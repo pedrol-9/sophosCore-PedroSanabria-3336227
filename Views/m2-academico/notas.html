@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophos Core - Libreta de Calificaciones</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/modules.css">
+</head>
+<body class="dashboard-body role-docente">
+
+    <header class="glass-header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <button id="sidebarToggle" class="sidebar-toggle-btn" title="Ocultar/Mostrar Menú">
+                    <i class="bi bi-layout-sidebar-inset"></i>
+                </button>
+                <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm" style="width: 34px; height: 34px;">
+                        <i class="bi bi-mortarboard-fill text-white fs-6"></i>
+                    </div>
+                    <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
+                </a>
+                <span class="badge badge-role badge-role-docente ms-2">Libreta de Calificaciones</span>
+            </div>
+            <div class="top-icons">
+                <div class="badge-date-pill d-flex align-items-center gap-2 me-3" id="periodTopBadge">
+                    <i class="bi bi-calendar3 text-indigo"></i>
+                    <span id="periodTopName">Periodo 3 - Activo</span>
+                </div>
+                <a href="../m1-autenticacion/login.html" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                    <i class="bi bi-box-arrow-right"></i> Salir
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-layout d-flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar py-3 d-flex flex-column justify-content-between">
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="inicio.html">
+                        <i class="bi bi-grid-1x2"></i> <span class="nav-text">Panel General</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="notas.html">
+                        <i class="bi bi-journal-check"></i> <span class="nav-text">Registro de Notas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="boletin.html">
+                        <i class="bi bi-file-earmark-bar-graph"></i> <span class="nav-text">Boletines</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../m3-asistente-docente/nuevo-asistente.html">
+                        <i class="bi bi-robot"></i> <span class="nav-text">Asistente IA Docente</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../m4-tutor-academico/nuevo-tutor.html">
+                        <i class="bi bi-chat-heart"></i> <span class="nav-text">Tutor Virtual Estudiante</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin.html">
+                        <i class="bi bi-shield-lock"></i> <span class="nav-text">Panel Admin</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-user-footer px-3 pt-3">
+                <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
+                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #059669, #10b981);">
+                        M
+                    </div>
+                    <div class="user-details overflow-hidden">
+                        <div class="fw-bold text-white small text-truncate">Profe Mariana</div>
+                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">Docente Matemáticas</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="panel-main">
+            <div class="container-fluid position-relative">
+                
+                <!-- Encabezado y Acciones -->
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                    <div>
+                        <h2 class="fw-bold mb-1 text-dark">Libreta de Calificaciones</h2>
+                        <p class="text-secondary small mb-0">Registra notas continuas, agrega evaluaciones y genera observaciones para el boletín con IA</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-primary" id="btnAddGradeColumn">
+                            <i class="bi bi-plus-circle me-1"></i> Agregar Nueva Nota
+                        </button>
+                        <button type="button" class="btn btn-indigo shadow-sm" id="btnSaveGradebook">
+                            <i class="bi bi-check2-circle me-1"></i> Guardar Cambios
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Barra de Filtros -->
+                <div class="card card-custom p-3 mb-3 border-0 shadow-sm">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-3">
+                            <label class="form-label text-secondary small fw-medium mb-1">Curso / Grupo</label>
+                            <select class="form-select bg-light border-0 fw-semibold" id="selectCourse">
+                                <option value="" selected disabled>Seleccionar Curso / Grupo...</option>
+                                <option value="11A">11° Grado A (5 Estudiantes)</option>
+                                <option value="10A">10° Grado A (5 Estudiantes)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label text-secondary small fw-medium mb-1">Materia</label>
+                            <select class="form-select bg-light border-0 fw-semibold" id="selectSubject">
+                                <option value="" selected disabled>Seleccionar Materia...</option>
+                                <option value="MAT">Matemáticas</option>
+                                <option value="FIS">Física</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label class="form-label text-secondary small fw-medium mb-0">Período Académico</label>
+                                <span id="notasPeriodStatusIndicator" class="small fw-semibold text-success">
+                                    <i class="bi bi-circle-fill me-1" style="font-size: 0.55rem;"></i> Período 3 Activo
+                                </span>
+                            </div>
+                            <div class="period-buttons-container" id="notasPeriodButtonsGroup">
+                                <!-- Botones de períodos -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toast de Alerta de Guardado -->
+                <div id="saveToast" class="alert alert-success d-none py-2 px-3 mb-3 shadow-sm align-items-center justify-content-between">
+                    <div><i class="bi bi-check-circle-fill me-2"></i> <strong>¡Calificaciones guardadas con éxito!</strong> Los promedios y observaciones se sincronizaron en la base de datos.</div>
+                    <button type="button" class="btn-close" onclick="document.getElementById('saveToast').classList.add('d-none')"></button>
+                </div>
+
+                <!-- Contenedor de la Tabla de Calificaciones -->
+                <div class="card card-custom border-0 shadow-sm overflow-hidden mb-4">
+                    <div class="card-header bg-white border-bottom p-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-table text-indigo fs-5"></i>
+                            <h5 class="mb-0 fw-bold text-dark" id="tableHeaderTitle">Libreta de Calificaciones</h5>
+                            <span id="notasPeriodModeBadge" class="badge bg-secondary-subtle text-secondary border ms-1">Selecciona filtros</span>
+                        </div>
+                    </div>
+
+                    <!-- Estado Vacío Inicial cuando no hay filtros -->
+                    <div id="notasEmptyState" class="text-center py-5 px-3">
+                        <div class="mx-auto mb-3 text-indigo bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 70px; height: 70px; font-size: 1.8rem;">
+                            <i class="bi bi-funnel"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-1">Selecciona un Curso y una Materia</h5>
+                        <p class="text-secondary small mb-0 mx-auto" style="max-width: 480px;">
+                            Para comenzar el registro o visualización de calificaciones, selecciona el <strong>Curso / Grupo</strong> y la <strong>Materia</strong> en los filtros superiores.
+                        </p>
+                    </div>
+
+                    <!-- Envoltorio de la tabla -->
+                    <div class="card-body p-0 d-none" id="notasTableWrapper">
+                        <div class="table-responsive">
+                            <table class="table table-gradebook align-middle mb-0" id="gradebookTable">
+                                <thead>
+                                    <tr id="gradebookHeadRow">
+                                        <!-- Columnas generadas dinámicamente -->
+                                    </tr>
+                                </thead>
+                                <tbody id="gradebookBody">
+                                    <!-- Filas generadas dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light p-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <span class="small text-secondary" id="notasFooterHelpText">
+                            Usa el botón <span class="badge bg-indigo"><i class="bi bi-stars"></i> IA</span> al lado de cada observación para sugerir una redacción pedagógica y profesional.
+                        </span>
+                        <a href="boletin.html" class="btn btn-sm btn-outline-dark" id="notasBtnPreviewReport">
+                            <i class="bi bi-file-earmark-pdf me-1"></i> Previsualizar Boletines
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Tooltip Popover Flotante para IA (Módulo 3) -->
+    <div id="aiTooltipContainer" class="ai-tooltip-popover d-none">
+        <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
+            <div class="fw-bold text-indigo d-flex align-items-center gap-1">
+                <i class="bi bi-stars"></i> Sugerencia IA Pedagógica
+            </div>
+            <button type="button" class="btn-close" style="font-size: 0.65rem;" onclick="closeAITooltip()"></button>
+        </div>
+        <p class="text-secondary mb-2" id="aiTooltipSuggestionText" style="line-height: 1.4;">
+            Cargando sugerencia...
+        </p>
+        <div class="d-flex justify-content-between align-items-center pt-1 border-top">
+            <span class="small text-muted" style="font-size: 0.72rem;">¿Aplicar cambio al boletín?</span>
+            <div class="d-flex gap-2">
+                <button type="button" class="ai-action-btn-accept" id="btnAcceptAISuggestion" title="Aceptar sugerencia">
+                    <i class="bi bi-check-lg"></i> Aceptar
+                </button>
+                <button type="button" class="ai-action-btn-reject" onclick="closeAITooltip()" title="Rechazar">
+                    <i class="bi bi-x-lg"></i> Rechazar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Agregar Nueva Columna de Nota -->
+    <div class="modal fade" id="modalAddColumn" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-plus-square text-indigo me-2"></i>Agregar Nueva Calificación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label small fw-medium">Nombre de la Nueva Actividad / Columna</label>
+                        <input type="text" class="form-control" id="newColumnTitleInput" placeholder="Ej: Taller 5, Quiz Oral, Examen Final...">
+                    </div>
+                    <p class="text-secondary small mb-0">Esta columna se añadirá a todos los estudiantes del curso para el periodo seleccionado.</p>
+                </div>
+                <div class="modal-footer border-top">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-indigo" id="btnConfirmAddColumn">Agregar Columna</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/sophos-client-db.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        // Variables de estado local de la libreta
+        let currentCourseId = "";
+        let currentSubjectId = "";
+        let currentPeriodId = 3;
+        let activeGradebook = null;
+        let activeAIStudentId = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sincronizar periodo activo de la base de datos
+            const activePeriodObj = SophosDB.getCurrentPeriod();
+            if (activePeriodObj) {
+                currentPeriodId = activePeriodObj.id;
+            }
+
+            renderNotasPeriodButtons();
+            loadGradebook();
+
+            // Eventos de filtros
+            document.getElementById('selectCourse').addEventListener('change', (e) => {
+                currentCourseId = e.target.value;
+                loadGradebook();
+            });
+
+            document.getElementById('selectSubject').addEventListener('change', (e) => {
+                currentSubjectId = e.target.value;
+                loadGradebook();
+            });
+
+            // Guardar notas
+            document.getElementById('btnSaveGradebook').addEventListener('click', saveCurrentGradebook);
+
+            // Agregar columna
+            const modalAddCol = new bootstrap.Modal(document.getElementById('modalAddColumn'));
+            document.getElementById('btnAddGradeColumn').addEventListener('click', () => {
+                if (!currentCourseId || !currentSubjectId) return;
+                const periodObj = SophosDB.getPeriods().find(p => p.id === currentPeriodId);
+                if (periodObj && periodObj.status !== 'active') return;
+
+                const nextNum = (activeGradebook && activeGradebook.columnTitles) ? activeGradebook.columnTitles.length + 1 : 1;
+                document.getElementById('newColumnTitleInput').value = `Nota ${nextNum}`;
+                modalAddCol.show();
+            });
+
+            document.getElementById('btnConfirmAddColumn').addEventListener('click', () => {
+                const title = document.getElementById('newColumnTitleInput').value.trim() || `Nota ${activeGradebook.columnTitles.length + 1}`;
+                addColumnToGradebook(title);
+                modalAddCol.hide();
+            });
+        });
+
+        function renderNotasPeriodButtons() {
+            const container = document.getElementById('notasPeriodButtonsGroup');
+            const statusIndicator = document.getElementById('notasPeriodStatusIndicator');
+            if (!container || typeof SophosDB === 'undefined') return;
+
+            const periods = SophosDB.getPeriods();
+            const activePeriodObj = SophosDB.getCurrentPeriod();
+            const currentActiveId = activePeriodObj ? activePeriodObj.id : 3;
+
+            container.innerHTML = '';
+
+            periods.forEach(p => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'period-pill-btn';
+
+                const isCurrentActive = (p.id === currentActiveId);
+                const isPastClosed = (p.status === 'closed');
+                const isFuturePending = (p.status === 'pending');
+
+                let badgeHTML = '';
+
+                if (isCurrentActive) {
+                    badgeHTML = `<span class="period-pill-badge badge-active-live"><i class="bi bi-circle-fill" style="font-size: 0.45rem;"></i> Activo</span>`;
+                    if (currentPeriodId === p.id) {
+                        btn.classList.add('selected-active');
+                    }
+                } else if (isPastClosed) {
+                    btn.classList.add('period-closed');
+                    badgeHTML = `<span class="period-pill-badge badge-closed"><i class="bi bi-eye"></i> Histórico</span>`;
+                    if (currentPeriodId === p.id) {
+                        btn.classList.add('selected-closed');
+                    }
+                } else if (isFuturePending) {
+                    btn.classList.add('period-locked');
+                    btn.disabled = true;
+                    btn.title = "Período inaccesible (Apertura futura)";
+                    badgeHTML = `<span class="period-pill-badge badge-locked"><i class="bi bi-lock-fill"></i> Inaccesible</span>`;
+                }
+
+                btn.innerHTML = `
+                    <span>${p.shortName || 'P' + p.id} - ${p.name.replace('Período', 'P.')}</span>
+                    ${badgeHTML}
+                `;
+
+                if (!isFuturePending) {
+                    btn.addEventListener('click', () => {
+                        currentPeriodId = p.id;
+                        renderNotasPeriodButtons();
+                        loadGradebook();
+                    });
+                }
+
+                container.appendChild(btn);
+            });
+
+            if (statusIndicator) {
+                const selectedObj = periods.find(p => p.id === currentPeriodId);
+                if (selectedObj && selectedObj.id === currentActiveId) {
+                    statusIndicator.className = 'small fw-semibold text-success';
+                    statusIndicator.innerHTML = `<i class="bi bi-pencil-fill me-1" style="font-size: 0.65rem;"></i> ${selectedObj.name} (Activo - Edición)`;
+                } else if (selectedObj && selectedObj.status === 'closed') {
+                    statusIndicator.className = 'small fw-semibold text-warning-emphasis';
+                    statusIndicator.innerHTML = `<i class="bi bi-eye-fill me-1" style="font-size: 0.65rem;"></i> ${selectedObj.name} (Cerrado - Solo Lectura)`;
+                }
+            }
+        }
+
+        function loadGradebook() {
+            const emptyState = document.getElementById('notasEmptyState');
+            const tableWrapper = document.getElementById('notasTableWrapper');
+            const btnAddCol = document.getElementById('btnAddGradeColumn');
+            const btnSave = document.getElementById('btnSaveGradebook');
+            const headerTitle = document.getElementById('tableHeaderTitle');
+            const modeBadge = document.getElementById('notasPeriodModeBadge');
+            const footerHelp = document.getElementById('notasFooterHelpText');
+            const previewBtn = document.getElementById('notasBtnPreviewReport');
+
+            const periods = SophosDB.getPeriods();
+            const periodObj = periods.find(p => p.id === currentPeriodId);
+            const activePeriodObj = SophosDB.getCurrentPeriod();
+            const isCurrentActive = periodObj && activePeriodObj && (periodObj.id === activePeriodObj.id);
+            const isReadOnly = !isCurrentActive;
+
+            // Flujo: Si NO hay Curso o NO hay Materia seleccionada, mostrar empty state
+            if (!currentCourseId || !currentSubjectId) {
+                if (emptyState) emptyState.classList.remove('d-none');
+                if (tableWrapper) tableWrapper.classList.add('d-none');
+                if (btnAddCol) btnAddCol.disabled = true;
+                if (btnSave) btnSave.disabled = true;
+                if (headerTitle) headerTitle.textContent = "Libreta de Calificaciones";
+                if (modeBadge) {
+                    modeBadge.className = "badge bg-secondary-subtle text-secondary border ms-1";
+                    modeBadge.innerHTML = `<i class="bi bi-funnel me-1"></i> Esperando filtros`;
+                }
+                if (previewBtn) {
+                    previewBtn.classList.add('disabled');
+                    previewBtn.setAttribute('aria-disabled', 'true');
+                }
+                return;
+            }
+
+            if (emptyState) emptyState.classList.add('d-none');
+            if (tableWrapper) tableWrapper.classList.remove('d-none');
+
+            activeGradebook = SophosDB.getGradebook(currentCourseId, currentSubjectId, currentPeriodId);
+            const students = SophosDB.getStudentsByCourse(currentCourseId);
+            const courseObj = SophosDB.getCourses().find(c => c.id === currentCourseId);
+            const subjectObj = SophosDB.getSubjects().find(s => s.id === currentSubjectId);
+            const courseName = courseObj ? courseObj.name : currentCourseId;
+            const subjectName = subjectObj ? subjectObj.name : currentSubjectId;
+            const periodName = periodObj ? periodObj.name : `Periodo ${currentPeriodId}`;
+
+            if (headerTitle) {
+                headerTitle.textContent = `${courseName} - ${subjectName} (${periodName})`;
+            }
+
+            if (isReadOnly) {
+                if (modeBadge) {
+                    modeBadge.className = "badge bg-warning-subtle text-warning-emphasis border border-warning-subtle ms-1";
+                    modeBadge.innerHTML = `<i class="bi bi-eye-fill me-1"></i> Modo Solo Lectura (Período Cerrado)`;
+                }
+                if (btnAddCol) {
+                    btnAddCol.disabled = true;
+                    btnAddCol.title = "No se pueden agregar notas a períodos cerrados";
+                }
+                if (btnSave) {
+                    btnSave.disabled = true;
+                    btnSave.title = "Las calificaciones están archivadas";
+                }
+                if (footerHelp) {
+                    footerHelp.innerHTML = `<span class="text-warning-emphasis fw-medium"><i class="bi bi-lock-fill me-1"></i> Período cerrado administrativamente. Modo solo visualización.</span>`;
+                }
+            } else {
+                if (modeBadge) {
+                    modeBadge.className = "badge bg-success-subtle text-success border border-success-subtle ms-1";
+                    modeBadge.innerHTML = `<i class="bi bi-pencil-fill me-1"></i> Período Activo (Edición Habilitada)`;
+                }
+                if (btnAddCol) {
+                    btnAddCol.disabled = false;
+                    btnAddCol.removeAttribute('title');
+                }
+                if (btnSave) {
+                    btnSave.disabled = false;
+                    btnSave.removeAttribute('title');
+                }
+                if (footerHelp) {
+                    footerHelp.innerHTML = `Usa el botón <span class="badge bg-indigo"><i class="bi bi-stars"></i> IA</span> al lado de cada observación para sugerir una redacción pedagógica y profesional.`;
+                }
+            }
+
+            if (previewBtn) {
+                previewBtn.classList.remove('disabled');
+                previewBtn.removeAttribute('aria-disabled');
+            }
+
+            renderGradebookTable(students, activeGradebook, isReadOnly);
+        }
+
+        function renderGradebookTable(students, gradebook, isReadOnly) {
+            const headRow = document.getElementById('gradebookHeadRow');
+            const body = document.getElementById('gradebookBody');
+            const tableElem = document.getElementById('gradebookTable');
+            if (!headRow || !body) return;
+
+            if (tableElem) {
+                if (isReadOnly) tableElem.classList.add('grade-table-readonly');
+                else tableElem.classList.remove('grade-table-readonly');
+            }
+
+            headRow.innerHTML = '';
+            body.innerHTML = '';
+
+            // 1. Renderizar encabezados
+            let headHTML = `<th class="ps-3" style="min-width: 200px;">Estudiante</th>`;
+            gradebook.columnTitles.forEach((title, idx) => {
+                headHTML += `<th class="text-center" style="min-width: 90px;">${title}</th>`;
+            });
+            headHTML += `<th class="text-center" style="min-width: 100px;">Definitiva</th>`;
+            headHTML += `<th style="min-width: 320px;">Observación para Boletín ${isReadOnly ? '(Solo Lectura)' : '(IA ✨)'}</th>`;
+            headRow.innerHTML = headHTML;
+
+            // 2. Renderizar filas por estudiante
+            students.forEach(student => {
+                const record = gradebook.records[student.id] || { grades: gradebook.columnTitles.map(() => null), observation: "" };
+                const avg = SophosDB.calculateAverage(record.grades);
+                const avgBadgeClass = avg === null ? 'bg-light text-secondary' : (avg >= 4.0 ? 'avg-high' : (avg >= 3.0 ? 'avg-mid' : 'avg-low'));
+
+                let rowHTML = `
+                    <tr data-student-id="${student.id}">
+                        <td class="ps-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="avatar-circle small text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 32px; height: 32px; background: ${student.avatarColor || '#4f46e5'}; font-size: 0.8rem;">
+                                    ${student.avatar}
+                                </div>
+                                <div>
+                                    <div class="fw-semibold text-dark small">${student.name}</div>
+                                    <div class="text-muted" style="font-size: 0.72rem;">${student.id}</div>
+                                </div>
+                            </div>
+                        </td>
+                `;
+
+                // Celdas de Notas
+                gradebook.columnTitles.forEach((_, colIdx) => {
+                    const gradeVal = record.grades && record.grades[colIdx] !== undefined && record.grades[colIdx] !== null ? record.grades[colIdx] : '';
+                    let colorClass = '';
+                    if (gradeVal !== '') {
+                        const num = Number(gradeVal);
+                        if (num >= 4.0) colorClass = 'grade-high';
+                        else if (num >= 3.0) colorClass = 'grade-mid';
+                        else colorClass = 'grade-low';
+                    }
+
+                    const inputAttrs = isReadOnly ? 'disabled readonly' : `oninput="onGradeChange('${student.id}', ${colIdx}, this)"`;
+
+                    rowHTML += `
+                        <td class="text-center">
+                            <input type="number" step="0.1" min="1.0" max="5.0" class="grade-input ${colorClass}" data-col="${colIdx}" value="${gradeVal}" placeholder="-" ${inputAttrs}>
+                        </td>
+                    `;
+                });
+
+                // Celda de Promedio/Definitiva
+                rowHTML += `
+                    <td class="text-center">
+                        <span class="average-badge ${avgBadgeClass}" id="avg-${student.id}">
+                            ${avg !== null ? avg : '--'}
+                        </span>
+                    </td>
+                `;
+
+                // Celda de Observación con botón IA
+                if (isReadOnly) {
+                    rowHTML += `
+                        <td>
+                            <div class="observation-input-group">
+                                <input type="text" class="form-control observation-input bg-light" id="obs-${student.id}" value="${record.observation || ''}" placeholder="Sin observaciones registradas" disabled readonly>
+                            </div>
+                        </td>
+                    </tr>`;
+                } else {
+                    rowHTML += `
+                        <td>
+                            <div class="observation-input-group">
+                                <input type="text" class="form-control observation-input" id="obs-${student.id}" value="${record.observation || ''}" placeholder="Escribe retroalimentación del periodo...">
+                                <button type="button" class="ai-sparkle-btn" title="Mejorar con IA" onclick="triggerAISuggestion('${student.id}', event)">
+                                    <i class="bi bi-stars"></i> IA
+                                </button>
+                            </div>
+                        </td>
+                    </tr>`;
+                }
+
+                body.innerHTML += rowHTML;
+            });
+        }
+
+        // Evento cuando se escribe una nota en vivo
+        function onGradeChange(studentId, colIdx, inputElem) {
+            let val = inputElem.value;
+            let num = val !== '' ? parseFloat(val) : null;
+
+            // Limitar rango
+            if (num !== null) {
+                if (num > 5.0) { num = 5.0; inputElem.value = "5.0"; }
+                if (num < 1.0 && num >= 0) { num = 1.0; inputElem.value = "1.0"; }
+            }
+
+            // Actualizar estilo visual del input
+            inputElem.classList.remove('grade-high', 'grade-mid', 'grade-low');
+            if (num !== null) {
+                if (num >= 4.0) inputElem.classList.add('grade-high');
+                else if (num >= 3.0) inputElem.classList.add('grade-mid');
+                else inputElem.classList.add('grade-low');
+            }
+
+            // Actualizar registro en memoria
+            if (!activeGradebook.records[studentId]) {
+                activeGradebook.records[studentId] = { grades: [], observation: "" };
+            }
+            activeGradebook.records[studentId].grades[colIdx] = num;
+
+            // Recalcular promedio en vivo
+            const avg = SophosDB.calculateAverage(activeGradebook.records[studentId].grades);
+            const badge = document.getElementById(`avg-${studentId}`);
+            if (badge) {
+                badge.textContent = avg !== null ? avg : '--';
+                badge.className = 'average-badge ' + (avg === null ? 'bg-light text-secondary' : (avg >= 4.0 ? 'avg-high' : (avg >= 3.0 ? 'avg-mid' : 'avg-low')));
+            }
+        }
+
+        // Agregar nueva columna de calificación
+        function addColumnToGradebook(newTitle) {
+            activeGradebook.columnTitles.push(newTitle);
+            const students = SophosDB.getStudentsByCourse(currentCourseId);
+            students.forEach(s => {
+                if (!activeGradebook.records[s.id]) {
+                    activeGradebook.records[s.id] = { grades: [], observation: "" };
+                }
+                activeGradebook.records[s.id].grades.push(null);
+            });
+            // Guardar y re-renderizar
+            SophosDB.saveGradebook(currentCourseId, currentSubjectId, currentPeriodId, activeGradebook);
+            renderGradebookTable(students, activeGradebook, false);
+        }
+
+        // Guardar cambios en LocalStorage
+        function saveCurrentGradebook() {
+            const students = SophosDB.getStudentsByCourse(currentCourseId);
+            students.forEach(s => {
+                const obsInput = document.getElementById(`obs-${s.id}`);
+                if (obsInput && activeGradebook.records[s.id]) {
+                    activeGradebook.records[s.id].observation = obsInput.value.trim();
+                }
+            });
+
+            SophosDB.saveGradebook(currentCourseId, currentSubjectId, currentPeriodId, activeGradebook);
+            
+            // Mostrar Toast
+            const toast = document.getElementById('saveToast');
+            toast.classList.remove('d-none');
+            setTimeout(() => { toast.classList.add('d-none'); }, 3500);
+        }
+
+        // ==========================================
+        // MÓDULO 3: ASISTENTE DE REDACCIÓN IA (TOOLTIP)
+        // ==========================================
+        function triggerAISuggestion(studentId, event) {
+            activeAIStudentId = studentId;
+            const input = document.getElementById(`obs-${studentId}`);
+            const originalText = (input ? input.value : "").trim();
+            const student = SophosDB.getStudentById(studentId);
+            const studentName = student ? student.name.split(' ')[0] : 'El estudiante';
+
+            // Generar redacción pedagógica contextual
+            const suggestion = generatePedagogicalSuggestion(originalText, studentName, studentId);
+
+            // Posicionar tooltip popover
+            const tooltip = document.getElementById('aiTooltipContainer');
+            const btnRect = event.currentTarget.getBoundingClientRect();
+            document.getElementById('aiTooltipSuggestionText').textContent = `"${suggestion}"`;
+            tooltip.classList.remove('d-none');
+
+            const tooltipWidth = tooltip.offsetWidth || 330;
+            const tooltipHeight = tooltip.offsetHeight || 160;
+
+            // Alineación horizontal: colocar hacia la izquierda del botón para no salirse de la pantalla
+            let leftPos = btnRect.right - tooltipWidth;
+            if (leftPos + tooltipWidth > window.innerWidth - 16) {
+                leftPos = window.innerWidth - tooltipWidth - 16;
+            }
+            if (leftPos < 16) {
+                leftPos = 16;
+            }
+
+            // Alineación vertical: preferir encima; si no cabe por el margen superior, ubicar debajo
+            let topPos = btnRect.top - tooltipHeight - 12;
+            let arrowPlacement = 'bottom';
+            if (topPos < 16) {
+                topPos = btnRect.bottom + 12;
+                arrowPlacement = 'top';
+            }
+
+            // Flecha indicadora apuntando directamente al centro del botón
+            const arrowX = Math.min(Math.max(16, (btnRect.left + btnRect.width / 2) - leftPos - 6), tooltipWidth - 24);
+            tooltip.style.setProperty('--arrow-x', `${arrowX}px`);
+            tooltip.classList.remove('arrow-top', 'arrow-bottom');
+            tooltip.classList.add(arrowPlacement === 'top' ? 'arrow-top' : 'arrow-bottom');
+
+            tooltip.style.top = `${topPos}px`;
+            tooltip.style.left = `${leftPos}px`;
+
+            // Botón Aceptar
+            document.getElementById('btnAcceptAISuggestion').onclick = () => {
+                if (input) {
+                    input.value = suggestion;
+                    if (activeGradebook.records[studentId]) {
+                        activeGradebook.records[studentId].observation = suggestion;
+                    }
+                }
+                closeAITooltip();
+            };
+        }
+
+        function closeAITooltip() {
+            const tooltip = document.getElementById('aiTooltipContainer');
+            tooltip.classList.add('d-none');
+            activeAIStudentId = null;
+        }
+
+        // Motor inteligente de sugerencias pedagógicas de IA
+        function generatePedagogicalSuggestion(original, studentName, studentId) {
+            const avg = activeGradebook.records[studentId] ? SophosDB.calculateAverage(activeGradebook.records[studentId].grades) : null;
+            const numAvg = avg ? parseFloat(avg) : 3.5;
+
+            if (!original || original.length < 5) {
+                if (numAvg >= 4.5) return `${studentName} evidencia un desempeño sobresaliente, dominio conceptual riguroso y una participación constructiva constante en el aula.`;
+                if (numAvg >= 3.8) return `${studentName} demuestra buen cumplimiento de los objetivos de aprendizaje y mantiene una actitud receptiva y responsable en las actividades asignadas.`;
+                return `${studentName} presenta avances en la materia, requiriendo afianzar hábitos de estudio y seguimiento oportuno en la resolución de talleres.`;
+            }
+
+            const lower = original.toLowerCase();
+
+            if (lower.includes('habla') || lower.includes('distrae') || lower.includes('no hace caso') || lower.includes('indisciplina')) {
+                return `${studentName} posee alto potencial cognitivo; se recomienda fortalecer la autorregulación, la escucha activa y la focalización durante las sesiones de clase.`;
+            }
+            if (lower.includes('no entrega') || lower.includes('perezoso') || lower.includes('tarde') || lower.includes('incumplido')) {
+                return `${studentName} requiere implementar un cronograma de estudio que optimice la puntualidad y el compromiso en la entrega oportuna de evidencias formativas.`;
+            }
+            if (lower.includes('malo') || lower.includes('bajo') || lower.includes('pierde') || lower.includes('dificultad') || lower.includes('no entiende')) {
+                return `${studentName} evidencia oportunidades de mejora conceptual; se sugiere vincularse al plan de tutorías virtuales y afianzar las competencias básicas en casa.`;
+            }
+            if (lower.includes('bien') || lower.includes('bueno') || lower.includes('juicioso') || lower.includes('excelente')) {
+                return `${studentName} refleja un alto sentido de responsabilidad, pensamiento crítico destacado y excelente disposición hacia el trabajo colaborativo e individual.`;
+            }
+
+            // Enriquecer texto existente manteniendo la intención
+            return `${studentName}: ${original.charAt(0).toUpperCase() + original.slice(1)}. Se proyecta consolidar sus fortalezas mediante prácticas autónomas continuas.`;
+        }
+
+        // Cerrar tooltip si se hace clic afuera
+        document.addEventListener('click', (e) => {
+            const tooltip = document.getElementById('aiTooltipContainer');
+            if (!tooltip.classList.contains('d-none') && !tooltip.contains(e.target) && !e.target.closest('.ai-sparkle-btn')) {
+                closeAITooltip();
+            }
+        });
+    </script>
+</body>
+</html>

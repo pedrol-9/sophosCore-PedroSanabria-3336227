@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sophos Core - Portal del Estudiante</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+  <link rel="shortcut icon" href="../../favicon.ico">
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/modules.css">
+  <!-- Estilos para impresión oficial de boletines -->
+  <link rel="stylesheet" href="../../assets/css/print.css" media="print">
+
+  <style>
+    /* =========================================================
+           BADGES DE ALTO CONTRASTE (Legibilidad Garantizada)
+           ========================================================= */
+    .badge-contrast-success {
+      background-color: #15803d !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(21, 128, 61, 0.3);
+    }
+
+    .badge-contrast-info {
+      background-color: #0369a1 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(3, 105, 161, 0.3);
+    }
+
+    .badge-contrast-warning {
+      background-color: #b45309 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(180, 83, 9, 0.3);
+    }
+
+    .badge-contrast-danger {
+      background-color: #b91c1c !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(185, 28, 28, 0.3);
+    }
+
+    .badge-contrast-purple {
+      background-color: #6d28d9 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(109, 40, 217, 0.3);
+    }
+
+    .badge-contrast-dark {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Promedios en tarjeta de calificaciones con alto contraste */
+    .average-badge.avg-high {
+      background-color: #15803d !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(21, 128, 61, 0.35);
+    }
+
+    .average-badge.avg-mid {
+      background-color: #b45309 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(180, 83, 9, 0.35);
+    }
+
+    .average-badge.avg-low {
+      background-color: #b91c1c !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.35);
+    }
+
+    /* Tarjetas de estadísticas y secciones */
+    .student-stat-card {
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .student-stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -6px rgba(2, 132, 199, 0.14);
+      border-color: #93c5fd;
+    }
+
+    .student-stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+
+    .subject-overview-card {
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      transition: all 0.25s ease;
+    }
+
+    .subject-overview-card:hover {
+      border-color: #0284c7;
+      box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.15);
+    }
+
+    .learning-step-card {
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .learning-step-card:hover {
+      transform: translateY(-2px);
+      border-color: #38bdf8;
+      box-shadow: 0 8px 18px rgba(2, 132, 199, 0.1);
+    }
+
+    .pulse-live-indicator {
+      width: 9px;
+      height: 9px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulseGreen 1.8s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      }
+
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 7px rgba(34, 197, 94, 0);
+      }
+
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+      }
+    }
+
+    /* =========================================================
+           WIDGET FLOTANTE SOPHOSBOT (BÚHO ANIMADO & CHAT OVERLAY)
+           ========================================================= */
+    .sophos-fab-container {
+      position: fixed;
+      bottom: 24px;
+      right: 28px;
+      z-index: 1060;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .sophos-fab-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(109, 40, 217, 0.15);
+      border: none;
+      box-shadow: 0 0 18px 8px rgba(109, 40, 217, 0.32);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      padding: 0;
+      overflow: visible;
+    }
+
+    .sophos-fab-btn:hover {
+      transform: scale(1.08) translateY(-3px);
+      background: rgba(124, 58, 237, 0.22);
+      box-shadow: 0 0 22px 10px rgba(124, 58, 237, 0.42);
+    }
+
+    .sophos-fab-btn.chat-active {
+      background: rgba(217, 119, 6, 0.18);
+      box-shadow: 0 0 18px 8px rgba(245, 158, 11, 0.35);
+    }
+
+    .sophos-fab-img {
+      width: 94px;
+      height: 94px;
+      max-width: none;
+      max-height: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      transition: transform 0.25s ease;
+      filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.2));
+    }
+
+    .sophos-fab-btn:hover .sophos-fab-img {
+      transform: translate(-50%, -55%) scale(1.05);
+    }
+
+    /* Panel de Chat Superpuesto Flotante */
+    .sophos-chat-overlay {
+      position: fixed;
+      bottom: 118px;
+      right: 28px;
+      width: 410px;
+      max-width: calc(100vw - 36px);
+      height: 560px;
+      max-height: calc(100vh - 135px);
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(226, 232, 240, 0.8);
+      z-index: 1059;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-origin: bottom right;
+    }
+
+    .sophos-chat-overlay.d-none {
+      display: none !important;
+      transform: scale(0.85) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sophos-chat-overlay:not(.d-none) {
+      display: flex !important;
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      animation: flyIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes flyIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .quick-chip {
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 11px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .quick-chip:hover {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      transform: translateY(-1px);
+    }
+
+    /* Impresión limpia del boletín oficial */
+    @media print {
+      body {
+        background: white !important;
+      }
+
+      .glass-header,
+      .sidebar,
+      .sophos-fab-container,
+      .sophos-chat-overlay,
+      .no-print {
+        display: none !important;
+      }
+
+      .panel-main {
+        padding: 0 !important;
+        background: white !important;
+        margin: 0 !important;
+      }
+
+      .card-report {
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+
+      .spa-section:not(#boletines) {
+        display: none !important;
+      }
+
+      #boletines {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="dashboard-body role-estudiante">
+
+  <!-- Header Transparente con Estética Glassmorphism -->
+  <header class="glass-header no-print">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <button id="sidebarToggle" class="sidebar-toggle-btn" data-bs-toggle="tooltip" data-bs-placement="right"
+          title="Ocultar/Mostrar Menú">
+          <i class="bi bi-layout-sidebar-inset"></i>
+        </button>
+        <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+          <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm"
+            style="width: 34px; height: 34px;">
+            <i class="bi bi-mortarboard-fill text-white fs-6"></i>
+          </div>
+          <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
+        </a>
+        <span class="badge badge-role badge-role-estudiante ms-2">Estudiante</span>
+      </div>
+
+      <div class="top-icons d-flex align-items-center gap-2">
+        <button class="icon-btn" data-bs-toggle="tooltip" title="Mensajes Académicos">
+          <i class="bi bi-envelope fs-5"></i>
+          <span class="badge-dot"></span>
+        </button>
+        <button class="icon-btn" data-bs-toggle="tooltip" title="Notificaciones del Sistema">
+          <i class="bi bi-bell fs-5"></i>
+          <span class="badge-dot"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-layout d-flex">
+    <!-- Sidebar Unificado -->
+    <aside id="sidebar" class="sidebar py-3 d-flex flex-column justify-content-between no-print">
+      <ul class="nav flex-column mb-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" data-target="panel-general" data-bs-toggle="tooltip"
+            data-bs-placement="right" title="Panel General">
+            <i class="bi bi-grid-1x2"></i> <span class="nav-text">Panel General</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-target="mis-calificaciones" data-bs-toggle="tooltip"
+            data-bs-placement="right" title="Mis Calificaciones">
+            <i class="bi bi-award"></i> <span class="nav-text">Mis Calificaciones</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-target="reporte-faltas" data-bs-toggle="tooltip" data-bs-placement="right"
+            title="Reporte de Faltas">
+            <i class="bi bi-calendar-check"></i> <span class="nav-text">Reporte de Faltas</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-target="boletines" data-bs-toggle="tooltip" data-bs-placement="right"
+            title="Boletines">
+            <i class="bi bi-file-earmark-bar-graph"></i> <span class="nav-text">Boletines</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Sección de Usuario y Cerrar Sesión al final del panel lateral -->
+      <div class="sidebar-user-footer px-3 pt-3">
+        <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
+          <div
+            class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
+            style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #0284c7, #06b6d4);">
+            AJ
+          </div>
+          <div class="user-details overflow-hidden">
+            <div class="fw-bold text-white small text-truncate">Alex Johnson</div>
+            <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">11° Grado A • Estudiante</div>
+          </div>
+        </div>
+        <a href="../../index.html" class="btn btn-link btn-logout text-decoration-none p-2 w-100"
+          data-bs-toggle="tooltip" data-bs-placement="right" title="Cerrar Sesión">
+          <i class="bi bi-box-arrow-right fs-5"></i>
+          <span class="nav-text small fw-medium">Cerrar Sesión</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="panel-main">
+      <div class="container-fluid">
+
+        <!-- ============================================================== -->
+        <!-- SECCIÓN 1: PANEL GENERAL / RESUMEN DEL ESTUDIANTE               -->
+        <!-- ============================================================== -->
+        <div id="panel-general" class="spa-section active">
+          <!-- Banner de Bienvenida -->
+          <div class="card border-0 rounded-4 text-white p-4 mb-4 shadow-sm"
+            style="background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #2563eb 100%);">
+            <div class="row align-items-center g-3">
+              <div class="col-lg-8">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <span class="badge badge-contrast-dark small">
+                    <i class="bi bi-calendar3 me-1"></i> Año Lectivo 2026
+                  </span>
+                  <span class="badge badge-contrast-success small">
+                    <span class="pulse-live-indicator me-1"></span> Período 3 Activo
+                  </span>
+                </div>
+                <h2 class="fw-bold mb-2">¡Hola de nuevo, Alex!</h2>
+              </div>
+              <div class="col-lg-4 text-lg-end">
+                <button type="button" class="btn btn-light text-primary fw-bold shadow-sm rounded-pill px-4 py-2"
+                  onclick="toggleSophosChat(true)">
+                  <i class="bi bi-chat-quote-fill text-primary me-2"></i> Abrir Chat con SophosBot
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Tarjetas de Métricas Clave con Badges de Alto Contraste -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-xl-3">
+              <div class="student-stat-card p-3 shadow-sm h-100 d-flex align-items-center gap-3">
+                <div class="student-stat-icon bg-primary bg-opacity-10 text-primary">
+                  <i class="bi bi-award-fill"></i>
+                </div>
+                <div>
+                  <div class="text-secondary small fw-bold">Promedio P3 Actual</div>
+                  <h3 class="fw-bold text-dark mb-1" id="statGeneralAvg">4.3</h3>
+                  <span class="badge-contrast-success small">
+                    <i class="bi bi-arrow-up-circle-fill"></i> Desempeño Alto
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="student-stat-card p-3 shadow-sm h-100 d-flex align-items-center gap-3">
+                <div class="student-stat-icon bg-success bg-opacity-10 text-success">
+                  <i class="bi bi-calendar-check-fill"></i>
+                </div>
+                <div>
+                  <div class="text-secondary small fw-bold">Asistencia Global</div>
+                  <h3 class="fw-bold text-dark mb-1">96%</h3>
+                  <span class="badge-contrast-info small">2 Fallas Justificadas</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="student-stat-card p-3 shadow-sm h-100 d-flex align-items-center gap-3">
+                <div class="student-stat-icon bg-warning bg-opacity-10 text-warning">
+                  <i class="bi bi-hourglass-split fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-secondary small fw-bold">Cierre de Período 3</div>
+                  <h4 class="fw-bold text-dark mb-1">19 de Octubre</h4>
+                  <span class="badge-contrast-warning small">
+                    <i class="bi bi-clock-fill"></i> Fecha Límite
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="student-stat-card p-3 shadow-sm h-100 d-flex align-items-center gap-3">
+                <div class="student-stat-icon bg-indigo bg-opacity-10 text-indigo">
+                  <i class="bi bi-robot fs-4"></i>
+                </div>
+                <div>
+                  <div class="text-secondary small fw-bold">Tutor IA (Gemini 2.5)</div>
+                  <h4 class="fw-bold text-dark mb-1">En Línea 24/7</h4>
+                  <span class="badge-contrast-purple small">
+                    <i class="bi bi-stars"></i> Asistente Activo
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila 1: Diagnóstico Académico + Mis Asignaturas -->
+          <div class="row g-4 mb-4">
+            <!-- Diagnóstico Académico -->
+            <div class="col-lg-5">
+              <div class="card card-custom border-0 shadow-sm p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-graph-up text-primary"></i> Diagnóstico Académico
+                  </h5>
+                  <span class="badge-contrast-info small">Período 3</span>
+                </div>
+
+                <div class="p-3 rounded-3 bg-light border mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="fw-bold text-dark">Matemáticas</span>
+                    <span class="badge-contrast-success fs-6">4.3 / 5.0</span>
+                  </div>
+                  <p class="text-secondary small mb-2 fst-italic">
+                    "Demuestra gran capacidad analítica y trabajo colaborativo."
+                  </p>
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="badge-contrast-purple small">Tema por afianzar:</span>
+                    <span class="small fw-semibold text-dark">Regla de la Cadena y Optimización</span>
+                  </div>
+                </div>
+
+                <h6 class="small fw-bold text-secondary text-uppercase mb-2">Consultas Rápidas Sugeridas:</h6>
+                <div class="d-flex flex-column gap-2">
+                  <button type="button"
+                    class="btn btn-sm btn-outline-primary text-start d-flex align-items-center justify-content-between"
+                    onclick="askSophosBotDirect('¿Cómo resolver derivadas por la regla de la cadena con un ejemplo paso a paso?')">
+                    <span><i class="bi bi-lightbulb-fill text-warning me-2"></i> Derivadas: Regla de la Cadena</span>
+                    <i class="bi bi-chat-dots-fill"></i>
+                  </button>
+                  <button type="button"
+                    class="btn btn-sm btn-outline-primary text-start d-flex align-items-center justify-content-between"
+                    onclick="askSophosBotDirect('Explícame funciones y límites al infinito de forma clara')">
+                    <span><i class="bi bi-lightbulb-fill text-warning me-2"></i> Límites y Continuidad</span>
+                    <i class="bi bi-chat-dots-fill"></i>
+                  </button>
+                  <button type="button"
+                    class="btn btn-sm btn-outline-primary text-start d-flex align-items-center justify-content-between"
+                    onclick="askSophosBotDirect('¿Qué temas debo priorizar para el examen de cierre del 19 de Octubre?')">
+                    <span><i class="bi bi-calendar-check-fill text-info me-2"></i> Preparar examen del 19 de
+                      Octubre</span>
+                    <i class="bi bi-chat-dots-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mis Asignaturas en Curso -->
+            <div class="col-lg-7">
+              <div class="card card-custom border-0 shadow-sm p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="fw-bold text-dark mb-0">
+                    <i class="bi bi-journal-bookmark-fill text-primary me-2"></i> Mis Asignaturas en Curso
+                  </h5>
+                  <button class="btn btn-sm btn-outline-primary fw-semibold"
+                    onclick="navigateToSection('mis-calificaciones')">
+                    Ver Desglose Completo <i class="bi bi-arrow-right"></i>
+                  </button>
+                </div>
+                <div class="row g-3" id="homeSubjectsContainer">
+                  <!-- Rellenado dinámicamente con badges de alto contraste -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila 2: Ruta de Refuerzo Personalizada & Canales Recomendados -->
+          <div class="row g-4 mb-4">
+            <!-- Ruta de Refuerzo Personalizada (Potenciada por SophosBot IA) -->
+            <div class="col-lg-7">
+              <div class="card card-custom border-0 shadow-sm p-4 h-100 d-flex flex-column justify-content-between">
+                <div>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                      <i class="bi bi-signpost-split-fill text-indigo"></i> Ruta de Refuerzo Personalizada
+                    </h5>
+                    <span class="badge-contrast-purple small"><i class="bi bi-stars"></i> IA en Vivo</span>
+                  </div>
+
+                  <!-- Call to Action Principal hacia SophosBot -->
+                  <div class="p-3 rounded-4 mb-3"
+                    style="background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); border: 1px solid #e0e7ff;">
+                    <div class="d-flex align-items-start gap-3">
+                      <div
+                        class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0"
+                        style="width: 44px; height: 44px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
+                        <i class="bi bi-robot fs-5"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="fw-bold text-dark small mb-1">¿Qué tema necesitas reforzar hoy?</div>
+                        <p class="text-secondary small mb-2" style="font-size: 0.8rem;">
+                          Coméntale a <strong>SophosBot</strong> tus dudas o pide una ruta guiada. El tutor IA analizará
+                          tu diagnóstico académico en tiempo real.
+                        </p>
+                        <!-- Input interactivo directo al Bot -->
+                        <div class="input-group input-group-sm">
+                          <input type="text" id="quickRefuerzoInput" class="form-control"
+                            placeholder="Ej: Explícame paso a paso cómo derivar con regla de la cadena..."
+                            onkeydown="if(event.key==='Enter') triggerRefuerzoPrompt()">
+                          <button class="btn btn-primary px-3 fw-semibold d-flex align-items-center gap-1" type="button"
+                            onclick="triggerRefuerzoPrompt()">
+                            <span>Consultar</span> <i class="bi bi-send-fill" style="font-size: 0.75rem;"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Opciones Rápidas de Refuerzo Generadas con IA -->
+                  <div class="row g-2">
+                    <div class="col-md-4">
+                      <div
+                        class="p-2 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between hover-shadow transition cursor-pointer"
+                        onclick="askSophosBotDirect('Por favor genera mi ruta de refuerzo personalizada paso a paso para Matemáticas, enfocada en Regla de la Cadena y Optimización.')">
+                        <div>
+                          <div class="d-flex align-items-center gap-1 text-primary fw-bold mb-1"
+                            style="font-size: 0.78rem;">
+                            <i class="bi bi-compass-fill"></i> Ruta Completa
+                          </div>
+                          <div class="text-secondary" style="font-size: 0.73rem;">Plan de estudio estructurado paso a
+                            paso.</div>
+                        </div>
+                        <div
+                          class="mt-2 text-primary fw-semibold small d-flex align-items-center justify-content-between">
+                          <span>Generar</span> <i class="bi bi-arrow-right-short fs-5"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        class="p-2 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between hover-shadow transition cursor-pointer"
+                        onclick="askSophosBotDirect('Plantéame 3 ejercicios prácticos de derivadas con regla de la cadena y acompáñame a resolverlos con retroalimentación.')">
+                        <div>
+                          <div class="d-flex align-items-center gap-1 text-purple fw-bold mb-1"
+                            style="font-size: 0.78rem; color: #7c3aed;">
+                            <i class="bi bi-pencil-square"></i> Ejercicios IA
+                          </div>
+                          <div class="text-secondary" style="font-size: 0.73rem;">3 ejercicios formativos con solución
+                            guiada.</div>
+                        </div>
+                        <div
+                          class="mt-2 text-purple fw-semibold small d-flex align-items-center justify-content-between"
+                          style="color: #7c3aed;">
+                          <span>Practicar</span> <i class="bi bi-arrow-right-short fs-5"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div
+                        class="p-2 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between hover-shadow transition cursor-pointer"
+                        onclick="askSophosBotDirect('¿Cuáles son los temas clave y tips para sacar la mejor nota en el examen de cálculo del 19 de Octubre?')">
+                        <div>
+                          <div class="d-flex align-items-center gap-1 text-warning-emphasis fw-bold mb-1"
+                            style="font-size: 0.78rem;">
+                            <i class="bi bi-lightbulb-fill text-warning"></i> Tips Examen
+                          </div>
+                          <div class="text-secondary" style="font-size: 0.73rem;">Estrategias clave para el cierre del
+                            19 de Octubre.</div>
+                        </div>
+                        <div class="mt-2 text-dark fw-semibold small d-flex align-items-center justify-content-between">
+                          <span>Revisar</span> <i class="bi bi-arrow-right-short fs-5"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
+                  <span class="text-muted small" style="font-size: 0.75rem;">
+                    <i class="bi bi-shield-check text-success"></i> Información procesada por Gemini 2.5 Flash
+                  </span>
+                  <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill fw-semibold"
+                    style="font-size: 0.72rem;"
+                    onclick="askSophosBotDirect('Actualiza mi diagnóstico y sugiere nuevas áreas de refuerzo según mi rendimiento.')">
+                    <i class="bi bi-arrow-repeat me-1"></i> Actualizar con IA
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Canales Recomendados (Enlaces Reales) -->
+            <div class="col-lg-5">
+              <div class="card card-custom border-0 shadow-sm p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-collection-play-fill text-danger"></i> Canales Recomendados
+                  </h5>
+                  <span class="badge-contrast-dark small">YouTube</span>
+                </div>
+                <p class="small text-secondary mb-3">Accede directamente al contenido pedagógico oficial de los docentes
+                  de apoyo:</p>
+
+                <div class="d-flex flex-column gap-2 mb-3">
+                  <!-- Canal 1: Profe Alex -->
+                  <a href="https://www.youtube.com/@MatematicasprofeAlex" target="_blank" rel="noopener noreferrer"
+                    class="p-2 rounded-3 bg-light border text-decoration-none d-flex align-items-center justify-content-between text-dark hover-shadow transition">
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-youtube text-danger fs-4"></i>
+                      <div>
+                        <div class="fw-bold small">Matemáticas Profe Alex</div>
+                        <div class="text-secondary" style="font-size: 0.72rem;">Cálculo diferencial, derivadas y límites
+                        </div>
+                      </div>
+                    </div>
+                    <span class="badge-contrast-danger small">Ir al Canal <i
+                        class="bi bi-box-arrow-up-right ms-1"></i></span>
+                  </a>
+
+                  <!-- Canal 2: JulioProfe -->
+                  <a href="https://www.youtube.com/@julioprofe" target="_blank" rel="noopener noreferrer"
+                    class="p-2 rounded-3 bg-light border text-decoration-none d-flex align-items-center justify-content-between text-dark hover-shadow transition">
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-youtube text-danger fs-4"></i>
+                      <div>
+                        <div class="fw-bold small">JulioProfe Oficial</div>
+                        <div class="text-secondary" style="font-size: 0.72rem;">Álgebra, trigonometría y física clásica
+                        </div>
+                      </div>
+                    </div>
+                    <span class="badge-contrast-danger small">Ir al Canal <i
+                        class="bi bi-box-arrow-up-right ms-1"></i></span>
+                  </a>
+
+                  <!-- Canal 3: Daniel Carreón -->
+                  <a href="https://www.youtube.com/@DanielCarreon" target="_blank" rel="noopener noreferrer"
+                    class="p-2 rounded-3 bg-light border text-decoration-none d-flex align-items-center justify-content-between text-dark hover-shadow transition">
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-youtube text-danger fs-4"></i>
+                      <div>
+                        <div class="fw-bold small">Daniel Carreón</div>
+                        <div class="text-secondary" style="font-size: 0.72rem;">Fundamentos y explicaciones intuitivas
+                        </div>
+                      </div>
+                    </div>
+                    <span class="badge-contrast-danger small">Ir al Canal <i
+                        class="bi bi-box-arrow-up-right ms-1"></i></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- SECCIÓN 2: MIS CALIFICACIONES DETALLADAS                        -->
+        <!-- ============================================================== -->
+        <div id="mis-calificaciones" class="spa-section">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div>
+              <h2 class="fw-bold mb-1 text-dark">Libreta de Mis Calificaciones</h2>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-primary" onclick="toggleSophosChat(true)">
+                <i class="bi bi-stars me-1"></i> Consultar a SophosBot
+              </button>
+              <button type="button" class="btn btn-indigo shadow-sm" onclick="navigateToSection('boletines')">
+                <i class="bi bi-file-earmark-pdf me-1"></i> Ver Boletín Oficial
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros de Período y Materia -->
+          <div class="card card-custom p-3 mb-3 border-0 shadow-sm">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-5">
+                <label class="form-label small text-secondary fw-bold mb-1">Materia</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="gradesSubjectSelector">
+                  <option value="MAT">Matemáticas - Profe Mariana</option>
+                  <option value="FIS">Física - Profe Mariana</option>
+                </select>
+              </div>
+              <div class="col-md-7">
+                <label class="form-label small text-secondary fw-bold mb-1">Período Académico</label>
+                <div class="period-buttons-container" id="gradesPeriodButtonsContainer">
+                  <!-- Botones de periodos generados dinámicamente -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumen de Desempeño en la Materia Seleccionada -->
+          <div class="card card-custom border-0 shadow-sm p-3 mb-3">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+              <div>
+                <h4 class="fw-bold text-dark mb-0" id="gradesSubjectTitle">Matemáticas</h4>
+                <div class="text-secondary small mt-1" id="gradesTeacherName">Docente: Profe Mariana</div>
+              </div>
+              <div class="d-flex align-items-center gap-3">
+                <div class="text-end">
+                  <div class="text-secondary small fw-medium">Promedio Actual</div>
+                  <span class="average-badge avg-high fs-4 px-3 py-1" id="gradesAverageBadge">4.3</span>
+                </div>
+                <span class="badge-contrast-success fs-6" id="gradesAverageStatus">Aprobado</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla de Actividades Evaluativas -->
+          <div class="card card-custom border-0 shadow-sm overflow-hidden mb-4">
+            <div class="card-header bg-white border-bottom p-3 d-flex justify-content-between align-items-center">
+              <h5 class="mb-0 fw-bold text-dark">
+                <i class="bi bi-table text-indigo me-2"></i> Desglose de Actividades Evaluadas
+              </h5>
+              <span class="small text-secondary">Escala evaluativa: 1.0 a 5.0 (Aprobatoria: 3.0)</span>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light small text-secondary">
+                    <tr>
+                      <th class="ps-4">#</th>
+                      <th>Actividad Evaluativa</th>
+                      <th class="text-center">Ponderación</th>
+                      <th class="text-center">Calificación</th>
+                      <th class="text-center">Nivel de Desempeño</th>
+                      <th class="text-end pe-4">Acción de Refuerzo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="gradesTableBody">
+                    <!-- Rellenado dinámicamente -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Observación Oficial del Docente con Feedback IA -->
+          <div class="card card-custom border-0 shadow-sm p-4">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <i class="bi bi-chat-left-quote-fill text-indigo fs-5"></i>
+              <h5 class="fw-bold text-dark mb-0">Observación Pedagógica del Docente</h5>
+              <span class="badge-contrast-purple small ms-auto">
+                <i class="bi bi-stars"></i> Asistida por IA
+              </span>
+            </div>
+            <p class="text-dark fw-medium mb-0 p-3 rounded-3 bg-light border" id="gradesTeacherObservation">
+              "Demuestra gran capacidad analítica y trabajo colaborativo."
+            </p>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- SECCIÓN 3: REPORTE DE FALTAS & ASISTENCIA                       -->
+        <!-- ============================================================== -->
+        <div id="reporte-faltas" class="spa-section">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div>
+              <h2 class="fw-bold mb-1 text-dark">Control de Asistencia & Justificaciones</h2>
+            </div>
+            <button type="button" class="btn btn-indigo shadow-sm" data-bs-toggle="modal"
+              data-bs-target="#modalJustificarFalta">
+              <i class="bi bi-plus-circle me-1"></i> Radicar Justificación
+            </button>
+          </div>
+
+          <!-- Métricas de Inasistencia -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-md-4">
+              <div class="card card-custom p-3 border-0 shadow-sm text-center">
+                <span class="text-secondary small fw-bold">Total Inasistencias (P3)</span>
+                <h3 class="fw-bold text-dark mt-1 mb-0" id="statTotalInasistencias">6</h3>
+                <span class="badge-contrast-dark small mt-2">Registradas en el período</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="card card-custom p-3 border-0 shadow-sm text-center">
+                <span class="text-secondary small fw-bold">Faltas Justificadas</span>
+                <h3 class="fw-bold text-primary mt-1 mb-0" id="statJustifiedAbsences">5</h3>
+                <span class="badge-contrast-info small mt-2">Con Justificación Aceptada</span>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="card card-custom p-3 border-0 shadow-sm text-center">
+                <span class="text-secondary small fw-bold">Inasistencias Sin Justificar</span>
+                <h3 class="fw-bold text-danger mt-1 mb-0" id="statUnjustifiedAbsences">1</h3>
+                <span class="badge-contrast-danger small mt-2">Pendientes de Excusa</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla de Historial de Novedades de Inasistencia -->
+          <div class="card card-custom border-0 shadow-sm overflow-hidden mb-4">
+            <div class="card-header bg-white border-bottom p-3 d-flex justify-content-between align-items-center">
+              <h5 class="mb-0 fw-bold text-dark">
+                <i class="bi bi-clock-history text-indigo me-2"></i> Historial de Inasistencias
+              </h5>
+              <span class="small text-secondary">Tercer Período Académico 2026</span>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light small text-secondary">
+                    <tr>
+                      <th class="ps-4">Fecha</th>
+                      <th>Materia</th>
+                      <th>Docente</th>
+                      <th>Tipo de Inasistencia</th>
+                      <th>Observación</th>
+                      <th class="text-center pe-4">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody id="attendanceHistoryTable">
+                    <tr>
+                      <td class="ps-4 fw-medium text-dark">09 de Oct, 2026</td>
+                      <td>Física</td>
+                      <td>Mariana Ruiz</td>
+                      <td><span class="badge-contrast-warning small">Inasistencia</span></td>
+                      <td class="text-secondary small">Cita médica odontológica programada</td>
+                      <td class="text-center pe-4"><span class="badge-contrast-info small">Justificada</span></td>
+                    </tr>
+                    <tr>
+                      <td class="ps-4 fw-medium text-dark">25 de Sep, 2026</td>
+                      <td>Matemáticas</td>
+                      <td>Mariana Ruiz</td>
+                      <td><span class="badge-contrast-warning small">Inasistencia</span></td>
+                      <td class="text-secondary small">Calamidad doméstica informada por acudiente</td>
+                      <td class="text-center pe-4"><span class="badge-contrast-info small">Justificada</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- SECCIÓN 4: BOLETINES OFICIALES                                  -->
+        <!-- ============================================================== -->
+        <div id="boletines" class="spa-section">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2 no-print">
+            <div>
+              <h2 class="fw-bold mb-1 text-dark">Boletines Académicos Oficiales</h2>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-secondary" onclick="navigateToSection('panel-general')">
+                <i class="bi bi-arrow-left me-1"></i> Volver al Inicio
+              </button>
+              <button type="button" class="btn btn-indigo shadow-sm" id="btnPrintBulletin" onclick="window.print()">
+                <i class="bi bi-printer me-1"></i> Imprimir / Guardar PDF
+              </button>
+            </div>
+          </div>
+
+          <!-- Selector de Período para el Boletín -->
+          <div class="card card-custom p-3 mb-4 border-0 shadow-sm no-print">
+            <div class="row align-items-center g-3">
+              <div class="col-md-6">
+                <label class="form-label small text-secondary fw-bold mb-1">Seleccionar Período a Consultar:</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="bulletinPeriodSelector"
+                  onchange="renderStudentBulletin()">
+                  <option value="1">Primer Período (Oficial Cerrado)</option>
+                  <option value="2" selected>Segundo Período (Oficial Cerrado)</option>
+                  <option value="3">Tercer Período (En curso - Cierre 19 de Octubre)</option>
+                </select>
+              </div>
+              <div class="col-md-6 text-md-end">
+                <span class="badge-contrast-success px-3 py-2" id="bulletinStatusBadge">
+                  <i class="bi bi-check-circle-fill me-1"></i> Documento Oficial Válido 2026
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formato Oficial del Boletín Institucional -->
+          <div class="card card-custom p-4 p-md-5 border-0 shadow mx-auto card-report"
+            style="max-width: 860px; background: white;" id="bulletinCardContent">
+            <!-- Cabecera Institucional -->
+            <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
+              <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center justify-content-center bg-indigo rounded-3 text-white"
+                  style="width: 52px; height: 52px;">
+                  <i class="bi bi-mortarboard-fill fs-3"></i>
+                </div>
+                <div>
+                  <h4 class="fw-bold mb-0 text-dark">COLEGIO SOPHOS CORE</h4>
+                  <div class="text-secondary small">Resolución Oficial No. 2026-A • Educación Media Vocacional</div>
+                  <div class="text-muted" style="font-size: 0.72rem;">Código DANE: 168001004523 • NIT: 900.842.120-1
+                  </div>
+                </div>
+              </div>
+              <div class="text-end">
+                <span class="badge-contrast-purple px-3 py-2 fs-6" id="bulletinReportPeriodBadge">Periodo 3 -
+                  2026</span>
+                <div class="text-muted small mt-1">Expedición: <span id="bulletinIssueDate"></span></div>
+              </div>
+            </div>
+
+            <!-- Datos del Estudiante -->
+            <div class="bg-light p-3 rounded-3 mb-4 border">
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <span class="text-muted small">Estudiante:</span>
+                  <div class="fw-bold text-dark fs-5">Alex Johnson</div>
+                </div>
+                <div class="col-md-3">
+                  <span class="text-muted small">Código / ID:</span>
+                  <div class="fw-bold text-dark">EST-1101</div>
+                </div>
+                <div class="col-md-3">
+                  <span class="text-muted small">Grado / Grupo:</span>
+                  <div class="fw-bold text-dark">11° Grado A</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabla de Asignaturas y Calificaciones -->
+            <h6 class="fw-bold text-dark text-uppercase mb-2">Desglose de Calificaciones por Asignatura</h6>
+            <div class="table-responsive mb-4">
+              <table class="table table-bordered align-middle mb-0">
+                <thead class="table-light text-center small text-secondary">
+                  <tr>
+                    <th class="text-start">Asignatura</th>
+                    <th>Calificaciones del Período</th>
+                    <th style="width: 110px;">Definitiva</th>
+                    <th style="width: 140px;">Desempeño</th>
+                  </tr>
+                </thead>
+                <tbody id="bulletinTableBody">
+                  <!-- Rellenado dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Observaciones del Docente y Recomendaciones de la IA -->
+            <div class="border rounded-3 p-3 bg-light mb-4">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <i class="bi bi-chat-quote-fill text-indigo fs-5"></i>
+                <h6 class="fw-bold text-dark mb-0">Observaciones y Recomendaciones Pedagógicas</h6>
+                <span class="badge-contrast-purple small ms-auto no-print">Validado por Docente & IA</span>
+              </div>
+              <p class="mb-0 text-dark" id="bulletinObservationText" style="line-height: 1.6; font-style: italic;">
+                "Demuestra gran capacidad analítica y trabajo colaborativo."
+              </p>
+            </div>
+
+            <!-- Firmas Institucionales -->
+            <div class="row pt-4 mt-4 border-top text-center">
+              <div class="col-6">
+                <div class="border-top border-dark mx-auto w-75 pt-2">
+                  <div class="fw-bold small">Profe Mariana</div>
+                  <div class="text-muted" style="font-size: 0.75rem;">Docente Titular / Coordinadora</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="border-top border-dark mx-auto w-75 pt-2">
+                  <div class="fw-bold small">Rectoría Institucional</div>
+                  <div class="text-muted" style="font-size: 0.75rem;">Colegio SophosCore</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aviso de Período en Curso (Cuando el boletín aún no se ha generado) -->
+          <div class="card card-custom p-5 border-0 shadow-sm mx-auto text-center d-none" style="max-width: 860px;" id="bulletinPendingCard">
+            <div class="mb-3">
+              <span class="rounded-circle d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning" style="width: 72px; height: 72px;">
+                <i class="bi bi-hourglass-split fs-1"></i>
+              </span>
+            </div>
+            <h4 class="fw-bold text-dark mb-2">Boletín Oficial Aún No Generado</h4>
+            <p class="text-secondary mx-auto mb-4" style="max-width: 540px;">
+              El boletín oficial del <strong id="pendingPeriodName">Tercer Período</strong> no se encuentra generado todavía, ya que este período académico está actualmente en curso.
+            </p>
+            <div class="alert alert-light border text-start mx-auto mb-4 p-3 rounded-3" style="max-width: 580px;">
+              <div class="d-flex align-items-start gap-2 mb-2">
+                <i class="bi bi-calendar-event text-primary mt-1"></i>
+                <div>
+                  <span class="fw-bold text-dark small">Fecha de Cierre Programada:</span>
+                  <div class="text-secondary small">19 de Octubre de 2026</div>
+                </div>
+              </div>
+              <div class="d-flex align-items-start gap-2">
+                <i class="bi bi-cpu text-indigo mt-1"></i>
+                <div>
+                  <span class="fw-bold text-dark small">Generación Automática:</span>
+                  <div class="text-secondary small">Al momento de realizarse el cierre oficial de período por parte de la coordinación académica, el sistema generará y consolidará de manera automática los boletines oficiales para todos los estudiantes.</div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+              <button type="button" class="btn btn-outline-primary rounded-pill px-4" onclick="document.getElementById('bulletinPeriodSelector').value='2'; renderStudentBulletin();">
+                <i class="bi bi-file-earmark-check me-1"></i> Consultar Boletín Período 2
+              </button>
+              <button type="button" class="btn btn-indigo rounded-pill px-4" onclick="navigateToSection('panel-general')">
+                <i class="bi bi-speedometer2 me-1"></i> Ver Calificaciones Parciales en Curso
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- WIDGET FLOTANTE: BÚHO SOPHOSBOT Y PANEL DE CHAT OVERLAY        -->
+  <!-- ============================================================== -->
+  <div class="sophos-fab-container no-print">
+    <button type="button" class="sophos-fab-btn" id="btnSophosFab" onclick="toggleSophosChat()"
+      title="Pregúntale a SophosBot">
+      <!-- Imagen dinámica del búho: sophos-bot.svg (cerrado) <-> sophos-bot-chat-abierto.svg (abierto) -->
+      <img id="sophosBotImg" class="sophos-fab-img" src="../../assets/img/sophos-bot.svg" alt="SophosBot">
+    </button>
+  </div>
+
+  <!-- Panel Flotante Superpuesto de Chat (Drawer/Overlay) -->
+  <div id="sophosChatOverlay" class="sophos-chat-overlay d-none no-print">
+    <!-- Cabecera del Chat -->
+    <div
+      class="p-3 bg-dark text-white d-flex justify-content-between align-items-center border-bottom border-secondary border-opacity-25">
+      <div class="d-flex align-items-center gap-2">
+        <div class="rounded-circle d-flex align-items-center justify-content-center text-white"
+          style="width: 40px; height: 40px; background: radial-gradient(circle, rgba(165,180,252,0.4) 0%, rgba(99,102,241,0.25) 100%); border: 1.5px solid rgba(199,210,254,0.45);">
+          <img src="../../assets/img/sophos-bot-chat-abierto.svg" alt="Owl Head" width="32" height="32"
+            style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+        </div>
+        <div>
+          <div class="fw-bold small mb-0 d-flex align-items-center gap-1">
+            SophosBot <span class="badge badge-contrast-purple py-0 px-2" style="font-size: 0.65rem;">Gemini AI</span>
+          </div>
+          <div class="text-white-50 small d-flex align-items-center gap-1" style="font-size: 0.72rem;">
+            <span class="pulse-live-indicator" style="width: 7px; height: 7px;"></span> En línea • Apoyo a Alex
+          </div>
+        </div>
+      </div>
+      <div class="d-flex align-items-center gap-1">
+        <button type="button" class="btn btn-sm btn-outline-light py-0 px-2 rounded-pill" onclick="resetStudentChat()"
+          title="Reiniciar conversación">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-light py-0 px-2 rounded-circle" onclick="toggleSophosChat(false)"
+          title="Cerrar chat">
+          <i class="bi bi-x-lg text-dark"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Área de Mensajes del Chat -->
+    <div class="chat-messages" id="studentChatArea"
+      style="flex: 1; overflow-y: auto; padding: 14px; background: #f8fafc;">
+      <!-- Mensaje de bienvenida -->
+      <div class="chat-bubble-ai mb-2">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="badge-contrast-purple small" style="font-size: 0.7rem;">SophosBot IA</span>
+          <small class="text-muted">Ahora</small>
+        </div>
+        <p class="mb-2 text-dark small">
+          ¡Hola, Alex! 🦉 Soy <strong>SophosBot</strong>, tu tutor virtual potenciado con Google Gemini. He revisado tus
+          calificaciones de Matemáticas (Promedio actual: 4.3). ¿Qué duda tienes sobre tus talleres o qué tema
+          deseas repasar para el examen de cierre del 19 de Octubre?
+        </p>
+        <div class="d-flex flex-wrap gap-1 mt-2">
+          <span class="quick-chip"
+            onclick="askSophosBotDirect('¿Cómo aplico la regla de la cadena en derivadas?')">Regla de la cadena</span>
+          <span class="quick-chip" onclick="askSophosBotDirect('¿Qué es un límite al infinito?')">Límites al
+            infinito</span>
+          <span class="quick-chip"
+            onclick="askSophosBotDirect('¿Qué consejos me das para el examen del 19 de Octubre?')">Tips examen 19
+            Oct</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indicador de Carga / Generando Respuesta -->
+    <div id="chatThinkingIndicator"
+      class="px-3 py-1 bg-light border-top text-secondary small d-none align-items-center gap-2">
+      <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+      <span>SophosBot está analizando tu consulta con Gemini...</span>
+    </div>
+
+    <!-- Entrada de Mensajes -->
+    <div class="p-3 bg-white border-top">
+      <form id="studentChatForm" class="d-flex gap-2">
+        <input type="text" class="form-control form-control-sm rounded-pill px-3" id="studentChatInput"
+          placeholder="Escribe tu pregunta académica..." autocomplete="off">
+        <button type="submit" class="btn btn-sm btn-indigo rounded-pill px-3 fw-bold d-flex align-items-center gap-1">
+          <span>Enviar</span> <i class="bi bi-send-fill" style="font-size: 0.75rem;"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Radicar Justificación de Falta -->
+  <div class="modal fade" id="modalJustificarFalta" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4 border-0 shadow">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold"><i class="bi bi-file-earmark-medical text-primary me-2"></i>Radicar
+            Justificación de Falta</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formJustificarFalta">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-secondary">Fecha de la Inasistencia</label>
+              <input type="date" class="form-control" id="modalFechaFalta" required value="2026-10-14">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-secondary">Materia Afectada</label>
+              <select class="form-select" id="modalMateriaFalta">
+                <option value="Matemáticas">Matemáticas</option>
+                <option value="Física">Física</option>
+                <option value="Todas las materias del día">Todas las materias del día</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold text-secondary">Tipo de Inasistencia</label>
+              <select class="form-select mb-2" id="modalMotivoTipo">
+                <option value="Incapacidad Médica">Incapacidad Médica / Consulta Salud</option>
+                <option value="Calamidad Doméstica">Calamidad Doméstica</option>
+                <option value="Representación Institucional / Deportiva">Representación Institucional / Deportiva
+                </option>
+                <option value="Otro Motivo">Otro Motivo</option>
+              </select>
+              <label class="form-label small fw-bold text-secondary">Observación</label>
+              <textarea class="form-control" id="modalDetalleFalta" rows="3"
+                placeholder="Describe la observación detallada de la inasistencia..." required></textarea>
+            </div>
+          </div>
+          <div class="modal-footer border-top">
+            <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-indigo rounded-pill px-4">Enviar a Coordinación</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Reproductor de Video Educativo YouTube -->
+  <div class="modal fade" id="modalVideoPlayer" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content rounded-4 border-0 shadow bg-dark text-white overflow-hidden">
+        <div class="modal-header border-secondary p-3">
+          <h6 class="modal-title fw-bold" id="videoModalTitle"><i class="bi bi-youtube text-danger me-2"></i>Recurso
+            Recomendado</h6>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="ratio ratio-16x9">
+            <iframe id="videoIframe" src="" title="Video Educativo" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast de Notificación Flotante -->
+  <div class="toast-container position-fixed bottom-0 start-0 p-3" style="z-index: 1090;">
+    <div id="studentToast" class="toast align-items-center text-bg-primary border-0 shadow-lg" role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body fw-medium" id="studentToastMessage">
+          ¡Operación realizada exitosamente!
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Script Principal -->
+  <script src="../../assets/js/main.js"></script>
+
+  <!-- Lógica Interactiva del Panel del Estudiante (Conectado a la DB MySQL: sophos_core) -->
+  <script>
+    const session = JSON.parse(sessionStorage.getItem('sophos_session') || '{}');
+    const CURRENT_STUDENT_ID = (session.rol === 'ESTUDIANTE' && session.id_usuario) ? session.id_usuario : "b0000001-0000-0000-0000-000000000001";
+    let studentPortalData = null;
+    let activePeriodNumber = 3;
+    let selectedAsignacionId = null;
+    let isChatOpen = false;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Fecha oficial para boletín
+      const issueDateEl = document.getElementById('bulletinIssueDate');
+      if (issueDateEl) {
+        issueDateEl.textContent = new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+
+      // Manejador del cambio de materia en libreta
+      const subjectSelect = document.getElementById('gradesSubjectSelector');
+      if (subjectSelect) {
+        subjectSelect.addEventListener('change', (e) => {
+          selectedAsignacionId = e.target.value;
+          renderGradesTable();
+        });
+      }
+
+      // Manejador del selector de período en boletín
+      const bulletinPeriodSel = document.getElementById('bulletinPeriodSelector');
+      if (bulletinPeriodSel) {
+        bulletinPeriodSel.addEventListener('change', () => {
+          renderStudentBulletin();
+        });
+      }
+
+      // Manejador del chat
+      const chatForm = document.getElementById('studentChatForm');
+      if (chatForm) {
+        chatForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          handleChatSubmit();
+        });
+      }
+
+      // Manejador del formulario de justificación
+      const formJustificar = document.getElementById('formJustificarFalta');
+      if (formJustificar) {
+        formJustificar.addEventListener('submit', (e) => {
+          e.preventDefault();
+          handleJustificationSubmit();
+        });
+      }
+
+      // Cargar datos exclusivamente desde la base de datos MySQL (sophos_core)
+      loadAlexJohnsonData();
+    });
+
+    // Alternar panel de chat flotante y cambiar el matacho del búho
+    function toggleSophosChat(forceOpen = null) {
+      const overlay = document.getElementById('sophosChatOverlay');
+      const fabBtn = document.getElementById('btnSophosFab');
+      const botImg = document.getElementById('sophosBotImg');
+
+      if (forceOpen !== null) {
+        isChatOpen = forceOpen;
+      } else {
+        isChatOpen = !isChatOpen;
+      }
+
+      if (isChatOpen) {
+        overlay.classList.remove('d-none');
+        fabBtn.classList.add('chat-active');
+        // Cambiar el SVG por el del búho con cabeza animada
+        botImg.src = '../../assets/img/sophos-bot-chat-abierto.svg';
+        botImg.alt = 'SophosBot Abierto';
+
+        setTimeout(() => {
+          document.getElementById('studentChatInput')?.focus();
+        }, 150);
+      } else {
+        overlay.classList.add('d-none');
+        fabBtn.classList.remove('chat-active');
+        // Restaurar el SVG del búho completo saludando
+        botImg.src = '../../assets/img/sophos-bot.svg';
+        botImg.alt = 'SophosBot Cerrado';
+      }
+    }
+
+    // Navegación entre secciones
+    function navigateToSection(targetId) {
+      const navLinks = document.querySelectorAll('.sidebar .nav-link');
+      const sections = document.querySelectorAll('.spa-section');
+
+      navLinks.forEach(l => {
+        if (l.getAttribute('data-target') === targetId) {
+          l.classList.add('active');
+        } else {
+          l.classList.remove('active');
+        }
+      });
+
+      sections.forEach(sec => {
+        if (sec.id === targetId) {
+          sec.classList.add('active');
+        } else {
+          sec.classList.remove('active');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Cargar datos exclusivamente desde la base de datos MySQL (sophos_core)
+    async function loadAlexJohnsonData() {
+      try {
+        const res = await fetch(`../../api/estudiante.php?action=overview&student_id=${CURRENT_STUDENT_ID}`);
+        const data = await res.json();
+        if (!data.success) {
+          console.error("Error al cargar datos del estudiante:", data.error);
+          return;
+        }
+        studentPortalData = data;
+        activePeriodNumber = data.active_period ? data.active_period.numero_periodo : 3;
+
+        // 1. Perfil del estudiante en Sidebar y Banner
+        renderStudentProfile(data.student, data.active_period);
+
+        // 2. Panel General / Métricas y Asignaturas
+        renderHomeOverview(data);
+
+        // 3. Selectores de materias y períodos
+        renderSubjectSelector(data.subjects);
+        renderGradesPeriodButtons(data.periods);
+
+        // 4. Libreta detallada de calificaciones
+        renderGradesTable();
+
+        // 5. Historial de asistencia
+        renderAttendanceSection(data.attendance_summary);
+
+        // 6. Boletín oficial
+        renderStudentBulletin();
+
+      } catch (err) {
+        console.error("Fallo al conectar con la base de datos sophos_core:", err);
+      }
+    }
+
+    // Renderizar perfil del estudiante desde la base de datos
+    function renderStudentProfile(student, activePeriod) {
+      if (!student) return;
+
+      // Sidebar usuario
+      const userBox = document.querySelector('.user-profile-box');
+      if (userBox) {
+        const initials = student.nombre_completo.split(' ').map(n => n[0]).join('').substring(0, 2);
+        const avatar = userBox.querySelector('.avatar-circle');
+        if (avatar) avatar.textContent = initials;
+
+        const details = userBox.querySelector('.user-details');
+        if (details) {
+          details.innerHTML = `
+                        <div class="fw-bold text-white small text-truncate">${escapeHtml(student.nombre_completo)}</div>
+                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">${escapeHtml(student.curso_nombre)} • ${escapeHtml(student.rol)}</div>
+                    `;
+        }
+      }
+
+      // Banner principal
+      const welcomeHeader = document.querySelector('#panel-general h2');
+      if (welcomeHeader) {
+        const firstName = student.nombre_completo.split(' ')[0];
+        welcomeHeader.textContent = `¡Hola de nuevo, ${firstName}! 🎓`;
+      }
+
+      const pBadge = document.querySelector('#panel-general .badge-contrast-success');
+      if (pBadge && activePeriod) {
+        pBadge.innerHTML = `<span class="pulse-live-indicator me-1"></span> Período ${activePeriod.numero_periodo} Activo`;
+      }
+    }
+
+    // Renderizar vista general de asignaturas en Panel General
+    function renderHomeOverview(data) {
+      const container = document.getElementById('homeSubjectsContainer');
+      if (!container) return;
+
+      const subjects = data.subjects || [];
+      let html = '';
+
+      subjects.forEach(subj => {
+        const avgNum = subj.promedio !== null ? parseFloat(subj.promedio) : null;
+        const badgeClass = avgNum !== null
+          ? (avgNum >= 4.0 ? 'badge-contrast-success' : (avgNum >= 3.0 ? 'badge-contrast-warning' : 'badge-contrast-danger'))
+          : 'badge-contrast-dark';
+        const progressWidth = avgNum !== null ? (avgNum / 5.0) * 100 : 0;
+        const obsText = subj.observacion || "Sin observaciones registradas.";
+
+        html += `
+                    <div class="col-md-6">
+                        <div class="subject-overview-card p-3 h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 class="fw-bold text-dark mb-0">${escapeHtml(subj.materia_nombre)}</h6>
+                                        <span class="text-secondary" style="font-size: 0.75rem;">Docente: ${escapeHtml(subj.docente_nombre)}</span>
+                                    </div>
+                                    <span class="${badgeClass} fs-6">${avgNum !== null ? avgNum.toFixed(1) : '—'}</span>
+                                </div>
+                                <div class="progress mb-2" style="height: 7px; background-color: #e2e8f0;">
+                                    <div class="progress-bar ${avgNum && avgNum >= 4.0 ? 'bg-success' : 'bg-warning'}" role="progressbar" style="width: ${progressWidth}%"></div>
+                                </div>
+                                <p class="text-dark small mb-3 fst-italic">
+                                    "${escapeHtml(obsText)}"
+                                </p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-xs btn-outline-primary flex-grow-1 py-1 fw-semibold" onclick="selectSubjectAndNavigate('${subj.id_asignacion}')">
+                                    Ver Calificaciones
+                                </button>
+                                <button class="btn btn-xs btn-indigo py-1 px-2" onclick="askSophosBotDirect('Quiero repasar el tema de ${escapeHtml(subj.materia_nombre)}')" title="Preguntar al tutor">
+                                    <i class="bi bi-chat-quote-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+      });
+
+      container.innerHTML = html;
+
+      // Actualizar métricas del panel general
+      const genAvgEl = document.getElementById('statGeneralAvg');
+      if (genAvgEl) genAvgEl.textContent = data.general_average !== null ? parseFloat(data.general_average).toFixed(1) : '—';
+    }
+
+    // Navegar a calificaciones con la materia seleccionada
+    function selectSubjectAndNavigate(asignacionId) {
+      selectedAsignacionId = asignacionId;
+      const selectEl = document.getElementById('gradesSubjectSelector');
+      if (selectEl) selectEl.value = asignacionId;
+      navigateToSection('mis-calificaciones');
+      renderGradesTable();
+    }
+
+    // Poblar selector de asignaturas desde la DB
+    function renderSubjectSelector(subjects) {
+      const selectEl = document.getElementById('gradesSubjectSelector');
+      const modalSelectEl = document.getElementById('modalMateriaFalta');
+      if (!selectEl) return;
+
+      let html = '';
+      let modalHtml = '';
+
+      subjects.forEach((subj, idx) => {
+        if (idx === 0 && !selectedAsignacionId) {
+          selectedAsignacionId = subj.id_asignacion;
+        }
+        const selected = subj.id_asignacion === selectedAsignacionId ? 'selected' : '';
+        html += `<option value="${subj.id_asignacion}" ${selected}>${escapeHtml(subj.materia_nombre)} - ${escapeHtml(subj.docente_nombre)}</option>`;
+        modalHtml += `<option value="${escapeHtml(subj.materia_nombre)}">${escapeHtml(subj.materia_nombre)}</option>`;
+      });
+
+      selectEl.innerHTML = html;
+      if (modalSelectEl) {
+        modalSelectEl.innerHTML = modalHtml + `<option value="Todas las materias del día">Todas las materias del día</option>`;
+      }
+    }
+
+    // Renderizar botones de períodos desde la base de datos
+    function renderGradesPeriodButtons(periods) {
+      const container = document.getElementById('gradesPeriodButtonsContainer');
+      if (!container || !periods) return;
+
+      let html = '';
+
+      periods.forEach(p => {
+        const isSelected = p.numero_periodo === activePeriodNumber;
+        let btnClass = 'period-pill-btn';
+        let badgeText = '';
+        let badgeClass = '';
+
+        if (p.activo == 1) {
+          btnClass += isSelected ? ' selected-active' : ' period-active';
+          badgeText = 'Activo';
+          badgeClass = 'badge-contrast-success py-0 px-2 small';
+        } else if (p.numero_periodo < (studentPortalData?.active_period?.numero_periodo || 3)) {
+          btnClass += isSelected ? ' selected-closed' : ' period-closed';
+          badgeText = 'Cerrado';
+          badgeClass = 'badge-contrast-dark py-0 px-2 small';
+        } else {
+          btnClass += ' period-locked';
+          badgeText = 'Inactivo';
+          badgeClass = 'badge-contrast-warning py-0 px-2 small';
+        }
+
+        html += `
+                    <button type="button" class="${btnClass}" ${p.numero_periodo > 3 ? 'disabled' : ''} onclick="changeGradesPeriod(${p.numero_periodo})">
+                        <span>Período ${p.numero_periodo}</span>
+                        <span class="${badgeClass}">${badgeText}</span>
+                    </button>
+                `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function changeGradesPeriod(periodNum) {
+      activePeriodNumber = periodNum;
+      if (studentPortalData?.periods) {
+        renderGradesPeriodButtons(studentPortalData.periods);
+      }
+      renderGradesTable();
+      renderStudentBulletin();
+    }
+
+    // Renderizar tabla detallada de calificaciones desde MySQL
+    async function renderGradesTable() {
+      const tableBody = document.getElementById('gradesTableBody');
+      const avgBadge = document.getElementById('gradesAverageBadge');
+      const avgStatus = document.getElementById('gradesAverageStatus');
+      const obsEl = document.getElementById('gradesTeacherObservation');
+      const subjectTitleEl = document.getElementById('gradesSubjectTitle');
+      const teacherNameEl = document.getElementById('gradesTeacherName');
+
+      if (!tableBody) return;
+
+      // Materia actual
+      const currSubj = (studentPortalData?.subjects || []).find(s => s.id_asignacion === selectedAsignacionId)
+        || (studentPortalData?.subjects ? studentPortalData.subjects[0] : null);
+
+      if (currSubj) {
+        if (subjectTitleEl) subjectTitleEl.textContent = currSubj.materia_nombre;
+        if (teacherNameEl) teacherNameEl.textContent = `Docente: ${currSubj.docente_nombre}`;
+      }
+
+      tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted"><div class="spinner-border spinner-border-sm text-primary me-2"></div>Consultando notas en la base de datos...</td></tr>`;
+
+      try {
+        const asigParam = selectedAsignacionId ? `&asignacion_id=${selectedAsignacionId}` : '';
+        const res = await fetch(`../../api/estudiante.php?action=grades&student_id=${CURRENT_STUDENT_ID}&period=${activePeriodNumber}${asigParam}`);
+        const data = await res.json();
+
+        if (!data.success || !data.grades || data.grades.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No hay calificaciones registradas para este período en la base de datos.</td></tr>`;
+          if (avgBadge) {
+            avgBadge.textContent = '—';
+            avgBadge.className = 'average-badge fs-4 px-3 py-1 avg-low';
+          }
+          if (avgStatus) {
+            avgStatus.textContent = 'Sin Calificar';
+            avgStatus.className = 'badge-contrast-dark fs-6';
+          }
+          if (obsEl) obsEl.textContent = "El docente aún no ha registrado observaciones en este período.";
+          return;
+        }
+
+        const avgNum = parseFloat(data.average) || 0;
+        if (avgBadge) {
+          avgBadge.textContent = avgNum.toFixed(1);
+          avgBadge.className = 'average-badge fs-4 px-3 py-1 ' + (avgNum >= 4.0 ? 'avg-high' : (avgNum >= 3.0 ? 'avg-mid' : 'avg-low'));
+        }
+
+        if (avgStatus) {
+          if (avgNum >= 4.0) {
+            avgStatus.textContent = 'Aprobado';
+            avgStatus.className = 'badge-contrast-success fs-6';
+          } else if (avgNum >= 3.0) {
+            avgStatus.textContent = 'Aprobado (Básico)';
+            avgStatus.className = 'badge-contrast-warning fs-6';
+          } else {
+            avgStatus.textContent = 'Requiere Refuerzo';
+            avgStatus.className = 'badge-contrast-danger fs-6';
+          }
+        }
+
+        const lastGradeWithObs = [...data.grades].reverse().find(g => g.comentario_docente);
+        if (obsEl) {
+          obsEl.textContent = lastGradeWithObs
+            ? `"${lastGradeWithObs.comentario_docente}"`
+            : "El docente no ha emitido una observación cualitativa aún.";
+        }
+
+        let rowsHtml = '';
+        const totalCount = data.grades.length;
+        const defaultWeight = Math.round(100 / totalCount);
+
+        data.grades.forEach((g, idx) => {
+          const gradeVal = parseFloat(g.nota);
+          const gradeStr = gradeVal.toFixed(1);
+          const actName = g.evidencia_nombre || g.actividad || `Actividad ${idx + 1}`;
+
+          let levelBadge = '';
+          let actionBtn = '';
+
+          if (gradeVal >= 4.5) {
+            levelBadge = '<span class="badge-contrast-success small">Superior</span>';
+            actionBtn = '<span class="text-success small fw-bold"><i class="bi bi-check-circle"></i> Dominado</span>';
+          } else if (gradeVal >= 4.0) {
+            levelBadge = '<span class="badge-contrast-info small">Alto</span>';
+            actionBtn = `<button class="btn btn-xs btn-outline-primary py-0 px-2 rounded-pill fw-semibold" onclick="askSophosBotDirect('Quiero profundizar en ${escapeHtml(actName)} de ${escapeHtml(currSubj ? currSubj.materia_nombre : '')}')"><i class="bi bi-stars"></i> Consultar</button>`;
+          } else if (gradeVal >= 3.0) {
+            levelBadge = '<span class="badge-contrast-warning small">Básico</span>';
+            actionBtn = `<button class="btn btn-xs btn-outline-warning text-dark py-0 px-2 rounded-pill fw-bold" onclick="askSophosBotDirect('Necesito ayuda con el tema ${escapeHtml(actName)} de ${escapeHtml(currSubj ? currSubj.materia_nombre : '')}')"><i class="bi bi-lightning-charge"></i> Reforzar</button>`;
+          } else {
+            levelBadge = '<span class="badge-contrast-danger small">Bajo</span>';
+            actionBtn = `<button class="btn btn-xs btn-danger py-0 px-2 rounded-pill fw-bold" onclick="askSophosBotDirect('Ayúdame urgente con el tema ${escapeHtml(actName)} de ${escapeHtml(currSubj ? currSubj.materia_nombre : '')}')"><i class="bi bi-exclamation-triangle"></i> Refuerzo IA</button>`;
+          }
+
+          rowsHtml += `
+                        <tr>
+                            <td class="ps-4 fw-bold text-secondary">${idx + 1}</td>
+                            <td class="fw-semibold text-dark">
+                                ${escapeHtml(actName)}
+                                ${g.evidencia_descripcion ? `<div class="text-secondary small fw-normal">${escapeHtml(g.evidencia_descripcion)}</div>` : ''}
+                            </td>
+                            <td class="text-center text-secondary small fw-medium">${defaultWeight}%</td>
+                            <td class="text-center">
+                                <span class="fw-bold fs-6 ${gradeVal >= 3.0 ? 'text-primary' : 'text-danger'}">
+                                    ${gradeStr}
+                                </span>
+                            </td>
+                            <td class="text-center">${levelBadge}</td>
+                            <td class="text-end pe-4">${actionBtn}</td>
+                        </tr>
+                    `;
+        });
+
+        tableBody.innerHTML = rowsHtml;
+
+      } catch (err) {
+        console.error("Error al cargar calificaciones:", err);
+        tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-4">Error al cargar las calificaciones de la base de datos.</td></tr>`;
+      }
+    }
+
+    // Consultar directamente a SophosBot y desplegar el chat
+    function askSophosBotDirect(promptText) {
+      toggleSophosChat(true);
+      setTimeout(() => {
+        appendUserMessage(promptText);
+        requestGeminiTutorResponse(promptText);
+      }, 300);
+    }
+
+    function handleChatSubmit() {
+      const input = document.getElementById('studentChatInput');
+      const query = input.value.trim();
+      if (!query) return;
+
+      appendUserMessage(query);
+      input.value = '';
+      requestGeminiTutorResponse(query);
+    }
+
+    function appendUserMessage(text) {
+      const chatArea = document.getElementById('studentChatArea');
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble-user mb-2';
+      bubble.innerHTML = `
+                <div class="d-flex align-items-center justify-content-end gap-2 mb-1">
+                    <small class="text-white-50">Tú (Alex)</small>
+                </div>
+                <p class="mb-0 small">${escapeHtml(text)}</p>
+            `;
+      chatArea.appendChild(bubble);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    // Llamada a la API real de Google Gemini vía api/gemini-assistant.php
+    async function requestGeminiTutorResponse(userQuery) {
+      const chatArea = document.getElementById('studentChatArea');
+      const indicator = document.getElementById('chatThinkingIndicator');
+      if (indicator) indicator.classList.remove('d-none');
+
+      try {
+        const response = await fetch('../../api/gemini-assistant.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: userQuery,
+            studentName: 'Alex Johnson',
+            type: 'tutor',
+            context: 'Estudiante de grado 11°A en Matemáticas y Física. Período 3 activo con cierre el 19 de Octubre.'
+          })
+        });
+
+        const data = await response.json();
+        if (indicator) indicator.classList.add('d-none');
+
+        if (data.success && data.text) {
+          appendAIMessage(data.text, data.model || 'Gemini 2.5 Flash');
+        } else {
+          // Fallback pedagógico contextual en caso de falta de red o cuota
+          const fallback = getFallbackPedagogicalResponse(userQuery);
+          appendAIMessage(fallback, 'SophosBot Offline Mode');
+        }
+      } catch (err) {
+        console.error('Error al conectar con Gemini API:', err);
+        if (indicator) indicator.classList.add('d-none');
+        const fallback = getFallbackPedagogicalResponse(userQuery);
+        appendAIMessage(fallback, 'SophosBot Asistente');
+      }
+    }
+
+    function appendAIMessage(responseText, modelName) {
+      const chatArea = document.getElementById('studentChatArea');
+      const bubble = document.createElement('div');
+      bubble.className = 'chat-bubble-ai mb-2';
+
+      // Formatear saltos de línea y negritas sencillas
+      let formattedText = escapeHtml(responseText)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n\n/g, '</p><p class="mb-2 text-dark small">')
+        .replace(/\n/g, '<br>');
+
+      bubble.innerHTML = `
+                <div class="d-flex align-items-center justify-content-between mb-1">
+                    <span class="badge-contrast-purple small" style="font-size: 0.65rem;">
+                        <i class="bi bi-robot"></i> ${escapeHtml(modelName)}
+                    </span>
+                    <small class="text-muted" style="font-size: 0.7rem;">Ahora</small>
+                </div>
+                <p class="mb-0 text-dark small">${formattedText}</p>
+            `;
+      chatArea.appendChild(bubble);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    // Respuestas pedagógicas de contingencia
+    function getFallbackPedagogicalResponse(query) {
+      const lower = query.toLowerCase();
+      if (lower.includes('cadena') || lower.includes('derivada')) {
+        return "Para la regla de la cadena en derivadas de funciones compuestas f(g(x)), recuerda derivar la función exterior manteniendo la interior, y multiplicar por la derivada de la interior: [f(g(x))]' = f'(g(x)) * g'(x). Por ejemplo, si y = (3x + 1)^2, su derivada es 2(3x + 1) * 3 = 6(3x + 1).";
+      }
+      if (lower.includes('limite') || lower.includes('límite') || lower.includes('infinito')) {
+        return "En los límites al infinito de polinomios o fracciones racionales, divide el numerador y el denominador entre la potencia de mayor grado de x. Si los grados son iguales, el resultado es la división de sus coeficientes principales.";
+      }
+      if (lower.includes('examen') || lower.includes('19 de octubre') || lower.includes('cierre')) {
+        return "Para el cierre del 19 de Octubre, te recomiendo: 1. Repasar las fórmulas de derivadas y regla de la cadena. 2. Resolver los ejercicios de práctica guiada que te puedo proponer aquí en el chat. 3. Descansar bien la noche anterior y confiar en tu proceso analítico.";
+      }
+      return "Comprendo tu pregunta. Descompón el problema en datos conocidos e incógnitas. Te sugiero indicarme qué paso específico deseas que resolvamos juntos aquí en SophosBot.";
+    }
+
+    function resetStudentChat() {
+      const chatArea = document.getElementById('studentChatArea');
+      chatArea.innerHTML = `
+                <div class="chat-bubble-ai mb-2">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge-contrast-purple small" style="font-size: 0.7rem;">SophosBot IA</span>
+                        <small class="text-muted">Ahora</small>
+                    </div>
+                    <p class="mb-2 text-dark small">
+                        ¡Conversación reiniciada, Alex! 🦉 ¿En qué otro tema de Matemáticas o Física puedo orientarte hoy?
+                    </p>
+                    <div class="d-flex flex-wrap gap-1 mt-2">
+                        <span class="quick-chip" onclick="askSophosBotDirect('¿Cómo aplico la regla de la cadena en derivadas?')">Regla de la cadena</span>
+                        <span class="quick-chip" onclick="askSophosBotDirect('¿Qué es un límite al infinito?')">Límites al infinito</span>
+                        <span class="quick-chip" onclick="askSophosBotDirect('¿Qué consejos me das para el examen del 19 de Octubre?')">Tips examen 19 Oct</span>
+                    </div>
+                </div>
+            `;
+    }
+
+    // Renderizar Inasistencias desde la Base de Datos
+    function renderAttendanceSection(summary) {
+      if (!summary) return;
+
+      const table = document.getElementById('attendanceHistoryTable');
+      const totalEl = document.getElementById('statTotalInasistencias');
+      const justifiedEl = document.getElementById('statJustifiedAbsences');
+      const unjustifiedEl = document.getElementById('statUnjustifiedAbsences');
+
+      if (totalEl) totalEl.textContent = summary.total_inasistencias ?? ((summary.justified_absences || 0) + (summary.unjustified_absences || 0));
+      if (justifiedEl) justifiedEl.textContent = summary.justified_absences ?? 0;
+      if (unjustifiedEl) unjustifiedEl.textContent = summary.unjustified_absences ?? 0;
+
+      if (!table || !summary.records) return;
+
+      // Filtrar únicamente registros de inasistencias (FALTA_JUSTIFICADA y FALTA_INJUSTIFICADA)
+      const inasistencias = summary.records.filter(r => r.estado === 'FALTA_JUSTIFICADA' || r.estado === 'FALTA_INJUSTIFICADA');
+
+      if (inasistencias.length === 0) {
+        table.innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center py-4 text-muted small">
+              <i class="bi bi-check-circle-fill text-success fs-4 d-block mb-1"></i>
+              No presenta registros de inasistencias en este período académico.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      let html = '';
+      inasistencias.forEach(rec => {
+        const isJustified = rec.estado === 'FALTA_JUSTIFICADA';
+        const badgeTipo = isJustified ? 'badge-contrast-warning' : 'badge-contrast-danger';
+        const labelTipo = isJustified ? 'Inasistencia' : 'Inasistencia Injustificada';
+        const badgeEstado = isJustified ? 'badge-contrast-info' : 'badge-contrast-danger';
+        const labelEstado = isJustified ? 'Justificada' : 'Sin Justificar';
+
+        html += `
+          <tr>
+            <td class="ps-4 fw-medium text-dark">${escapeHtml(rec.fecha)}</td>
+            <td>${escapeHtml(rec.materia_nombre || 'Matemáticas')}</td>
+            <td>${escapeHtml(rec.docente_nombre || 'Mariana Ruiz')}</td>
+            <td><span class="${badgeTipo} small">${labelTipo}</span></td>
+            <td class="text-secondary small">${escapeHtml(rec.observacion || 'Sin observación')}</td>
+            <td class="text-center pe-4"><span class="${badgeEstado} small">${labelEstado}</span></td>
+          </tr>
+        `;
+      });
+
+      table.innerHTML = html;
+    }
+
+    // Renderizar Boletín Oficial desde MySQL (Exclusivamente períodos cerrados)
+    function renderStudentBulletin() {
+      if (!studentPortalData) return;
+
+      const selectedPeriod = parseInt(document.getElementById('bulletinPeriodSelector')?.value || 2);
+      const bulletinCard = document.getElementById('bulletinCardContent');
+      const pendingCard = document.getElementById('bulletinPendingCard');
+      const printBtn = document.getElementById('btnPrintBulletin');
+      const statusBadge = document.getElementById('bulletinStatusBadge');
+
+      // Buscar si es un boletín histórico cerrado (Periodo 1 o 2)
+      const historicalBulletin = (studentPortalData.bulletins || []).find(b => parseInt(b.numero_periodo) === selectedPeriod);
+
+      // Si el período está en curso o no se ha cerrado, NO se debe generar boletín
+      if (!historicalBulletin) {
+        if (bulletinCard) bulletinCard.classList.add('d-none');
+        if (pendingCard) {
+          pendingCard.classList.remove('d-none');
+          const pName = document.getElementById('pendingPeriodName');
+          if (pName) pName.textContent = selectedPeriod === 3 ? 'Tercer Período (Activo)' : `Período ${selectedPeriod}`;
+        }
+        if (printBtn) {
+          printBtn.disabled = true;
+          printBtn.classList.add('opacity-50');
+        }
+        if (statusBadge) {
+          statusBadge.className = 'badge-contrast-warning px-3 py-2';
+          statusBadge.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Período en Curso - Pendiente de Cierre';
+        }
+        return;
+      }
+
+      // Período cerrado con boletín oficial generado
+      if (pendingCard) pendingCard.classList.add('d-none');
+      if (bulletinCard) bulletinCard.classList.remove('d-none');
+      if (printBtn) {
+        printBtn.disabled = false;
+        printBtn.classList.remove('opacity-50');
+      }
+      if (statusBadge) {
+        statusBadge.className = 'badge-contrast-success px-3 py-2';
+        statusBadge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Documento Oficial Válido 2026';
+      }
+
+      const periodBadge = document.getElementById('bulletinReportPeriodBadge');
+      if (periodBadge) periodBadge.textContent = `Período ${selectedPeriod} - 2026`;
+
+      const issueDate = document.getElementById('bulletinIssueDate');
+      if (issueDate) {
+        const rawDate = historicalBulletin.fecha_cierre;
+        issueDate.textContent = rawDate
+          ? new Date(rawDate.includes('T') ? rawDate : rawDate + 'T12:00:00').toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })
+          : '3 de julio de 2026';
+      }
+
+      const tableBody = document.getElementById('bulletinTableBody');
+      const obsEl = document.getElementById('bulletinObservationText');
+      let rowsHtml = '';
+      let generalObs = '';
+
+      const dm = historicalBulletin.datos_materias;
+      if (Array.isArray(dm)) {
+        dm.forEach(item => {
+          const gradeVal = parseFloat(item.nota || 0);
+          let level = '<span class="badge-contrast-success small">SUPERIOR</span>';
+          if (gradeVal < 3.0) level = '<span class="badge-contrast-danger small">BAJO</span>';
+          else if (gradeVal < 4.0) level = '<span class="badge-contrast-warning small">BÁSICO</span>';
+          else if (gradeVal < 4.5) level = '<span class="badge-contrast-info small">ALTO</span>';
+
+          const teacherName = (item.materia === 'Lengua Castellana' || item.materia === 'Lectura Crítica') ? 'Carlos Mendoza' : 'Mariana Ruiz';
+
+          rowsHtml += `
+            <tr>
+              <td class="text-start ps-3">
+                <div class="fw-bold text-dark">${escapeHtml(item.materia)}</div>
+                <div class="text-secondary small">Docente: ${teacherName}</div>
+              </td>
+              <td class="text-center font-monospace">${gradeVal.toFixed(1)}</td>
+              <td class="text-center fw-bold fs-6 text-dark">${gradeVal.toFixed(1)}</td>
+              <td class="text-center">${level}</td>
+            </tr>
+          `;
+        });
+      }
+
+      generalObs = historicalBulletin.observacion_director
+        || `Boletín oficial consolidado y cerrado para el Período ${selectedPeriod}. Promedio general registrado: ${historicalBulletin.promedio_general}.`;
+
+      if (tableBody) tableBody.innerHTML = rowsHtml;
+      if (obsEl) obsEl.textContent = `"${generalObs}"`;
+    }
+
+    // Justificación de faltas conectada a MySQL
+    async function handleJustificationSubmit() {
+      const fecha = document.getElementById('modalFechaFalta').value;
+      const materia = document.getElementById('modalMateriaFalta').value;
+      const motivo = document.getElementById('modalMotivoTipo').value;
+      const detalle = document.getElementById('modalDetalleFalta').value;
+
+      try {
+        const response = await fetch(`../../api/estudiante.php?action=justificar&student_id=${CURRENT_STUDENT_ID}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fecha: fecha,
+            motivo_tipo: motivo,
+            detalle: detalle
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Recargar datos desde la base de datos MySQL
+          await loadAlexJohnsonData();
+
+          const modalEl = document.getElementById('modalJustificarFalta');
+          const modalInstance = bootstrap.Modal.getInstance(modalEl);
+          if (modalInstance) modalInstance.hide();
+          document.getElementById('formJustificarFalta').reset();
+
+          showToast(`¡Justificación radicada en la Base de Datos! Radicado: ${result.radicado}`);
+        } else {
+          alert('Error al radicar la justificación: ' + (result.error || 'Error desconocido'));
+        }
+      } catch (err) {
+        console.error("Error al radicar justificación:", err);
+        showToast("Fallo de conexión al radicar. Intenta nuevamente.");
+      }
+    }
+
+    function triggerRefuerzoPrompt() {
+      const input = document.getElementById('quickRefuerzoInput');
+      const val = input ? input.value.trim() : '';
+      if (!val) {
+        askSophosBotDirect('Hola SophosBot, por favor genera una ruta de refuerzo personalizada para mis materias en este Período 3.');
+        return;
+      }
+      askSophosBotDirect(val);
+      if (input) input.value = '';
+    }
+
+    function showToast(message) {
+      const toastEl = document.getElementById('studentToast');
+      const msgEl = document.getElementById('studentToastMessage');
+      if (toastEl && msgEl) {
+        msgEl.textContent = message;
+        const toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+        toast.show();
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/[&<>"']/g, function (m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
+    }
+  </script>
+</body>
+
+</html>

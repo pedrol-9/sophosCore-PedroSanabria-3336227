@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Búho animado</title>
+  <desc id="desc">Búho geométrico multicolor que saluda con el ala, guiña un ojo y mueve la cabeza.</desc>
+  <defs>
+    <linearGradient id="body" x1=".15" y1=".08" x2=".85" y2=".95"><stop stop-color="#ff6c86"/><stop offset=".48" stop-color="#ff9b43"/><stop offset="1" stop-color="#ffc94e"/></linearGradient>
+    <linearGradient id="wing" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffb444"/><stop offset=".48" stop-color="#f45b91"/><stop offset="1" stop-color="#853fe0"/></linearGradient>
+    <linearGradient id="head" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff845b"/><stop offset=".55" stop-color="#ffb844"/><stop offset="1" stop-color="#ff6c87"/></linearGradient>
+    <linearGradient id="brow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffcf55"/><stop offset=".55" stop-color="#ff795c"/><stop offset="1" stop-color="#a33ce0"/></linearGradient>
+    <linearGradient id="belly" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#fff0ae"/><stop offset="1" stop-color="#ffb34d"/></linearGradient>
+  </defs>
+  <style>
+    .head { transform-box:fill-box; transform-origin:50% 80%; animation: head-tilt 5s ease-in-out infinite; }
+    .wave { transform-box:fill-box; transform-origin:82% 82%; animation: wave 2.8s ease-in-out infinite; }
+    .head { transform-box:fill-box; transform-origin:50% 80%; animation: head-tilt 5s ease-in-out infinite; }
+    .wave { transform-box:fill-box; transform-origin:82% 82%; animation: wave 2.8s ease-in-out infinite; }
+    .right-eye { animation: eye-hide 5s ease-in-out infinite; }
+    .wink-lid { opacity:0; animation: wink-lid 5s ease-in-out infinite; }
+    .wink-line { opacity:0; animation: wink-line 5s ease-in-out infinite; }
+    @keyframes eye-hide { 0%,38%,46%,100% { opacity:1 } 41%,44% { opacity:0 } }
+    @keyframes wink-lid { 0%,38%,46%,100% { opacity:0 } 41%,44% { opacity:1 } }
+    @keyframes wink-line { 0%,38%,46%,100% { opacity:0 } 41%,44% { opacity:1 } }
+    @keyframes head-tilt { 0%,18%,100% { transform:rotate(0deg) } 25%,38% { transform:rotate(-7deg) } 45%,58% { transform:rotate(5deg) } 65%,82% { transform:rotate(0deg) } }
+    @keyframes wave { 0%,12%,100% { transform:rotate(0) } 18%,28% { transform:rotate(-28deg) } 34%,44% { transform:rotate(8deg) } 50%,60% { transform:rotate(-25deg) } 66%,74% { transform:rotate(0) } }
+    @keyframes wink { 0%,38%,46%,100% { transform:scaleY(1) } 41%,44% { transform:scaleY(.08) } }
+    @keyframes eye-hide { 0%,38%,46%,100% { opacity:1 } 41%,44% { opacity:0 } }
+    @keyframes wink-line { 0%,38%,46%,100% { opacity:0 } 41%,44% { opacity:1 } }
+    @media (prefers-reduced-motion: reduce) { .head,.wave,.wink,.eye,.right-eye,.wink-lid,.wink-line { animation:none } }
+  </style>
+  <!-- Tail and body -->
+  <path d="M174 370 132 414l91-27z" fill="#8a42df"/>
+  <path d="M202 373 173 429l79-42z" fill="#f05d9b"/>
+  <path d="M256 167c-83 0-137 62-137 155 0 76 51 131 137 131s137-55 137-131c0-93-54-155-137-155z" fill="url(#body)"/>
+  <path d="M256 167c-83 0-137 62-137 155 0 76 51 131 137 131z" fill="#e945a6" opacity=".36"/>
+  <path d="M256 306c-51 0-89 34-92 91 24 36 55 56 92 56s68-20 92-56c-3-57-41-91-92-91z" fill="url(#belly)"/>
+  <path d="m256 311 37 39-37 24-35-26z" fill="#fff4c9" opacity=".65"/>
+  <!-- Feet -->
+  <path d="M214 436v20m0 0c-22-21-43-7-44 10 17-8 29-4 44 9 12-15 27-18 42-9-2-21-24-33-42-10zm84-20v20m0 0c-22-21-43-7-44 10 17-8 29-4 44 9 12-15 27-18 42-9-2-21-24-33-42-10z" fill="#ffbd4d" stroke="#ef7957" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Far wing -->
+  <g transform="translate(512 0) scale(-1 1)">
+    <g class="wave" stroke="#5838aa" stroke-width="8" stroke-linejoin="round">
+      <path d="M174 286c-42 24-66 64-89 110 39-7 75-1 114-29 24-18 40-43 42-70z" fill="url(#wing)"/>
+      <path d="M173 302c-31 25-52 53-70 84 30-15 57-20 89-37" fill="none" stroke="#ffbd50" stroke-width="10"/>
+      <path d="M190 330c-23 23-39 44-51 65 27-10 49-19 69-39" fill="none" stroke="#c54cdb" stroke-width="9"/>
+    </g>
+  </g>  <!-- Waving wing -->
+  <g class="wave" stroke="#5838aa" stroke-width="8" stroke-linejoin="round">
+    <path d="M174 286c-42 24-66 64-89 110 39-7 75-1 114-29 24-18 40-43 42-70z" fill="url(#wing)"/>
+    <path d="M173 302c-31 25-52 53-70 84 30-15 57-20 89-37" fill="none" stroke="#ffbd50" stroke-width="10"/>
+    <path d="M190 330c-23 23-39 44-51 65 27-10 49-19 69-39" fill="none" stroke="#c54cdb" stroke-width="9"/>
+  </g>
+  <!-- Head -->
+  <g class="head">
+    <path d="M128 178c-8-31-8-59-4-88 20 26 44 40 77 47 19-16 37-23 55-23s36 7 55 23c33-7 57-21 77-47 4 29 4 57-4 88-17 48-65 74-128 74s-111-26-128-74z" fill="url(#head)" stroke="#5135a9" stroke-width="8" stroke-linejoin="round"/>
+    <!-- ear tufts -->
+    <path d="M124 92c20 25 43 38 77 45-17 15-36 23-57 23-15-17-22-40-20-68zm264 0c-20 25-43 38-77 45 17 15 36 23 57 23 15-17 22-40 20-68z" fill="url(#brow)"/>
+    <!-- eye discs -->
+    <ellipse cx="195" cy="190" rx="59" ry="62" fill="#ffe7a0" stroke="#623aa8" stroke-width="8"/>
+    <ellipse cx="317" cy="190" rx="59" ry="62" fill="#ffe7a0" stroke="#623aa8" stroke-width="8"/>
+    <g class="eye">
+      <circle cx="195" cy="191" r="38" fill="#243c63"/><circle cx="195" cy="191" r="26" fill="#26c5d2"/><circle cx="195" cy="191" r="17" fill="#172b4d"/><circle cx="184" cy="178" r="8" fill="white"/><circle cx="205" cy="202" r="4" fill="#a8f7fa"/>
+    </g>
+    <g class="right-eye"><circle cx="317" cy="191" r="38" fill="#243c63"/><circle cx="317" cy="191" r="26" fill="#26c5d2"/><circle cx="317" cy="191" r="17" fill="#172b4d"/><circle cx="306" cy="178" r="8" fill="white"/><circle cx="327" cy="202" r="4" fill="#a8f7fa"/></g>
+    <path class="wink-lid" d="M279 191a38 38 0 0 1 76 0v1a38 38 0 0 1-76 0z" fill="#ff9f48"/>
+    <path class="wink-line" d="M282 191q35 23 70 0" fill="none" stroke="#713ca6" stroke-width="8" stroke-linecap="round"/>
+    <!-- beak -->
+    <path d="m233 250 23-25 23 25-23 38z" fill="#20c7ce" stroke="#4b3ba1" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m256 225 23 25-23 8z" fill="#10aebd"/>
+  </g>
+</svg>
+
+
+
+
+

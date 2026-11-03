@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophos Core - Tutor de Apoyo Académico Virtual</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/modules.css">
+</head>
+<body class="dashboard-body role-estudiante">
+
+    <header class="glass-header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <button id="sidebarToggle" class="sidebar-toggle-btn" title="Ocultar/Mostrar Menú">
+                    <i class="bi bi-layout-sidebar-inset"></i>
+                </button>
+                <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm" style="width: 34px; height: 34px;">
+                        <i class="bi bi-mortarboard-fill text-white fs-6"></i>
+                    </div>
+                    <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
+                </a>
+                <span class="badge badge-role badge-role-estudiante ms-2">Tutor Académico IA</span>
+            </div>
+            <div class="top-icons">
+                <div class="badge-date-pill d-flex align-items-center gap-2 me-3">
+                    <i class="bi bi-robot text-cyan"></i>
+                    <span>Tutor IA Activo 24/7</span>
+                </div>
+                <a href="../m1-autenticacion/login.html" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                    <i class="bi bi-box-arrow-right"></i> Salir
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-layout d-flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar py-3 d-flex flex-column justify-content-between">
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../m2-academico/boletin.html">
+                        <i class="bi bi-award"></i> <span class="nav-text">Mis Calificaciones</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="nuevo-tutor.html">
+                        <i class="bi bi-robot"></i> <span class="nav-text">Tutor IA Virtual</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../m2-academico/inicio.html">
+                        <i class="bi bi-person-badge"></i> <span class="nav-text">Vista Docente</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin.html">
+                        <i class="bi bi-shield-lock"></i> <span class="nav-text">Vista Admin</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-user-footer px-3 pt-3">
+                <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
+                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #0284c7, #06b6d4);">
+                        A
+                    </div>
+                    <div class="user-details overflow-hidden">
+                        <div class="fw-bold text-white small text-truncate" id="sidebarStudentName">Alex Johnson</div>
+                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">11° Grado A • Estudiante</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="panel-main">
+            <div class="container-fluid">
+                
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                    <div>
+                        <h2 class="fw-bold mb-1 text-dark">Tutor de Apoyo Académico Inteligente</h2>
+                        <p class="text-secondary small mb-0">Resuelve dudas, refuerza temas prioritarios y descubre recursos recomendados de YouTube</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="small text-secondary">Estudiante activo:</span>
+                        <select class="form-select form-select-sm bg-light border-0 fw-semibold" id="selActiveStudent" style="width: 200px;">
+                            <option value="EST-1101">Alex Johnson</option>
+                            <option value="EST-1103">Carlos Mendoza</option>
+                            <option value="EST-1001">Juan Diego Pérez</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Columna Izquierda: Diagnóstico & Temas Sugeridos -->
+                    <div class="col-lg-4">
+                        <!-- Card Diagnóstico Basado en Calificaciones -->
+                        <div class="card card-custom p-4 border-0 shadow-sm mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                                    <i class="bi bi-graph-up text-primary"></i> Diagnóstico de Rendimiento
+                                </h6>
+                                <span class="badge bg-primary bg-opacity-10 text-primary small">Periodo Actual</span>
+                            </div>
+
+                            <div class="p-3 rounded-3 bg-light mb-3" id="diagnosticBox">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="small fw-semibold text-dark">Matemáticas</span>
+                                    <span class="badge bg-success" id="studentAvgBadge">4.3 / 5.0</span>
+                                </div>
+                                <div class="text-muted small" style="font-size: 0.75rem;" id="studentObsSnippet">
+                                    "Demuestra gran capacidad analítica y trabajo colaborativo."
+                                </div>
+                            </div>
+
+                            <h6 class="small fw-bold text-secondary text-uppercase mb-2">Rutas de Refuerzo Sugeridas:</h6>
+                            <div class="d-flex flex-column gap-2" id="suggestedTopicsList">
+                                <button type="button" class="btn btn-sm btn-outline-primary text-start d-flex align-items-center justify-content-between" onclick="askQuickPrompt('¿Cómo resolver derivadas por regla de la cadena?')">
+                                    <span><i class="bi bi-lightbulb me-1"></i> Derivadas: Regla de la Cadena</span>
+                                    <i class="bi bi-arrow-right-short fs-5"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-primary text-start d-flex align-items-center justify-content-between" onclick="askQuickPrompt('Explícame funciones y límites con ejemplos sencillos')">
+                                    <span><i class="bi bi-lightbulb me-1"></i> Límites y Asíntotas</span>
+                                    <i class="bi bi-arrow-right-short fs-5"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-primary text-start d-flex align-items-center justify-content-between" onclick="askQuickPrompt('Dame ejercicios prácticos de trigonometría básica')">
+                                    <span><i class="bi bi-lightbulb me-1"></i> Identidades Trigonométricas</span>
+                                    <i class="bi bi-arrow-right-short fs-5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card de Canales Educativos Recomendados -->
+                        <div class="card card-custom p-4 border-0 shadow-sm">
+                            <h6 class="fw-bold text-dark mb-2 d-flex align-items-center gap-2">
+                                <i class="bi bi-youtube text-danger fs-5"></i> Canales Recomendados
+                            </h6>
+                            <p class="small text-secondary mb-3">Contenido curado para complementar tus clases:</p>
+                            <div class="d-flex flex-column gap-2 small">
+                                <div class="d-flex align-items-center gap-2 p-2 bg-light rounded-3">
+                                    <i class="bi bi-play-circle-fill text-danger fs-5"></i>
+                                    <div>
+                                        <div class="fw-semibold text-dark">Matemáticas con Profe Alex</div>
+                                        <span class="text-muted" style="font-size: 0.7rem;">Cálculo y Álgebra</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-2 p-2 bg-light rounded-3">
+                                    <i class="bi bi-play-circle-fill text-danger fs-5"></i>
+                                    <div>
+                                        <div class="fw-semibold text-dark">JulioProfe Oficial</div>
+                                        <span class="text-muted" style="font-size: 0.7rem;">Física y Trigonometría</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Chat Interactivo -->
+                    <div class="col-lg-8">
+                        <div class="card card-custom border-0 shadow-sm p-0 chat-container">
+                            <!-- Cabecera del Chat -->
+                            <div class="p-3 bg-dark text-white d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-indigo rounded-circle d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px;">
+                                        <i class="bi bi-robot fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold mb-0">SophosBot - Tutor de Apoyo</div>
+                                        <div class="text-white-50 small d-flex align-items-center gap-1" style="font-size: 0.75rem;">
+                                            <span class="pulse-dot-ai" style="background: #10b981; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span> En línea • Listo para ayudarte
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-light rounded-pill" onclick="resetChatHistory()">
+                                    <i class="bi bi-arrow-clockwise"></i> Reiniciar Chat
+                                </button>
+                            </div>
+
+                            <!-- Área de Mensajes -->
+                            <div class="chat-messages" id="chatMessagesArea">
+                                <!-- Mensaje de Bienvenida -->
+                                <div class="chat-bubble-ai">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <span class="badge bg-indigo small">Tutor IA</span>
+                                        <small class="text-muted">Ahora</small>
+                                    </div>
+                                    <p class="mb-2 text-dark small" id="welcomeChatMsg">
+                                        ¡Hola, Alex! 🎓 Soy tu Tutor Virtual de SophosCore. He revisado tus calificaciones de Matemáticas y vas muy bien (Promedio 4.3). ¿En qué tema quisieras profundizar hoy o qué dudas tienes sobre tus talleres?
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-1">
+                                        <button class="btn btn-xs btn-outline-secondary py-1 px-2 rounded-pill small" style="font-size: 0.75rem;" onclick="askQuickPrompt('¿Cómo entender los límites al infinito?')">
+                                            Límites al infinito
+                                        </button>
+                                        <button class="btn btn-xs btn-outline-secondary py-1 px-2 rounded-pill small" style="font-size: 0.75rem;" onclick="askQuickPrompt('Dame consejos para el examen del 19 de Octubre')">
+                                            Preparar examen de cierre
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pie del Chat / Envío -->
+                            <div class="p-3 bg-white border-top">
+                                <form id="chatForm" class="d-flex gap-2">
+                                    <input type="text" class="form-control rounded-pill px-3" id="chatInputText" placeholder="Pregúntale al tutor sobre matemáticas, ejercicios, explicaciones..." autocomplete="off">
+                                    <button type="submit" class="btn btn-indigo rounded-pill px-4 fw-semibold d-flex align-items-center gap-2">
+                                        <span>Enviar</span> <i class="bi bi-send-fill"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/sophos-client-db.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        let currentStudentId = "EST-1101";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStudentDiagnostic();
+
+            document.getElementById('selActiveStudent').addEventListener('change', (e) => {
+                currentStudentId = e.target.value;
+                const student = SophosDB.getStudentById(currentStudentId);
+                if (student) {
+                    document.getElementById('sidebarStudentName').textContent = student.name;
+                }
+                updateStudentDiagnostic();
+                resetChatHistory();
+            });
+
+            document.getElementById('chatForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const text = document.getElementById('chatInputText').value.trim();
+                if (!text) return;
+                sendMessage(text);
+                document.getElementById('chatInputText').value = '';
+            });
+        });
+
+        function updateStudentDiagnostic() {
+            const summary = SophosDB.getStudentSummaryForAI(currentStudentId);
+            if (!summary) return;
+
+            const math = summary.subjects.find(s => s.subjectName.includes('Matemáticas'));
+            if (math) {
+                const avg = math.average !== null ? math.average : 3.5;
+                const badge = document.getElementById('studentAvgBadge');
+                badge.textContent = `${avg} / 5.0`;
+                badge.className = `badge ${avg >= 4.0 ? 'bg-success' : (avg >= 3.0 ? 'bg-warning text-dark' : 'bg-danger')}`;
+
+                document.getElementById('studentObsSnippet').textContent = math.observation ? `"${math.observation}"` : 'Sin observación registrada aún.';
+            }
+        }
+
+        function askQuickPrompt(promptText) {
+            sendMessage(promptText);
+        }
+
+        function sendMessage(userText) {
+            const area = document.getElementById('chatMessagesArea');
+
+            // 1. Burbuja del usuario
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble-user';
+            userBubble.innerHTML = `
+                <div class="small fw-semibold mb-1 text-white-50">Tú</div>
+                <div class="small">${escapeHTML(userText)}</div>
+            `;
+            area.appendChild(userBubble);
+            area.scrollTop = area.scrollHeight;
+
+            // 2. Simular indicador de escritura y respuesta de IA
+            setTimeout(() => {
+                const responseData = generateAITutorResponse(userText);
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'chat-bubble-ai';
+                
+                let ytHTML = '';
+                if (responseData.video) {
+                    ytHTML = `
+                        <div class="yt-card">
+                            <div class="yt-card-thumb">
+                                <i class="bi bi-youtube yt-play-icon"></i>
+                                <span class="position-absolute bottom-0 end-0 bg-dark text-white px-2 py-1 small m-2 rounded" style="font-size: 0.68rem;">${responseData.video.duration}</span>
+                            </div>
+                            <div class="p-3">
+                                <div class="badge bg-danger mb-1"><i class="bi bi-youtube"></i> Recurso Educativo</div>
+                                <h6 class="fw-bold text-dark mb-1">${responseData.video.title}</h6>
+                                <p class="text-secondary small mb-2">${responseData.video.channel} • Explicación paso a paso</p>
+                                <a href="${responseData.video.url}" target="_blank" class="btn btn-sm btn-outline-danger w-100 fw-semibold">
+                                    <i class="bi bi-play-circle me-1"></i> Ver Video en YouTube
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                aiBubble.innerHTML = `
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge bg-indigo small">Tutor IA</span>
+                        <small class="text-muted">Justo ahora</small>
+                    </div>
+                    <div class="text-dark small mb-2" style="line-height: 1.5;">
+                        ${responseData.text}
+                    </div>
+                    ${ytHTML}
+                `;
+
+                area.appendChild(aiBubble);
+                area.scrollTop = area.scrollHeight;
+            }, 550);
+        }
+
+        function generateAITutorResponse(query) {
+            const lower = query.toLowerCase();
+
+            if (lower.includes('límite') || lower.includes('limite') || lower.includes('infinito')) {
+                return {
+                    text: `¡Excelente pregunta! Para resolver **límites al infinito**:<br>
+                    1. Identifica la potencia más alta de la variable en el denominador.<br>
+                    2. Divide cada término del numerador y denominador entre esa potencia.<br>
+                    3. Recuerda que cualquier constante dividida entre infinito tiende a <strong>cero</strong> (k / ∞ = 0).<br>
+                    Te he seleccionado este video tutorial perfecto para consolidarlo:`,
+                    video: {
+                        title: "Límites al infinito explicados desde cero",
+                        channel: "Matemáticas con Profe Alex",
+                        duration: "11:45 min",
+                        url: "https://www.youtube.com/results?search_query=limites+al+infinito+profe+alex"
+                    }
+                };
+            }
+
+            if (lower.includes('derivada') || lower.includes('cadena') || lower.includes('cálculo')) {
+                return {
+                    text: `La **regla de la cadena** se utiliza cuando tienes una función compuesta (una función dentro de otra):<br>
+                    <strong>[f(g(x))]' = f'(g(x)) · g'(x)</strong>.<br>
+                    En palabras sencillas: <em>"Derivas lo de afuera dejando intacto lo de adentro, y luego multiplicas por la derivada de lo de adentro"</em>.<br>
+                    Revisa este video donde resuelven 5 ejemplos paso a paso:`,
+                    video: {
+                        title: "Regla de la cadena para derivadas - Ejercicios resueltos",
+                        channel: "JulioProfe",
+                        duration: "14:20 min",
+                        url: "https://www.youtube.com/results?search_query=regla+de+la+cadena+julioprofe"
+                    }
+                };
+            }
+
+            if (lower.includes('trigonometría') || lower.includes('triángulo') || lower.includes('seno') || lower.includes('coseno')) {
+                return {
+                    text: `En trigonometría, las tres razones básicas para un triángulo rectángulo son:<br>
+                    • <strong>Seno (θ)</strong> = Cateto Opuesto / Hipotenusa<br>
+                    • <strong>Coseno (θ)</strong> = Cateto Adyacente / Hipotenusa<br>
+                    • <strong>Tangente (θ)</strong> = Cateto Opuesto / Cateto Adyacente<br>
+                    ¡Una regla nemotécnica muy útil es recordar la palabra <strong>SOH-CAH-TOA</strong>! Mira este video didáctico:`,
+                    video: {
+                        title: "Razones Trigonométricas SOH CAH TOA súper fácil",
+                        channel: "Daniel Carreón",
+                        duration: "7:12 min",
+                        url: "https://www.youtube.com/results?search_query=razones+trigonometricas+daniel+carreon"
+                    }
+                };
+            }
+
+            if (lower.includes('19 de octubre') || lower.includes('examen') || lower.includes('cierre') || lower.includes('consejo')) {
+                return {
+                    text: `Para el **cierre del Periodo 3 programado para el 19 de Octubre**, te sugiero:<br>
+                    1. Repasar los 4 talleres que trabajaron con la Profe Mariana.<br>
+                    2. Crear un formulario resumen con las propiedades clave de funciones y derivadas.<br>
+                    3. Practicar 3 ejercicios por tu cuenta sin mirar las soluciones.<br>
+                    ¡Tienes un excelente potencial para cerrar el periodo con calificación sobresaliente!`,
+                    video: {
+                        title: "Técnica Feynman para preparar exámenes difíciles",
+                        channel: "Aprendizaje Activo",
+                        duration: "8:50 min",
+                        url: "https://www.youtube.com/results?search_query=metodo+estudio+feynman+matematicas"
+                    }
+                };
+            }
+
+            // Respuesta general
+            return {
+                text: `Comprendo tu inquietud sobre este tema. Para abordarlo de la mejor manera, te recomiendo dividir el problema en pasos lógicos, verificar las fórmulas aplicables y realizar un par de ejercicios guiados. Te comparto este video introductorio con ejercicios prácticos:`,
+                video: {
+                    title: "Matemáticas y Razonamiento Lógico",
+                    channel: "Educación SophosCore",
+                    duration: "10:30 min",
+                    url: "https://www.youtube.com/results?search_query=matematicas+bachillerato+tutorial"
+                }
+            };
+        }
+
+        function resetChatHistory() {
+            const area = document.getElementById('chatMessagesArea');
+            const student = SophosDB.getStudentById(currentStudentId);
+            const name = student ? student.name.split(' ')[0] : 'Estudiante';
+            area.innerHTML = `
+                <div class="chat-bubble-ai">
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge bg-indigo small">Tutor IA</span>
+                        <small class="text-muted">Ahora</small>
+                    </div>
+                    <p class="mb-2 text-dark small">
+                        ¡Hola, ${name}! 🎓 Soy tu Tutor Virtual de SophosCore. ¿En qué tema quisieras profundizar hoy o qué dudas tienes sobre tus talleres?
+                    </p>
+                </div>
+            `;
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        }
+    </script>
+</body>
+</html>

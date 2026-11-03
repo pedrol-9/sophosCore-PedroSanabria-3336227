@@ -1,0 +1,153 @@
+/* ==========================================================================
+   SOPHOSCORE - HOJA DE ESTILOS DE IMPRESIÓN OFICIAL (print.css)
+   Aísla y formatea exclusivamente los documentos oficiales (Boletines)
+   omitiendo toda la interfaz web (navbars, sidebars, botones y filtros).
+   ========================================================================== */
+
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 1cm;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    font-size: 11pt !important;
+  }
+
+  /* 1. Ocultar componentes de la interfaz de usuario */
+  header,
+  .glass-header,
+  aside,
+  .sidebar,
+  #sidebar,
+  .no-print,
+  .academic-subtabs-header,
+  #academicSubtabsHeader,
+  .academic-header-switcher,
+  .academic-switcher-title,
+  #academicNotasActionButtons,
+  #registro-academico > .no-print,
+  #registro-academico > *:not(#academicViewBoletines),
+  #academicViewBoletines > *:not(#docenteBoletinContent),
+  #academicViewNotas,
+  #academicViewAsistencia,
+  #docenteBoletinPendingCard,
+  #bulletinPendingCard,
+  #docenteAiTooltip,
+  .modal,
+  .toast-container,
+  .sophos-fab-container,
+  .sophos-chat-overlay,
+  .btn,
+  .spa-section:not(#registro-academico):not(#boletines) {
+    display: none !important;
+  }
+
+  /* 2. Desbloquear el flujo vertical de contenedores principales */
+  .dashboard-layout {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .panel-main {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: transparent !important;
+  }
+
+  #registro-academico,
+  #academicViewBoletines,
+  #boletines {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 3. Formato y acabado del documento del boletín */
+  #docenteBoletinContent,
+  #bulletinCardContent,
+  .card-report {
+    display: block !important;
+    margin: 0 auto !important;
+    padding: 20px !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* 4. Tablas de calificaciones oficiales */
+  .card-report .table,
+  #docenteBoletinContent .table,
+  #bulletinCardContent .table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .card-report .table th,
+  .card-report .table td,
+  #docenteBoletinContent .table th,
+  #docenteBoletinContent .table td,
+  #bulletinCardContent .table th,
+  #bulletinCardContent .table td {
+    border: 1px solid #dee2e6 !important;
+    padding: 6px 10px !important;
+    background-color: transparent !important;
+    color: #111827 !important;
+    font-size: 9.5pt !important;
+  }
+
+  /* 5. Badges de desempeño y estados en impresión */
+  .badge-contrast-success {
+    background-color: #15803d !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .badge-contrast-info {
+    background-color: #0369a1 !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .badge-contrast-warning {
+    background-color: #b45309 !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .badge-contrast-danger {
+    background-color: #b91c1c !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .badge-contrast-purple {
+    background-color: #6d28d9 !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

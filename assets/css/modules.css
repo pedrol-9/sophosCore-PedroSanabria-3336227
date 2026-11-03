@@ -1,0 +1,672 @@
+/* ==========================================================================
+   SOPHOSCORE - ESTILOS PARA MÓDULOS (modules.css)
+   ========================================================================== */
+
+/* --- Tooltip interactivo con IA (Módulo 3) --- */
+.ai-tooltip-popover {
+    position: fixed;
+    z-index: 10050;
+    width: 330px;
+    max-width: calc(100vw - 32px);
+    background: #ffffff;
+    border: 1px solid #e0e7ff;
+    border-radius: 12px;
+    box-shadow: 0 12px 28px -5px rgba(79, 70, 229, 0.25), 0 8px 12px -6px rgba(79, 70, 229, 0.15);
+    padding: 14px 16px;
+    font-size: 0.85rem;
+    animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-tooltip-popover::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border: 1px solid #e0e7ff;
+    transform: rotate(45deg);
+}
+
+.ai-tooltip-popover.arrow-bottom::before,
+.ai-tooltip-popover:not(.arrow-top)::before {
+    bottom: -6px;
+    border-top: none;
+    border-left: none;
+    left: var(--arrow-x, 85%);
+}
+
+.ai-tooltip-popover.arrow-top::before {
+    top: -6px;
+    border-bottom: none;
+    border-right: none;
+    left: var(--arrow-x, 85%);
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: translateY(6px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ai-sparkle-btn {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.ai-sparkle-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    color: #fff;
+}
+
+/* Botón Insignia IA (Badge Pill Premium) */
+.ai-insignia-btn {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    padding: 3px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+    line-height: 1.2;
+}
+
+.ai-insignia-btn:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    color: #ffffff;
+}
+
+.ai-insignia-btn:active {
+    transform: translateY(0);
+}
+
+.ai-insignia-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.ai-tooltip-popover-wide {
+    width: 480px;
+    max-width: calc(100vw - 32px);
+}
+
+.ai-action-btn-accept {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.15s ease;
+}
+
+.ai-action-btn-accept:hover {
+    background-color: #059669;
+    color: white;
+}
+
+.ai-action-btn-reject {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: background 0.15s ease;
+}
+
+.ai-action-btn-reject:hover {
+    background-color: #dc2626;
+    color: white;
+}
+
+/* --- Tabla de Calificaciones (Módulo 2) --- */
+.table-gradebook th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.table-gradebook td {
+    vertical-align: middle;
+    padding: 8px 10px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.grade-input {
+    width: 64px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    padding: 4px 6px;
+    transition: all 0.2s ease;
+}
+
+.grade-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    outline: none;
+}
+
+.grade-input.grade-high {
+    color: #059669;
+    background-color: #ecfdf5;
+}
+
+.grade-input.grade-mid {
+    color: #d97706;
+    background-color: #fffbeb;
+}
+
+.grade-input.grade-low {
+    color: #dc2626;
+    background-color: #fef2f2;
+}
+
+.average-badge {
+    min-width: 44px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-block;
+    text-align: center;
+}
+
+.average-badge.avg-high {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.average-badge.avg-mid {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.average-badge.avg-low {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.observation-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.observation-input {
+    font-size: 0.83rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    padding: 5px 8px;
+    flex-grow: 1;
+    min-width: 220px;
+}
+
+/* --- Chat de Tutor Virtual (Módulo 4) --- */
+.chat-container {
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #f8fafc;
+}
+
+.chat-bubble-ai {
+    align-self: flex-start;
+    max-width: 82%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px 12px 12px 2px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.chat-bubble-user {
+    align-self: flex-end;
+    max-width: 82%;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: #ffffff;
+    border-radius: 12px 12px 2px 12px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.yt-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.yt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.yt-card-thumb {
+    height: 110px;
+    background: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #ff0000;
+}
+
+.yt-play-icon {
+    font-size: 2.5rem;
+    transition: transform 0.2s;
+}
+
+.yt-card:hover .yt-play-icon {
+    transform: scale(1.15);
+}
+
+/* ==========================================================================
+   SELECTOR DE PERÍODOS POR BOTONES (Módulo 2 - Registro de Notas)
+   ========================================================================== */
+.period-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.period-pill-btn {
+    flex: 1;
+    min-width: 105px;
+    padding: 7px 10px;
+    border-radius: 9px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: #475569;
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    user-select: none;
+}
+
+.period-pill-btn:hover:not(:disabled) {
+    background: #ffffff;
+    color: #1e293b;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Período seleccionado activo (Editable) */
+.period-pill-btn.selected-active {
+    background: #4f46e5 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3) !important;
+    border-color: #4338ca !important;
+}
+
+.period-pill-btn.selected-active .period-pill-badge {
+    background: #10b981 !important;
+    color: #ffffff !important;
+}
+
+/* Período seleccionado cerrado (Solo visualización) */
+.period-pill-btn.selected-closed {
+    background: #334155 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(51, 65, 85, 0.25) !important;
+    border-color: #1e293b !important;
+}
+
+.period-pill-btn.selected-closed .period-pill-badge {
+    background: #f59e0b !important;
+    color: #ffffff !important;
+}
+
+/* Período cerrado no seleccionado */
+.period-pill-btn.period-closed:not(.selected-closed):not(.selected-active) {
+    color: #64748b;
+}
+
+/* Período inaccesible / futuro */
+.period-pill-btn:disabled,
+.period-pill-btn.period-locked {
+    opacity: 0.45;
+    cursor: not-allowed !important;
+    background: transparent !important;
+    color: #94a3b8 !important;
+    border: 1px dashed #cbd5e1 !important;
+    box-shadow: none !important;
+}
+
+.period-pill-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    color: #475569;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    transition: all 0.2s ease;
+}
+
+.period-pill-badge.badge-active-live {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.period-pill-badge.badge-closed {
+    background: #e2e8f0;
+    color: #64748b;
+}
+
+.period-pill-badge.badge-locked {
+    background: #f1f5f9;
+    color: #94a3b8;
+}
+
+/* Estilos de modo solo visualización en la tabla */
+.grade-table-readonly .grade-input {
+    background-color: #f8fafc !important;
+    color: #475569 !important;
+    cursor: not-allowed;
+    border-color: #e2e8f0 !important;
+}
+
+.grade-table-readonly .observation-input {
+    background-color: #f8fafc !important;
+    color: #475569 !important;
+    cursor: not-allowed;
+}
+
+.grade-table-readonly .ai-sparkle-btn {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   TÍTULOS INTERACTIVOS DE REGISTRO ACADÉMICO (NOTAS | ASISTENCIA)
+   ========================================================================== */
+.academic-header-switcher {
+    cursor: default;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.85rem;
+}
+
+.academic-switcher-title {
+    display: inline-block;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+    line-height: 1.15;
+    margin: 0;
+}
+
+.academic-switcher-title.active-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #0f172a; /* Slate 900 */
+    cursor: default;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.academic-switcher-title.inactive-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #94a3b8; /* Slate 400 (color intermedio suave) */
+    cursor: pointer;
+    opacity: 0.75;
+    transform: scale(0.95);
+    transform-origin: left bottom;
+}
+
+.academic-switcher-title.inactive-title:hover {
+    color: #6366f1; /* Indigo */
+    opacity: 1;
+    transform: scale(0.98);
+}
+
+/* Submenú de Registro Académico en el Sidebar */
+.academic-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-left: 1.75rem;
+    margin-right: 14px;
+    padding-top: 3px;
+    padding-bottom: 6px;
+    transition: all 0.2s ease;
+}
+
+.academic-submenu .submenu-item {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    transition: all 0.18s ease;
+}
+
+.academic-submenu .submenu-item:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.09);
+    padding-left: 16px;
+}
+
+.academic-submenu .submenu-item.active {
+    color: #ffffff;
+    background: rgba(99, 102, 241, 0.28);
+    border-left: 3px solid #818cf8;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* ====================================================
+   COMPORTAMIENTO DEL SUBMENÚ CON SIDEBAR COLAPSADO / OCULTO
+   ==================================================== */
+/* 1. Si no está en Registro Académico, ocultar siempre el submenú */
+.sidebar:not(:has(#navRegistroAcademico.active)) .academic-submenu {
+    display: none !important;
+}
+
+/* 2. Alineación de Registro Académico cuando el sidebar está colapsado */
+body.dashboard-body .sidebar.collapsed #navRegistroAcademico {
+    justify-content: center !important;
+    padding: 12px 0 !important;
+}
+
+/* 3. Estilo de los dos ítems de submenú (Notas y Asistencia) en modo colapsado */
+body.dashboard-body .sidebar.collapsed .academic-submenu {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 2px !important;
+    padding-bottom: 4px !important;
+    margin: 0 !important;
+    gap: 4px !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+
+body.dashboard-body .sidebar.collapsed .academic-submenu .submenu-text {
+    display: none !important;
+    opacity: 0;
+}
+
+body.dashboard-body .sidebar.collapsed .academic-submenu .submenu-item {
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 10px 0 !important;
+    margin: 4px 10px !important;
+    border-radius: 14px !important;
+    border-left: none !important;
+    width: calc(100% - 20px) !important;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+}
+
+body.dashboard-body .sidebar.collapsed .academic-submenu .submenu-item i {
+    font-size: 1.25rem !important;
+    margin: 0 !important;
+    text-align: center !important;
+    width: 24px;
+}
+
+body.dashboard-body .sidebar.collapsed .academic-submenu .submenu-item:hover {
+    padding-left: 0 !important;
+    background: rgba(255, 255, 255, 0.09) !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: scale(1.05);
+}
+
+body.dashboard-body .sidebar.collapsed .academic-submenu .submenu-item.active {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.45), rgba(124, 58, 237, 0.3)) !important;
+    color: #ffffff !important;
+    border-color: rgba(129, 140, 248, 0.45) !important;
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35) !important;
+}
+
+/* =========================================================
+   BADGES DE ALTO CONTRASTE (Legibilidad Garantizada y Boletines)
+   ========================================================= */
+.badge-contrast-success {
+  background-color: #15803d !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(21, 128, 61, 0.3);
+}
+
+.badge-contrast-info {
+  background-color: #0369a1 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(3, 105, 161, 0.3);
+}
+
+.badge-contrast-warning {
+  background-color: #b45309 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(180, 83, 9, 0.3);
+}
+
+.badge-contrast-danger {
+  background-color: #b91c1c !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(185, 28, 28, 0.3);
+}
+
+.badge-contrast-purple {
+  background-color: #6d28d9 !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(109, 40, 217, 0.3);
+}
+
+.badge-contrast-dark {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+  font-weight: 700;
+  padding: 5px 11px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+

@@ -1,0 +1,213 @@
+/* ==========================================================================
+   LANDING PAGE STYLES (Sophos Core Premium)
+   ========================================================================== */
+
+html, body.landing-page {
+    background-color: #0f172a;
+    color: #f8fafc;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: hidden; /* Se adapta exactamente a la pantalla sin scroll vertical */
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.premium-font {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Header de la landing con z-index prioritario */
+.landing-page .glass-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1055 !important;
+    background: rgba(15, 23, 42, 0.75) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.landing-page main {
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-section {
+    position: relative;
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 72px; /* Espacio para el header fijo */
+    box-sizing: border-box;
+    background: radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.18), transparent 30%),
+                radial-gradient(circle at 85% 30%, rgba(147, 51, 234, 0.16), transparent 30%);
+}
+
+.blob-1 {
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 380px;
+    height: 380px;
+    background: linear-gradient(135deg, #4f46e5, #9333ea);
+    filter: blur(100px);
+    opacity: 0.45;
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+    animation: float 8s ease-in-out infinite alternate;
+}
+
+.blob-2 {
+    position: absolute;
+    bottom: -100px;
+    left: -80px;
+    width: 420px;
+    height: 420px;
+    background: linear-gradient(135deg, #3b82f6, #4f46e5);
+    filter: blur(120px);
+    opacity: 0.35;
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+    animation: float 10s ease-in-out infinite alternate-reverse;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+}
+
+.hero-title {
+    font-size: clamp(2rem, 3.2vw, 3.2rem);
+    line-height: 1.15;
+}
+
+.hero-lead {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    line-height: 1.5;
+    color: #94a3b8;
+}
+
+.btn-glow {
+    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+    color: white !important;
+    border: none;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-glow::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+    border-radius: inherit;
+    filter: blur(12px);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover {
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+.btn-glow:hover::before {
+    opacity: 0.8;
+}
+
+.dashboard-frame {
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    background: rgba(15, 23, 42, 0.85);
+    padding: 8px;
+    backdrop-filter: blur(10px);
+    transform: perspective(1000px) rotateY(-5deg) rotateX(4deg);
+    transition: transform 0.5s ease;
+    max-height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-frame:hover {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.02);
+}
+
+.dashboard-frame img {
+    border-radius: 12px;
+    width: 100%;
+    max-height: 62vh;
+    object-fit: contain;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Backdrop Blur Premium cuando se abre el modal */
+.modal-backdrop.show {
+    backdrop-filter: blur(14px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
+    background-color: rgba(7, 11, 22, 0.75) !important;
+    opacity: 1 !important;
+}
+
+#loginModal {
+    z-index: 1060 !important;
+}
+
+#loginModal .modal-content {
+    background: rgba(18, 24, 40, 0.88) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 35px rgba(79, 70, 229, 0.2) !important;
+    border-radius: 20px !important;
+    color: #f8fafc;
+}
+
+#loginModal .input-group-text {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+#loginModal .form-control {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    font-size: 0.86rem;
+    transition: all 0.2s ease;
+}
+
+#loginModal .form-control:focus {
+    border-color: #6366f1 !important;
+    background: rgba(15, 23, 42, 0.9) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+}
+
+#loginModal .text-secondary {
+    color: #94a3b8 !important;
+}
+
+#loginModal .btn-outline-light {
+    transition: all 0.2s ease;
+}
+
+#loginModal .btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    transform: translateY(-1px);
+}

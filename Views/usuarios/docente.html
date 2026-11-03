@@ -1,0 +1,2710 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sophos Core - Panel Docente</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../../assets/css/modules.css">
+  <!-- Estilos para impresión oficial de boletines -->
+  <link rel="stylesheet" href="../../assets/css/print.css" media="print">
+</head>
+
+<body class="dashboard-body role-docente">
+
+  <header class="glass-header">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <button id="sidebarToggle" class="sidebar-toggle-btn" data-bs-toggle="tooltip" data-bs-placement="right"
+          title="Ocultar/Mostrar Menú">
+          <i class="bi bi-layout-sidebar-inset"></i>
+        </button>
+        <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+          <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm"
+            style="width: 34px; height: 34px;">
+            <i class="bi bi-mortarboard-fill text-white fs-6"></i>
+          </div>
+          <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
+        </a>
+        <span class="badge badge-role badge-role-docente ms-2">Docente</span>
+      </div>
+      <div class="top-icons">
+        <button class="icon-btn" data-bs-toggle="tooltip" title="Mensajes">
+          <i class="bi bi-envelope fs-5"></i>
+          <span class="badge-dot"></span>
+        </button>
+        <button class="icon-btn" data-bs-toggle="tooltip" title="Notificaciones">
+          <i class="bi bi-bell fs-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-layout d-flex">
+    <!-- Sidebar Unificado -->
+    <aside id="sidebar" class="sidebar py-3 d-flex flex-column justify-content-between">
+      <ul class="nav flex-column mb-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" data-target="panel-general" data-bs-toggle="tooltip"
+            data-bs-placement="right" title="Panel General">
+            <i class="bi bi-grid-1x2"></i> <span class="nav-text">Panel General</span>
+          </a>
+        </li>
+        <li class="nav-item" id="navItemRegistroAcademico">
+          <a class="nav-link" href="#" id="navRegistroAcademico" data-target="registro-academico"
+            data-bs-toggle="tooltip" data-bs-placement="right" title="Registro Académico">
+            <i class="bi bi-mortarboard"></i> <span class="nav-text">Registro Académico</span>
+          </a>
+          <div class="academic-submenu" id="academicSubmenu" style="display: none;">
+            <a class="submenu-item active" href="#" id="submenuItemNotas" data-bs-toggle="tooltip"
+              data-bs-placement="right" title="Notas" onclick="switchAcademicTab('notas', event)">
+              <i class="bi bi-journal-text me-2"></i> <span class="submenu-text">Notas</span>
+            </a>
+            <a class="submenu-item" href="#" id="submenuItemAsistencia" data-bs-toggle="tooltip"
+              data-bs-placement="right" title="Inasistencias" onclick="switchAcademicTab('asistencia', event)">
+              <i class="bi bi-calendar-x me-2"></i> <span class="submenu-text">Inasistencias</span>
+            </a>
+            <a class="submenu-item" href="#" id="submenuItemBoletines" data-bs-toggle="tooltip"
+              data-bs-placement="right" title="Boletines" onclick="switchAcademicTab('boletines', event)">
+              <i class="bi bi-file-earmark-bar-graph me-2"></i> <span class="submenu-text">Boletines</span>
+            </a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-target="evidencias" data-bs-toggle="tooltip" data-bs-placement="right"
+            title="Evidencias LMS">
+            <i class="bi bi-folder-check"></i> <span class="nav-text">Evidencias LMS</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-target="observador" data-bs-toggle="tooltip" data-bs-placement="right"
+            title="Observador">
+            <i class="bi bi-eye"></i> <span class="nav-text">Observador</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Sección de Usuario y Cerrar Sesión al final del panel lateral -->
+      <div class="sidebar-user-footer px-3 pt-3">
+        <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
+          <div
+            class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
+            style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #059669, #10b981);">
+            M
+          </div>
+          <div class="user-details overflow-hidden">
+            <div class="fw-bold text-white small text-truncate">Profe Mariana</div>
+            <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">Docente</div>
+          </div>
+        </div>
+        <a href="../../index.html" class="btn btn-link btn-logout text-decoration-none p-2 w-100"
+          data-bs-toggle="tooltip" data-bs-placement="right" title="Cerrar Sesión">
+          <i class="bi bi-box-arrow-right fs-5"></i>
+          <span class="nav-text small fw-medium">Cerrar Sesión</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content con Esquina Curva de Continuidad -->
+    <main class="panel-main">
+      <div class="container-fluid">
+
+        <!-- Sección: Panel General -->
+        <div id="panel-general" class="spa-section active">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Mis Clases</h2>
+          </div>
+
+          <!-- Filtros -->
+          <div class="card card-custom p-3 mb-4">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label text-secondary small fw-medium">Materia</label>
+                <select class="form-select bg-light border-0">
+                  <option>Matemáticas</option>
+                  <option>Física</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label text-secondary small fw-medium">Grado</label>
+                <select class="form-select bg-light border-0">
+                  <option>11°A</option>
+                  <option>10°B</option>
+                </select>
+              </div>
+              <div class="col-md-4 d-flex align-items-end">
+                <button class="btn btn-indigo w-100"><i class="bi bi-filter"></i> Aplicar Filtros</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Listado de Estudiantes -->
+          <div class="card card-custom">
+            <div class="card-header bg-white border-bottom p-3">
+              <h5 class="mb-0 fw-bold">Listado de Estudiantes (11°A)</h5>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="ps-4">Estudiante</th>
+                      <th>Estado</th>
+                      <th>Última Evidencia</th>
+                      <th class="text-end pe-4">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="ps-4">
+                        <div class="d-flex align-items-center gap-3">
+                          <img src="https://ui-avatars.com/api/?name=Alex+J&background=random" class="avatar-sm" alt="">
+                          <span class="fw-medium text-dark">Alex Johnson</span>
+                        </div>
+                      </td>
+                      <td><span class="badge bg-success bg-opacity-10 text-success">Activo</span></td>
+                      <td><span class="text-secondary small">Hace 2 días</span></td>
+                      <td class="text-end pe-4">
+                        <button class="btn btn-sm btn-outline-secondary">Ver Perfil</button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="ps-4">
+                        <div class="d-flex align-items-center gap-3">
+                          <img src="https://ui-avatars.com/api/?name=Maria+G&background=random" class="avatar-sm"
+                            alt="">
+                          <span class="fw-medium text-dark">Maria Gonzalez</span>
+                        </div>
+                      </td>
+                      <td><span class="badge bg-success bg-opacity-10 text-success">Activo</span></td>
+                      <td><span class="text-secondary small">Hace 5 horas</span></td>
+                      <td class="text-end pe-4">
+                        <button class="btn btn-sm btn-outline-secondary">Ver Perfil</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección: Registro Académico (Notas & Asistencia) -->
+        <div id="registro-academico" class="spa-section">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3 no-print">
+            <!-- Títulos Interactivos con Efecto de Escala, Color Intermedio y Hover -->
+            <div class="d-flex align-items-baseline gap-3 academic-header-switcher">
+              <h2 id="tabTitleNotas" class="academic-switcher-title active-title" onclick="switchAcademicTab('notas')"
+                title="Ver Notas">
+                Notas
+              </h2>
+              <span class="text-secondary opacity-50 fs-3 fw-light user-select-none">|</span>
+              <h2 id="tabTitleAsistencia" class="academic-switcher-title inactive-title"
+                onclick="switchAcademicTab('asistencia')" title="Ver Inasistencias">
+                Inasistencias
+              </h2>
+              <span class="text-secondary opacity-50 fs-3 fw-light user-select-none">|</span>
+              <h2 id="tabTitleBoletines" class="academic-switcher-title inactive-title"
+                onclick="switchAcademicTab('boletines')" title="Ver Emisión de Boletines">
+                Boletines
+              </h2>
+            </div>
+            <div class="d-flex gap-2" id="academicNotasActionButtons">
+              <button type="button" class="btn btn-outline-primary" id="docenteBtnAddColumn">
+                <i class="bi bi-plus-circle me-1"></i> Agregar Nueva Nota
+              </button>
+              <button type="button" class="btn btn-indigo shadow-sm" id="docenteBtnSave">
+                <i class="bi bi-check2-circle me-1"></i> Guardar Cambios
+              </button>
+            </div>
+            <div class="d-flex gap-2 d-none" id="academicInasistenciaActionButtons">
+              <button type="button" class="btn btn-indigo shadow-sm" onclick="openDocenteModalAddInasistencia()">
+                <i class="bi bi-plus-circle me-1"></i> Registrar Inasistencia
+              </button>
+            </div>
+          </div>
+
+          <!-- Sub-vista 1: Registro de Notas -->
+          <div id="academicViewNotas">
+
+            <!-- Barra de Filtros -->
+            <div class="card card-custom p-3 mb-3 border-0 shadow-sm">
+              <div class="row g-3 align-items-center">
+                <div class="col-md-3">
+                  <label class="form-label text-secondary small fw-medium mb-1">Curso / Grupo</label>
+                  <select class="form-select bg-light border-0 fw-semibold" id="docenteSelectCourse">
+                    <option value="" selected disabled>Seleccionar Curso / Grupo...</option>
+                    <option value="11A">11° Grado A (5 Estudiantes)</option>
+                    <option value="10A">10° Grado A (5 Estudiantes)</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label text-secondary small fw-medium mb-1">Materia</label>
+                  <select class="form-select bg-light border-0 fw-semibold" id="docenteSelectSubject">
+                    <option value="" selected disabled>Seleccionar Materia...</option>
+                    <option value="MAT">Matemáticas</option>
+                    <option value="FIS">Física</option>
+                    <option value="QUI">Química</option>
+                    <option value="CAS">Lengua Castellana</option>
+                    <option value="LEC">Lectura Crítica</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label class="form-label text-secondary small fw-medium mb-0">Período Académico</label>
+                    <span id="docentePeriodStatusIndicator" class="small fw-semibold text-success">
+                      <i class="bi bi-circle-fill me-1" style="font-size: 0.55rem;"></i> Período 3 Activo
+                    </span>
+                  </div>
+                  <div class="period-buttons-container" id="docentePeriodButtonsGroup">
+                    <!-- Generado dinámicamente: Período activo preseleccionado, pasados solo ver, futuros inaccesibles -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Toast de Guardado -->
+            <div id="docenteSaveToast"
+              class="alert alert-success d-none py-2 px-3 mb-3 shadow-sm align-items-center justify-content-between">
+              <div><i class="bi bi-check-circle-fill me-2"></i> <strong>¡Calificaciones guardadas exitosamente!</strong>
+                Sincronizadas con la base de datos institucional.</div>
+              <button type="button" class="btn-close"
+                onclick="document.getElementById('docenteSaveToast').classList.add('d-none')"></button>
+            </div>
+
+            <!-- Tabla de Notas -->
+            <div class="card card-custom border-0 shadow-sm overflow-hidden mb-4">
+              <div
+                class="card-header bg-white border-bottom p-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-table text-indigo fs-5"></i>
+                  <h5 class="mb-0 fw-bold text-dark" id="docenteTableHeaderTitle">Libreta de Calificaciones</h5>
+                  <span id="docentePeriodModeBadge"
+                    class="badge bg-secondary-subtle text-secondary border ms-1">Selecciona filtros</span>
+                </div>
+              </div>
+
+              <!-- Estado Vacío Inicial cuando no hay filtros seleccionados -->
+              <div id="docenteEmptyState" class="text-center py-5 px-3">
+                <div
+                  class="mx-auto mb-3 text-indigo bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                  style="width: 70px; height: 70px; font-size: 1.8rem;">
+                  <i class="bi bi-funnel"></i>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Selecciona un Curso y una Materia</h5>
+                <p class="text-secondary small mb-0 mx-auto" style="max-width: 480px;">
+                  Para comenzar el registro o visualización de calificaciones, selecciona el <strong>Curso /
+                    Grupo</strong> y la <strong>Materia</strong> en los filtros superiores.
+                </p>
+              </div>
+
+              <!-- Contenedor con la Tabla (se muestra cuando hay filtros seleccionados) -->
+              <div class="card-body p-0 d-none" id="docenteTableWrapper">
+                <div class="table-responsive">
+                  <table class="table table-gradebook align-middle mb-0" id="docenteGradeTable">
+                    <thead>
+                      <tr id="docenteGradeHeadRow"></tr>
+                    </thead>
+                    <tbody id="docenteGradeBody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="card-footer bg-light p-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <span class="small text-secondary" id="docenteFooterHelpText">
+                  Usa el botón <span class="badge bg-indigo"><i class="bi bi-stars"></i> IA</span> al lado de cada
+                  observación para sugerir una redacción pedagógica y profesional.
+                </span>
+                <a href="../m2-academico/boletin.html" class="btn btn-sm btn-outline-dark" id="docenteBtnPreviewReport">
+                  <i class="bi bi-file-earmark-pdf me-1"></i> Previsualizar Boletines
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tooltip Popover Flotante para IA -->
+          <div id="docenteAiTooltip" class="ai-tooltip-popover d-none shadow-lg">
+            <div class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
+              <div class="fw-bold text-indigo d-flex align-items-center gap-1">
+                <i class="bi bi-stars"></i> <span id="docenteAiTooltipTitle">Sugerencia IA Pedagógica</span>
+              </div>
+              <button type="button" class="btn-close" style="font-size: 0.65rem;"
+                onclick="closeDocenteAITooltip()"></button>
+            </div>
+            <div class="text-secondary mb-2 overflow-y-auto" id="docenteAiTooltipText"
+              style="line-height: 1.5; max-height: 250px; font-size: 0.85rem; white-space: pre-wrap;">
+              Cargando sugerencia...
+            </div>
+            <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+              <span class="small text-muted" id="docenteAiTooltipQuestion" style="font-size: 0.75rem;">¿Aplicar
+                cambio?</span>
+              <div class="d-flex gap-2">
+                <button type="button" class="ai-action-btn-accept" id="btnAcceptDocenteAISuggestion"
+                  title="Aceptar sugerencia">
+                  <i class="bi bi-check-lg"></i> Aceptar
+                </button>
+                <button type="button" class="ai-action-btn-reject" onclick="closeDocenteAITooltip()" title="Rechazar">
+                  <i class="bi bi-x-lg"></i> Rechazar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal para Agregar Columna de Calificación -->
+          <div class="modal fade" id="modalDocenteAddColumn" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom">
+                  <h5 class="modal-title fw-bold"><i class="bi bi-plus-square text-indigo me-2"></i>Agregar Nueva
+                    Calificación</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3">
+                    <label class="form-label small fw-medium">Nombre de la Nueva Actividad / Columna</label>
+                    <input type="text" class="form-control" id="docenteNewColTitleInput"
+                      placeholder="Ej: Taller 5, Quiz Oral...">
+                  </div>
+                  <p class="text-secondary small mb-0">Esta columna se agregará a todos los estudiantes del curso para
+                    el periodo seleccionado.</p>
+                </div>
+                <div class="modal-footer border-top">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-indigo" id="docenteBtnConfirmAddColumn">Agregar Columna</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- Fin de #academicViewNotas -->
+
+        <!-- Sub-vista 2: Gestión de Inasistencias Oficiales -->
+        <div id="academicViewAsistencia" class="d-none">
+          <!-- Métricas Resumen de Inasistencias -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-xl-3">
+              <div class="card card-custom p-3 border-0 shadow-sm h-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <span class="text-secondary small fw-bold text-uppercase">Total Inasistencias</span>
+                    <h3 class="fw-bold text-dark mt-1 mb-0" id="statDocenteTotalInasistencias">0</h3>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark bg-opacity-10 text-dark" style="width: 44px; height: 44px;">
+                    <i class="bi bi-calendar-x fs-5"></i>
+                  </div>
+                </div>
+                <div class="text-muted small mt-2">Registradas en el sistema</div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="card card-custom p-3 border-0 shadow-sm h-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <span class="text-secondary small fw-bold text-uppercase">Injustificadas</span>
+                    <h3 class="fw-bold text-danger mt-1 mb-0" id="statDocenteInjustificadas">0</h3>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-danger bg-opacity-10 text-danger" style="width: 44px; height: 44px;">
+                    <i class="bi bi-exclamation-octagon fs-5"></i>
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <span class="badge-contrast-danger small">Sin justificar</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="card card-custom p-3 border-0 shadow-sm h-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <span class="text-secondary small fw-bold text-uppercase">Justificadas</span>
+                    <h3 class="fw-bold text-info mt-1 mb-0" id="statDocenteJustificadas">0</h3>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-info bg-opacity-10 text-info" style="width: 44px; height: 44px;">
+                    <i class="bi bi-shield-check fs-5"></i>
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <span class="badge-contrast-info small">Con soporte / excusa</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-xl-3">
+              <div class="card card-custom p-3 border-0 shadow-sm h-100">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div>
+                    <span class="text-secondary small fw-bold text-uppercase">Estudiantes</span>
+                    <h3 class="fw-bold text-indigo mt-1 mb-0" id="statDocenteEstudiantesAfectados">0</h3>
+                  </div>
+                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-indigo bg-opacity-10 text-indigo" style="width: 44px; height: 44px;">
+                    <i class="bi bi-people fs-5"></i>
+                  </div>
+                </div>
+                <div class="text-muted small mt-2">Con reportes de novedad</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Barra de Filtros y Búsqueda -->
+          <div class="card card-custom p-3 mb-4 border-0 shadow-sm">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-3">
+                <label class="form-label small text-secondary fw-bold mb-1">Curso / Grupo</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="filterInasistenciaCourse" onchange="loadDocenteInasistencias()">
+                  <option value="all">Todos los Cursos</option>
+                  <option value="11A" selected>11° Grado A</option>
+                  <option value="10A">10° Grado A</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label small text-secondary fw-bold mb-1">Asignatura</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="filterInasistenciaSubject" onchange="loadDocenteInasistencias()">
+                  <option value="all" selected>Todas las Asignaturas</option>
+                  <option value="MAT">Matemáticas</option>
+                  <option value="FIS">Física</option>
+                  <option value="QUI">Química</option>
+                  <option value="CAS">Lengua Castellana</option>
+                  <option value="LEC">Lectura Crítica</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label small text-secondary fw-bold mb-1">Tipo de Inasistencia</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="filterInasistenciaStatus" onchange="loadDocenteInasistencias()">
+                  <option value="all" selected>Todos los Estados</option>
+                  <option value="INJUSTIFICADA">Falta Injustificada</option>
+                  <option value="JUSTIFICADA">Falta Justificada</option>
+                </select>
+              </div>
+              <div class="col-md-3 d-flex align-items-end">
+                <button type="button" class="btn btn-indigo w-100 shadow-sm" onclick="openDocenteModalAddInasistencia()">
+                  <i class="bi bi-plus-circle me-1"></i> Nueva Inasistencia
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla de Inasistencias -->
+          <div class="card card-custom border-0 shadow-sm overflow-hidden mb-4">
+            <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-card-checklist text-indigo fs-5"></i>
+                <h5 class="fw-bold mb-0 text-dark">Listado Oficial de Inasistencias</h5>
+              </div>
+              <span class="text-muted small" id="inasistenciasCounterBadge">Cargando registros...</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-secondary small">
+                  <tr>
+                    <th class="ps-4" style="width: 120px;">Fecha</th>
+                    <th>Estudiante</th>
+                    <th>Curso</th>
+                    <th>Asignatura</th>
+                    <th class="text-center" style="width: 150px;">Tipo de Inasistencia</th>
+                    <th>Observación</th>
+                    <th class="text-center pe-4" style="width: 90px;">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="docenteInasistenciasTableBody">
+                  <!-- Se llena dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal: Registrar Inasistencia (Docente) -->
+        <div class="modal fade" id="modalDocenteAddInasistencia" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+              <div class="modal-header border-bottom">
+                <h5 class="modal-title fw-bold"><i class="bi bi-calendar-plus text-indigo me-2"></i>Registrar Inasistencia</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <form id="formDocenteAddInasistencia" onsubmit="submitDocenteInasistencia(event)">
+                <div class="modal-body p-4">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label small fw-bold text-secondary">Curso / Grupo</label>
+                      <select class="form-select bg-light border-0 fw-semibold" id="newInasistenciaCourse" onchange="updateInasistenciaStudentsDropdown()">
+                        <option value="11A" selected>11° Grado A</option>
+                        <option value="10A">10° Grado A</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label small fw-bold text-secondary">Fecha</label>
+                      <input type="date" class="form-control bg-light border-0 fw-semibold" id="newInasistenciaDate" required>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label small fw-bold text-secondary">Estudiante</label>
+                      <select class="form-select bg-light border-0 fw-semibold" id="newInasistenciaStudent" required>
+                        <!-- Llenado dinámicamente -->
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label small fw-bold text-secondary">Asignatura</label>
+                      <select class="form-select bg-light border-0 fw-semibold" id="newInasistenciaSubject" required>
+                        <option value="MAT" selected>Matemáticas</option>
+                        <option value="FIS">Física</option>
+                        <option value="QUI">Química</option>
+                        <option value="CAS">Lengua Castellana</option>
+                        <option value="LEC">Lectura Crítica</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label small fw-bold text-secondary">Tipo de Inasistencia</label>
+                      <select class="form-select bg-light border-0 fw-semibold" id="newInasistenciaType" required>
+                        <option value="FALTA_INJUSTIFICADA" selected>Injustificada</option>
+                        <option value="FALTA_JUSTIFICADA">Justificada</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label small fw-bold text-secondary">Observación</label>
+                      <textarea class="form-control bg-light border-0" id="newInasistenciaObs" rows="3"
+                        placeholder="Detalla la observación de la inasistencia (ej. Cita médica, sin excusa, calamidad doméstica...)" required></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer border-top bg-light rounded-bottom-4">
+                  <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn btn-indigo rounded-pill px-4 shadow-sm" id="btnSaveInasistencia">
+                    <i class="bi bi-check-circle me-1"></i> Guardar Inasistencia
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-vista 3: Emisión de Boletines Oficiales -->
+        <div id="academicViewBoletines" class="d-none">
+          <!-- Barra de Filtros del Boletín -->
+          <div class="card card-custom p-3 mb-4 border-0 shadow-sm no-print">
+            <div class="row g-3 align-items-center">
+              <div class="col-md-3">
+                <label class="form-label small text-secondary fw-medium mb-1">Curso / Grupo</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="docenteBoletinCourse">
+                  <option value="11A" selected>11° Grado A (5 Estudiantes)</option>
+                  <option value="10A">10° Grado A (5 Estudiantes)</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label small text-secondary fw-medium mb-1">Estudiante</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="docenteBoletinStudent">
+                  <!-- Llenado dinámico -->
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label small text-secondary fw-medium mb-1">Período Académico</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="docenteBoletinPeriod">
+                  <option value="1">Período 1 (Oficial Cerrado)</option>
+                  <option value="2" selected>Período 2 (Oficial Cerrado)</option>
+                  <option value="3">Período 3 (En curso)</option>
+                </select>
+              </div>
+              <div class="col-md-2 d-flex align-items-end">
+                <button type="button" class="btn btn-indigo w-100 shadow-sm" id="docenteBtnPrintBoletin"
+                  onclick="printDocenteBoletin()">
+                  <i class="bi bi-printer me-1"></i> Imprimir
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formato Oficial del Boletín -->
+          <div class="card card-custom p-4 p-md-5 border-0 shadow mx-auto card-report"
+            style="max-width: 860px; background: white;" id="docenteBoletinContent">
+            <!-- Cabecera Institucional -->
+            <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
+              <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center justify-content-center bg-indigo rounded-3 text-white"
+                  style="width: 52px; height: 52px;">
+                  <i class="bi bi-mortarboard-fill fs-3"></i>
+                </div>
+                <div>
+                  <h4 class="fw-bold mb-0 text-dark">COLEGIO SOPHOS CORE</h4>
+                  <div class="text-secondary small">Resolución Oficial No. 2026-A • Educación Media Vocacional</div>
+                  <div class="text-muted" style="font-size: 0.72rem;">Código DANE: 168001004523 • NIT: 900.842.120-1
+                  </div>
+                </div>
+              </div>
+              <div class="text-end">
+                <span class="badge-contrast-purple px-3 py-2 fs-6" id="docenteBoletinPeriodBadge">Período 2 - 2026</span>
+                <div class="text-muted small mt-1">Expedición: <span id="docenteBoletinDate"></span></div>
+              </div>
+            </div>
+
+            <!-- Datos del Estudiante -->
+            <div class="bg-light p-3 rounded-3 mb-4 border">
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <span class="text-muted small">Estudiante:</span>
+                  <div class="fw-bold text-dark fs-5" id="docenteBoletinStudentName">Alex Johnson</div>
+                </div>
+                <div class="col-md-3">
+                  <span class="text-muted small">Código / ID:</span>
+                  <div class="fw-bold text-dark" id="docenteBoletinStudentID">EST-1101</div>
+                </div>
+                <div class="col-md-3">
+                  <span class="text-muted small">Grado / Grupo:</span>
+                  <div class="fw-bold text-dark" id="docenteBoletinStudentGrade">11° Grado A</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabla de Asignaturas y Calificaciones -->
+            <h6 class="fw-bold text-dark text-uppercase mb-2">Desglose de Calificaciones por Asignatura</h6>
+            <div class="table-responsive mb-4">
+              <table class="table table-bordered align-middle mb-0">
+                <thead class="table-light text-center small text-secondary">
+                  <tr>
+                    <th class="text-start">Asignatura</th>
+                    <th>Calificaciones del Período</th>
+                    <th style="width: 110px;">Definitiva</th>
+                    <th style="width: 140px;">Desempeño</th>
+                  </tr>
+                </thead>
+                <tbody id="docenteBoletinTableBody">
+                  <!-- Llenado dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Observaciones del Docente y Recomendaciones de la IA -->
+            <div class="border rounded-3 p-3 bg-light mb-4">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <i class="bi bi-chat-quote-fill text-indigo fs-5"></i>
+                <h6 class="fw-bold text-dark mb-0">Observaciones y Recomendaciones Pedagógicas</h6>
+                <span class="badge-contrast-purple small ms-auto no-print">Validado por Docente & IA</span>
+              </div>
+              <p class="mb-0 text-dark" id="docenteBoletinObservationText" style="line-height: 1.6; font-style: italic;">
+                "El estudiante demuestra un proceso continuo de aprendizaje..."
+              </p>
+            </div>
+
+            <!-- Firmas Institucionales -->
+            <div class="row pt-4 mt-4 border-top text-center">
+              <div class="col-6">
+                <div class="border-top border-dark mx-auto w-75 pt-2">
+                  <div class="fw-bold small" id="docenteBoletinSignDocente">Profe Mariana</div>
+                  <div class="text-muted" style="font-size: 0.75rem;">Docente Titular / Coordinadora</div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="border-top border-dark mx-auto w-75 pt-2">
+                  <div class="fw-bold small">Rectoría Institucional</div>
+                  <div class="text-muted" style="font-size: 0.75rem;">Colegio SophosCore</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aviso de Período en Curso para Docente -->
+          <div class="card card-custom p-5 border-0 shadow-sm mx-auto text-center d-none" style="max-width: 880px;"
+            id="docenteBoletinPendingCard">
+            <div class="mb-3">
+              <span
+                class="rounded-circle d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning"
+                style="width: 72px; height: 72px;">
+                <i class="bi bi-hourglass-split fs-1"></i>
+              </span>
+            </div>
+            <h4 class="fw-bold text-dark mb-2">Boletín Oficial No Generado</h4>
+            <p class="text-secondary mx-auto mb-4" style="max-width: 560px;">
+              El boletín oficial del <strong id="docentePendingPeriodName">Tercer Período (2026)</strong> aún no puede
+              emitirse ni imprimirse debido a que el período académico se encuentra actualmente en curso.
+            </p>
+            <div class="alert alert-light border text-start mx-auto mb-4 p-3 rounded-3" style="max-width: 580px;">
+              <div class="d-flex align-items-start gap-2 mb-2">
+                <i class="bi bi-calendar-event text-primary mt-1"></i>
+                <div>
+                  <span class="fw-bold text-dark small">Fecha de Cierre Oficial:</span>
+                  <div class="text-secondary small">19 de Octubre de 2026</div>
+                </div>
+              </div>
+              <div class="d-flex align-items-start gap-2">
+                <i class="bi bi-magic text-indigo mt-1"></i>
+                <div>
+                  <span class="fw-bold text-dark small">Generación Automática:</span>
+                  <div class="text-secondary small">Una vez la coordinación académica realice el cierre formal del
+                    período en el sistema, los boletines oficiales de todos los estudiantes se generarán y consolidarán
+                    automáticamente.</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button type="button" class="btn btn-outline-primary rounded-pill px-4"
+                onclick="document.getElementById('docenteBoletinPeriod').value='2'; renderDocenteBoletin();">
+                <i class="bi bi-arrow-left me-1"></i> Consultar Boletín Período 2 (Cerrado)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div><!-- Fin de #registro-academico -->
+
+      <!-- Sección: Evidencias (En Construcción) -->
+      <div id="evidencias" class="spa-section">
+        <div class="under-construction-card shadow-sm mx-auto" style="max-width: 600px; margin-top: 50px;">
+          <i class="bi bi-folder-check under-construction-icon"></i>
+          <h3 class="fw-bold text-dark">Evidencias LMS</h3>
+          <p class="text-secondary mt-3">
+            La recepción, calificación masiva y rúbricas de evaluación de evidencias digitales estarán disponibles
+            próximamente.
+          </p>
+          <button class="btn btn-outline-secondary mt-3" disabled>En Construcción</button>
+        </div>
+      </div>
+
+      <!-- Sección: Observador Estudiantil -->
+      <div id="observador" class="spa-section">
+        <!-- Encabezado de la Sección -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+          <div>
+            <h2 class="fw-bold mb-1 text-dark">Observador Estudiantil</h2>
+          </div>
+        </div>
+
+        <!-- Selector de Subsección (Tabs tipo botón) -->
+        <div class="card card-custom p-2 mb-3 border-0 shadow-sm bg-white">
+          <div class="d-flex gap-2">
+            <button type="button" class="btn btn-indigo flex-grow-1 py-2 fw-semibold" id="btnSubTabObservacion">
+              <i class="bi bi-journal-text me-2"></i> 1. Registro de Observación
+            </button>
+            <button type="button" class="btn btn-outline-secondary flex-grow-1 py-2 fw-semibold" id="btnSubTabReporte">
+              <i class="bi bi-file-earmark-bar-graph me-2"></i> 2. Generar Reporte Oficial
+            </button>
+          </div>
+        </div>
+
+        <!-- Toast de Notificación Observador -->
+        <div id="obsAlertToast"
+          class="alert alert-success d-none py-2 px-3 mb-3 shadow-sm align-items-center justify-content-between">
+          <div id="obsAlertToastMessage"><i class="bi bi-check-circle-fill me-2"></i> <strong>¡Registro guardado con
+              éxito!</strong></div>
+          <button type="button" class="btn-close"
+            onclick="document.getElementById('obsAlertToast').classList.add('d-none')"></button>
+        </div>
+
+        <!-- SUBSECCIÓN 1: REGISTRO DE OBSERVACIÓN -->
+        <div id="subseccionObservacionContainer">
+          <div class="row g-3">
+            <!-- Columna Izquierda: Formulario de Registro -->
+            <div class="col-lg-7">
+              <div class="card card-custom p-4 border-0 shadow-sm h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-pencil-square text-indigo"></i> Nueva Observación Convivencial
+                  </h5>
+                  <button type="button" class="btn btn-sm btn-outline-secondary"
+                    onclick="loadObservationExampleDraft()">
+                    <i class="bi bi-lightbulb me-1"></i> Cargar borrador de ejemplo
+                  </button>
+                </div>
+
+                <form id="formNuevaObservacion">
+                  <!-- Filtros de Estudiante -->
+                  <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                      <label class="form-label text-secondary small fw-medium mb-1">Curso / Grupo</label>
+                      <select class="form-select bg-light border-0 fw-semibold" id="obsSelectCourse">
+                        <option value="11A" selected>11° Grado A (5 Estudiantes)</option>
+                        <option value="10A">10° Grado A (5 Estudiantes)</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label text-secondary small fw-medium mb-1">Estudiante</label>
+                      <select class="form-select bg-light border-0 fw-semibold" id="obsSelectStudent">
+                        <!-- Poblado dinámicamente -->
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Categoría y Fecha -->
+                  <div class="row g-2 mb-3">
+                    <div class="col-md-7">
+                      <label class="form-label text-secondary small fw-medium mb-1">Tipo de Acontecimiento</label>
+                      <select class="form-select bg-light border-0 fw-semibold" id="obsSelectCategory">
+                        <option value="Falta Leve / Dispersión">Falta Leve / Dispersión o distracción</option>
+                        <option value="Compromiso Convivencial">Compromiso Convivencial / Desacato</option>
+                        <option value="Citación a Acudiente">Citación formal a Acudiente</option>
+                        <option value="Felicitación Formativa">Reconocimiento / Conducta formativa destacada</option>
+                      </select>
+                    </div>
+                    <div class="col-md-5">
+                      <label class="form-label text-secondary small fw-medium mb-1">Fecha del Hecho</label>
+                      <input type="date" class="form-control bg-light border-0 fw-semibold" id="obsInputDate">
+                    </div>
+                  </div>
+
+                  <!-- Hechos (Borrador) con botón IA -->
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <label class="form-label text-secondary small fw-medium mb-0">Descripción de los Hechos (Borrador
+                        docente)</label>
+                      <button type="button" class="ai-insignia-btn" id="btnMejorarObsIA"
+                        title="Mejorar redacción con Gemini AI">
+                        <span id="obsIASpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                          style="width: 0.72rem; height: 0.72rem;"></span>
+                        <i class="bi bi-stars" id="obsIAIcon"></i> <span>IA</span>
+                      </button>
+                    </div>
+                    <textarea class="form-control" id="obsTextareaDraft" rows="4"
+                      placeholder="Puedes escribir aquí la observación de manera informal, luego pulsa el botón 'IA' para convertirlo en redacción pedagógica y asertiva"></textarea>
+                  </div>
+
+                  <!-- Acuerdos y Compromisos -->
+                  <div class="mb-4">
+                    <label class="form-label text-secondary small fw-medium mb-1">Acuerdos y Compromisos
+                      Pedagógicos</label>
+                    <input type="text" class="form-control" id="obsInputAgreements"
+                      placeholder="Ej: El estudiante se compromete a ingresar puntualmente y guardar el celular durante la sesión.">
+                  </div>
+
+                  <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary" onclick="resetObservationForm()">
+                      Limpiar
+                    </button>
+                    <button type="submit" class="btn btn-indigo px-4 shadow-sm" id="btnGuardarObservacion">
+                      <i class="bi bi-check2-circle me-1"></i> Guardar en Observador
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Historial de Observaciones del Estudiante -->
+            <div class="col-lg-5">
+              <div class="card card-custom p-4 border-0 shadow-sm h-100 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h6 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-clock-history text-indigo"></i> Historial en Observador
+                  </h6>
+                  <span class="badge bg-light text-secondary border" id="obsHistorialStudentBadge">-</span>
+                </div>
+                <div class="overflow-y-auto flex-grow-1" style="max-height: 480px;" id="obsHistorialListContainer">
+                  <!-- Poblado dinámicamente -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBSECCIÓN 2: GENERAR REPORTE -->
+        <div id="subseccionReporteContainer" class="d-none">
+          <div class="card card-custom p-4 border-0 shadow-sm mb-4">
+            <h5 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+              <i class="bi bi-file-earmark-text text-indigo"></i> Generación de Reportes Oficiales
+            </h5>
+
+            <!-- Tipo de Reporte (Disciplinario vs Académico) -->
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <label class="form-label text-secondary small fw-medium mb-1">Tipo de Reporte Institucional</label>
+                <div class="btn-group w-100" role="group">
+                  <input type="radio" class="btn-check" name="repTypeRadio" id="repTypeDisciplinario"
+                    value="disciplinario" checked autocomplete="off">
+                  <label class="btn btn-outline-danger py-2 fw-semibold" for="repTypeDisciplinario">
+                    <i class="bi bi-shield-exclamation me-1"></i> Reporte Disciplinario
+                  </label>
+
+                  <input type="radio" class="btn-check" name="repTypeRadio" id="repTypeAcademico" value="academico"
+                    autocomplete="off">
+                  <label class="btn btn-outline-primary py-2 fw-semibold" for="repTypeAcademico">
+                    <i class="bi bi-mortarboard me-1"></i> Reporte Académico
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label text-secondary small fw-medium mb-1">Curso / Grupo</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="repSelectCourse">
+                  <option value="11A" selected>11° Grado A (5 Estudiantes)</option>
+                  <option value="10A">10° Grado A (5 Estudiantes)</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label text-secondary small fw-medium mb-1">Estudiante</label>
+                <select class="form-select bg-light border-0 fw-semibold" id="repSelectStudent">
+                  <!-- Poblado dinámicamente -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Antecedentes y Contexto Automático del Estudiante -->
+            <div class="p-3 bg-light rounded-3 mb-3 border">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="small fw-bold text-dark" id="repContextTitle"><i
+                    class="bi bi-info-circle me-1 text-indigo"></i> Antecedentes registrados en el sistema:</span>
+                <span class="small text-muted" id="repStudentMetaInfo">Periodo 3 - 2026</span>
+              </div>
+              <p class="small text-secondary mb-0" id="repContextDetails">
+                Cargando antecedentes del estudiante...
+              </p>
+            </div>
+
+            <!-- Redacción y Dictamen del Reporte con botón insignia IA -->
+            <div class="mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <label class="form-label text-secondary small fw-medium mb-0">Contenido y Dictamen del Reporte
+                  Oficial</label>
+                <button type="button" class="ai-insignia-btn" id="btnMejorarRepIA"
+                  title="Generar dictamen con Gemini AI">
+                  <span id="repIASpinner" class="spinner-border spinner-border-sm d-none" role="status"
+                    style="width: 0.72rem; height: 0.72rem;"></span>
+                  <i class="bi bi-stars" id="repIAIcon"></i> <span>IA</span>
+                </button>
+              </div>
+              <textarea class="form-control" id="repTextareaDraft" rows="6"
+                placeholder="Escribe los aspectos o notas clave del reporte. Pulsa el botón insignia IA para estructurar el dictamen oficial con diagnóstico, valoración y plan pedagógico..."></textarea>
+            </div>
+
+            <!-- Acciones -->
+            <div class="d-flex justify-content-end align-items-center gap-2">
+              <button type="button" class="btn btn-outline-dark" id="btnPreviewReportModal">
+                <i class="bi bi-printer me-1"></i> Previsualizar / Imprimir Reporte
+              </button>
+              <button type="button" class="btn btn-indigo px-4 shadow-sm" id="btnGuardarReporte">
+                <i class="bi bi-check2-circle me-1"></i> Radicar Reporte Oficial
+              </button>
+            </div>
+          </div>
+
+          <!-- Historial de Reportes Oficiales Radicados -->
+          <div class="card card-custom p-4 border-0 shadow-sm">
+            <h6 class="fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+              <i class="bi bi-archive text-indigo"></i> Reportes Radicados del Estudiante
+            </h6>
+            <div id="repHistorialListContainer">
+              <!-- Poblado dinámicamente -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  </main>
+  </div>
+
+  <!-- Modal Previsualización de Reporte Oficial (Imprimible) -->
+  <div class="modal fade" id="modalPreviewDocenteReport" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="modal-header border-bottom bg-light">
+          <h5 class="modal-title fw-bold text-dark d-flex align-items-center gap-2">
+            <i class="bi bi-file-earmark-check text-indigo"></i> Previsualización de Reporte Institucional
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4 bg-white" id="modalReportPrintArea">
+          <div class="border p-4 rounded-3 shadow-sm">
+            <!-- Membrete -->
+            <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <div class="bg-indigo text-white p-2 rounded-circle d-flex align-items-center justify-content-center"
+                  style="width: 42px; height: 42px;">
+                  <i class="bi bi-mortarboard-fill fs-5"></i>
+                </div>
+                <div>
+                  <h5 class="fw-bold mb-0 text-dark">Colegio Sophos Core</h5>
+                  <small class="text-secondary">Sistema Institucional de Gestión Académica y Convivencial</small>
+                </div>
+              </div>
+              <div class="text-end">
+                <span class="badge bg-indigo px-3 py-2 fs-6" id="modalRepBadgeType">Reporte Disciplinario</span>
+                <div class="text-muted small mt-1" id="modalRepDate">Fecha: 13 de Octubre de 2026</div>
+              </div>
+            </div>
+
+            <!-- Datos del estudiante -->
+            <div class="row g-2 mb-3 bg-light p-3 rounded-2">
+              <div class="col-md-5">
+                <small class="text-muted d-block">Estudiante:</small>
+                <strong class="text-dark fs-6" id="modalRepStudentName">-</strong>
+              </div>
+              <div class="col-md-3">
+                <small class="text-muted d-block">Identificación / Código:</small>
+                <strong class="text-dark" id="modalRepStudentID">-</strong>
+              </div>
+              <div class="col-md-4">
+                <small class="text-muted d-block">Curso / Grado:</small>
+                <strong class="text-dark" id="modalRepStudentCourse">-</strong>
+              </div>
+            </div>
+
+            <!-- Contenido -->
+            <div class="mb-4">
+              <h6 class="fw-bold text-dark border-bottom pb-1 text-uppercase small">Dictamen y Disposiciones Pedagógicas
+              </h6>
+              <p class="text-dark p-2 bg-light rounded" id="modalRepBodyContent"
+                style="white-space: pre-wrap; line-height: 1.7; font-size: 0.92rem;">
+                Sin contenido.
+              </p>
+            </div>
+
+            <!-- Firmas -->
+            <div class="row pt-4 mt-4 border-top text-center">
+              <div class="col-4">
+                <div class="border-top border-dark mx-auto w-75 pt-1">
+                  <div class="fw-bold small">Profe Mariana</div>
+                  <div class="text-muted" style="font-size: 0.72rem;">Docente Titular</div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="border-top border-dark mx-auto w-75 pt-1">
+                  <div class="fw-bold small">Rectoría / Convivencia</div>
+                  <div class="text-muted" style="font-size: 0.72rem;">Colegio Sophos Core</div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="border-top border-dark mx-auto w-75 pt-1">
+                  <div class="fw-bold small">Firma Acudiente</div>
+                  <div class="text-muted" style="font-size: 0.72rem;">C.C. ________________</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top bg-light d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-indigo" onclick="window.print()">
+            <i class="bi bi-printer me-1"></i> Imprimir Reporte
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Base de Datos Conectada a MySQL -->
+  <script src="../../assets/js/sophos-client-db.js"></script>
+  <!-- Vanilla JS -->
+  <script src="../../assets/js/main.js"></script>
+  <!-- Componentes reutilizables -->
+  <script src="../../Components/footer.js"></script>
+
+  <!-- Script Libreta de Calificaciones y Asistente IA Docente -->
+  <script>
+    let docenteCurrentCourse = "";
+    let docenteCurrentSubject = "";
+    let docenteCurrentPeriod = 3;
+    let docenteActiveGradebook = null;
+    let docenteActiveAIStudent = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Sincronizar período actual activo de la base de datos
+      if (typeof SophosDB !== 'undefined') {
+        const activePeriod = SophosDB.getCurrentPeriod();
+        if (activePeriod) {
+          docenteCurrentPeriod = activePeriod.id;
+        }
+      }
+
+      // Renderizar selector de períodos por botones
+      renderDocentePeriodButtons();
+
+      // Cargar estado inicial (cuadro vacío a la espera de filtros)
+      loadDocenteGradebook();
+
+      // Eventos de filtros (Curso y Materia)
+      const courseSel = document.getElementById('docenteSelectCourse');
+      if (courseSel) {
+        courseSel.addEventListener('change', (e) => {
+          docenteCurrentCourse = e.target.value;
+          loadDocenteGradebook();
+        });
+      }
+
+      const subjectSel = document.getElementById('docenteSelectSubject');
+      if (subjectSel) {
+        subjectSel.addEventListener('change', (e) => {
+          docenteCurrentSubject = e.target.value;
+          loadDocenteGradebook();
+        });
+      }
+
+      // Botón Guardar Notas
+      const btnSave = document.getElementById('docenteBtnSave');
+      if (btnSave) {
+        btnSave.addEventListener('click', saveDocenteGradebook);
+      }
+
+      // Modal Agregar Columna
+      const btnAddCol = document.getElementById('docenteBtnAddColumn');
+      const modalAddColElem = document.getElementById('modalDocenteAddColumn');
+      if (btnAddCol && modalAddColElem) {
+        const modalAddCol = new bootstrap.Modal(modalAddColElem);
+        btnAddCol.addEventListener('click', () => {
+          if (!docenteCurrentCourse || !docenteCurrentSubject) return;
+          const periodObj = SophosDB.getPeriods().find(p => p.id === docenteCurrentPeriod);
+          if (periodObj && periodObj.status !== 'active') return;
+
+          const nextNum = (docenteActiveGradebook && docenteActiveGradebook.columnTitles) ? docenteActiveGradebook.columnTitles.length + 1 : 1;
+          const inputTitle = document.getElementById('docenteNewColTitleInput');
+          if (inputTitle) inputTitle.value = `Nota ${nextNum}`;
+          modalAddCol.show();
+        });
+
+        const btnConfirmAdd = document.getElementById('docenteBtnConfirmAddColumn');
+        if (btnConfirmAdd) {
+          btnConfirmAdd.addEventListener('click', () => {
+            const inputTitle = document.getElementById('docenteNewColTitleInput');
+            const title = (inputTitle && inputTitle.value.trim()) ? inputTitle.value.trim() : `Nota ${(docenteActiveGradebook?.columnTitles?.length || 0) + 1}`;
+            addDocenteGradeColumn(title);
+            modalAddCol.hide();
+          });
+        }
+      }
+
+      // Inicializar Módulo de Observador Estudiantil con Gemini
+      initObservadorEstudiantil();
+
+      // Sincronización del submenú de Registro Académico con todos los ítems del Sidebar
+      document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          const targetId = link.getAttribute('data-target');
+          const submenu = document.getElementById('academicSubmenu');
+
+          if (targetId === 'registro-academico') {
+            e.preventDefault();
+            if (submenu) submenu.style.display = 'flex';
+            const itemAsis = document.getElementById('submenuItemAsistencia');
+            const itemBol = document.getElementById('submenuItemBoletines');
+            let subTab = 'notas';
+            if (itemAsis && itemAsis.classList.contains('active')) subTab = 'asistencia';
+            else if (itemBol && itemBol.classList.contains('active')) subTab = 'boletines';
+            switchAcademicTab(subTab);
+          } else {
+            // SI ESTÁ EN CUALQUIER OTRO APARTADO QUE NO SEA REGISTRO ACADÉMICO:
+            // Ocultar inmediatamente las dos opciones (Notas y Asistencia)
+            if (submenu) submenu.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // ==========================================
+    // GESTIÓN DE REGISTRO ACADÉMICO (NOTAS | ASISTENCIA)
+    // ==========================================
+    function switchAcademicTab(tabName, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      // 1. Mostrar la sección principal #registro-academico en el SPA
+      document.querySelectorAll('.spa-section').forEach(s => s.classList.remove('active'));
+      const mainSec = document.getElementById('registro-academico');
+      if (mainSec) mainSec.classList.add('active');
+
+      // 2. Marcar el link del menú lateral como activo y mostrar sus dos opciones
+      document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+      const navAcad = document.getElementById('navRegistroAcademico');
+      if (navAcad) navAcad.classList.add('active');
+
+      const submenu = document.getElementById('academicSubmenu');
+      if (submenu) submenu.style.display = 'flex';
+
+      // 3. Manejo de submenú lateral y vistas
+      const itemNotas = document.getElementById('submenuItemNotas');
+      const itemAsis = document.getElementById('submenuItemAsistencia');
+      const itemBol = document.getElementById('submenuItemBoletines');
+      const viewNotas = document.getElementById('academicViewNotas');
+      const viewAsis = document.getElementById('academicViewAsistencia');
+      const viewBol = document.getElementById('academicViewBoletines');
+      const titleNotas = document.getElementById('tabTitleNotas');
+      const titleAsis = document.getElementById('tabTitleAsistencia');
+      const titleBol = document.getElementById('tabTitleBoletines');
+      const actionBtns = document.getElementById('academicNotasActionButtons');
+      const inasistenciaBtns = document.getElementById('academicInasistenciaActionButtons');
+
+      if (tabName === 'notas') {
+        if (itemNotas) itemNotas.classList.add('active');
+        if (itemAsis) itemAsis.classList.remove('active');
+        if (itemBol) itemBol.classList.remove('active');
+        if (viewNotas) viewNotas.classList.remove('d-none');
+        if (viewAsis) viewAsis.classList.add('d-none');
+        if (viewBol) viewBol.classList.add('d-none');
+        if (titleNotas) titleNotas.className = 'academic-switcher-title active-title';
+        if (titleAsis) titleAsis.className = 'academic-switcher-title inactive-title';
+        if (titleBol) titleBol.className = 'academic-switcher-title inactive-title';
+        if (actionBtns) actionBtns.classList.remove('d-none');
+        if (inasistenciaBtns) inasistenciaBtns.classList.add('d-none');
+      } else if (tabName === 'asistencia') {
+        if (itemAsis) itemAsis.classList.add('active');
+        if (itemNotas) itemNotas.classList.remove('active');
+        if (itemBol) itemBol.classList.remove('active');
+        if (viewAsis) viewAsis.classList.remove('d-none');
+        if (viewNotas) viewNotas.classList.add('d-none');
+        if (viewBol) viewBol.classList.add('d-none');
+        if (titleAsis) titleAsis.className = 'academic-switcher-title active-title';
+        if (titleNotas) titleNotas.className = 'academic-switcher-title inactive-title';
+        if (titleBol) titleBol.className = 'academic-switcher-title inactive-title';
+        if (actionBtns) actionBtns.classList.add('d-none');
+        if (inasistenciaBtns) inasistenciaBtns.classList.remove('d-none');
+        initDocenteInasistencias();
+      } else if (tabName === 'boletines') {
+        if (itemBol) itemBol.classList.add('active');
+        if (itemNotas) itemNotas.classList.remove('active');
+        if (itemAsis) itemAsis.classList.remove('active');
+        if (viewBol) viewBol.classList.remove('d-none');
+        if (viewNotas) viewNotas.classList.add('d-none');
+        if (viewAsis) viewAsis.classList.add('d-none');
+        if (titleBol) titleBol.className = 'academic-switcher-title active-title';
+        if (titleNotas) titleNotas.className = 'academic-switcher-title inactive-title';
+        if (titleAsis) titleAsis.className = 'academic-switcher-title inactive-title';
+        if (actionBtns) actionBtns.classList.add('d-none');
+        if (inasistenciaBtns) inasistenciaBtns.classList.add('d-none');
+        initDocenteBoletin();
+      }
+    }
+
+    // ==========================================
+    // GESTIÓN DEL BOLETÍN EN PANEL DOCENTE
+    // ==========================================
+    let docenteBoletinInitialized = false;
+
+    function initDocenteBoletin() {
+      const courseSel = document.getElementById('docenteBoletinCourse');
+      const studentSel = document.getElementById('docenteBoletinStudent');
+      const periodSel = document.getElementById('docenteBoletinPeriod');
+      const dateEl = document.getElementById('docenteBoletinDate');
+
+      if (dateEl) {
+        dateEl.textContent = new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+
+      if (!docenteBoletinInitialized) {
+        if (courseSel) {
+          courseSel.addEventListener('change', () => {
+            populateDocenteBoletinStudents();
+            renderDocenteBoletin();
+          });
+        }
+        if (studentSel) {
+          studentSel.addEventListener('change', renderDocenteBoletin);
+        }
+        if (periodSel) {
+          periodSel.addEventListener('change', renderDocenteBoletin);
+        }
+        docenteBoletinInitialized = true;
+      }
+
+      populateDocenteBoletinStudents();
+      renderDocenteBoletin();
+    }
+
+    function populateDocenteBoletinStudents() {
+      const courseSel = document.getElementById('docenteBoletinCourse');
+      const studentSel = document.getElementById('docenteBoletinStudent');
+      if (!courseSel || !studentSel || typeof SophosDB === 'undefined') return;
+
+      const courseId = courseSel.value;
+      const students = SophosDB.getStudentsByCourse(courseId);
+      studentSel.innerHTML = '';
+      students.forEach(st => {
+        const opt = document.createElement('option');
+        opt.value = st.id;
+        opt.textContent = st.name;
+        studentSel.appendChild(opt);
+      });
+    }
+
+    async function renderDocenteBoletin() {
+      const courseSel = document.getElementById('docenteBoletinCourse');
+      const studentSel = document.getElementById('docenteBoletinStudent');
+      const periodSel = document.getElementById('docenteBoletinPeriod');
+
+      if (!courseSel || !studentSel || !periodSel) return;
+
+      const courseId = courseSel.value;
+      const studentId = studentSel.value;
+      const periodId = parseInt(periodSel.value);
+
+      const student = typeof SophosDB !== 'undefined' ? SophosDB.getStudentById(studentId) : null;
+      if (!student) return;
+
+      const contentEl = document.getElementById('docenteBoletinContent');
+      const pendingEl = document.getElementById('docenteBoletinPendingCard');
+      const printBtn = document.getElementById('docenteBtnPrintBoletin');
+
+      // Si es el Período 3 (en curso) o no está cerrado, NO debe generarse boletín
+      if (periodId === 3) {
+        if (contentEl) contentEl.classList.add('d-none');
+        if (pendingEl) {
+          pendingEl.classList.remove('d-none');
+          const pName = document.getElementById('docentePendingPeriodName');
+          if (pName) pName.textContent = 'Tercer Período (Activo)';
+        }
+        if (printBtn) {
+          printBtn.disabled = true;
+          printBtn.classList.add('opacity-50');
+        }
+        return;
+      }
+
+      // Consultar datos de boletín cerrado desde API oficial MySQL
+      try {
+        const res = await fetch(`../../api/boletin.php?course=${courseId}&student_id=${studentId}&period=${periodId}`);
+        const data = await res.json();
+
+        if (data.success && data.materias && data.materias.length > 0) {
+          if (pendingEl) pendingEl.classList.add('d-none');
+          if (contentEl) contentEl.classList.remove('d-none');
+          if (printBtn) {
+            printBtn.disabled = false;
+            printBtn.classList.remove('opacity-50');
+          }
+
+          document.getElementById('docenteBoletinStudentName').textContent = student.name;
+          document.getElementById('docenteBoletinStudentID').textContent = student.id;
+          document.getElementById('docenteBoletinStudentGrade').textContent = courseId === '11A' ? '11° Grado A' : '10° Grado A';
+          document.getElementById('docenteBoletinPeriodBadge').textContent = `Período ${periodId} - 2026`;
+
+          const dateEl = document.getElementById('docenteBoletinDate');
+          if (dateEl) {
+            const rawDate = data.fecha_expedicion || data.fecha_cierre;
+            dateEl.textContent = rawDate
+              ? new Date(rawDate.includes('T') ? rawDate : rawDate + 'T12:00:00').toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })
+              : '3 de julio de 2026';
+          }
+
+          const tbody = document.getElementById('docenteBoletinTableBody');
+          const obsEl = document.getElementById('docenteBoletinObservationText');
+
+          let rowsHtml = '';
+          data.materias.forEach(m => {
+            const gradeVal = parseFloat(m.definitiva || 0);
+            let level = '<span class="badge-contrast-success small">SUPERIOR</span>';
+            if (gradeVal < 3.0) level = '<span class="badge-contrast-danger small">BAJO</span>';
+            else if (gradeVal < 4.0) level = '<span class="badge-contrast-warning small">BÁSICO</span>';
+            else if (gradeVal < 4.5) level = '<span class="badge-contrast-info small">ALTO</span>';
+
+            const teacher = (m.materia === 'Lengua Castellana' || m.materia === 'Lectura Crítica')
+              ? 'Carlos Mendoza'
+              : (m.docente || 'Mariana Ruiz');
+
+            rowsHtml += `
+              <tr>
+                <td class="text-start ps-3">
+                  <div class="fw-bold text-dark">${escapeHtml(m.materia)}</div>
+                  <div class="text-secondary small">Docente: ${escapeHtml(teacher)}</div>
+                </td>
+                <td class="text-center font-monospace">${gradeVal.toFixed(1)}</td>
+                <td class="text-center fw-bold fs-6 text-dark">${gradeVal.toFixed(1)}</td>
+                <td class="text-center">${level}</td>
+              </tr>
+            `;
+          });
+
+          if (tbody) tbody.innerHTML = rowsHtml;
+          if (obsEl) obsEl.textContent = `"${data.observacion}"`;
+          return;
+        } else {
+          // Período no cerrado o sin boletín
+          if (contentEl) contentEl.classList.add('d-none');
+          if (pendingEl) {
+            pendingEl.classList.remove('d-none');
+            const pName = document.getElementById('docentePendingPeriodName');
+            if (pName) pName.textContent = `Período ${periodId}`;
+          }
+          if (printBtn) {
+            printBtn.disabled = true;
+            printBtn.classList.add('opacity-50');
+          }
+        }
+      } catch (e) {
+        console.error("Error al consultar boletín:", e);
+      }
+    }
+
+    // Impresión limpia y exclusiva del boletín oficial
+    function printDocenteBoletin() {
+      const periodSel = document.getElementById('docenteBoletinPeriod');
+      if (periodSel && parseInt(periodSel.value) === 3) {
+        alert('El boletín del Período 3 no está disponible para impresión porque el período se encuentra actualmente en curso.');
+        return;
+      }
+      window.print();
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text).replace(/[&<>"']/g, function (m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
+    }
+
+    // ==========================================
+    // GESTIÓN DE INASISTENCIAS EN PANEL DOCENTE
+    // ==========================================
+    let docenteInasistenciasInitialized = false;
+
+    function initDocenteInasistencias() {
+      loadDocenteInasistencias();
+      updateInasistenciaStudentsDropdown();
+      const dateInput = document.getElementById('newInasistenciaDate');
+      if (dateInput && !dateInput.value) {
+        dateInput.value = new Date().toISOString().split('T')[0];
+      }
+    }
+
+    async function loadDocenteInasistencias() {
+      const course = document.getElementById('filterInasistenciaCourse')?.value || 'all';
+      const subject = document.getElementById('filterInasistenciaSubject')?.value || 'all';
+      const status = document.getElementById('filterInasistenciaStatus')?.value || 'all';
+      const tbody = document.getElementById('docenteInasistenciasTableBody');
+      const counterBadge = document.getElementById('inasistenciasCounterBadge');
+
+      if (!tbody) return;
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7" class="text-center py-4 text-muted">
+            <div class="spinner-border spinner-border-sm text-indigo me-2"></div>
+            Cargando inasistencias desde la base de datos MySQL...
+          </td>
+        </tr>
+      `;
+
+      try {
+        const res = await fetch(`../../api/docente.php?action=inasistencias&course=${course}&subject=${subject}&status=${status}`);
+        const data = await res.json();
+
+        if (data.success) {
+          // Actualizar métricas
+          const totalEl = document.getElementById('statDocenteTotalInasistencias');
+          const injEl = document.getElementById('statDocenteInjustificadas');
+          const justEl = document.getElementById('statDocenteJustificadas');
+          const stdEl = document.getElementById('statDocenteEstudiantesAfectados');
+
+          if (totalEl) totalEl.textContent = data.stats.total || 0;
+          if (injEl) injEl.textContent = data.stats.injustificadas || 0;
+          if (justEl) justEl.textContent = data.stats.justificadas || 0;
+          if (stdEl) stdEl.textContent = data.stats.estudiantes_afectados || 0;
+
+          if (counterBadge) {
+            counterBadge.textContent = `${data.records.length} registro${data.records.length === 1 ? '' : 's'} encontrado${data.records.length === 1 ? '' : 's'}`;
+          }
+
+          if (data.records.length === 0) {
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="7" class="text-center py-5 text-muted">
+                  <i class="bi bi-clipboard-check fs-1 text-success d-block mb-2"></i>
+                  <div class="fw-bold">No se encontraron registros de inasistencia.</div>
+                  <div class="small">Todos los estudiantes registran asistencia normal para los filtros seleccionados.</div>
+                </td>
+              </tr>
+            `;
+            return;
+          }
+
+          let html = '';
+          data.records.forEach(r => {
+            const isJustified = (r.estado === 'FALTA_JUSTIFICADA');
+            const badge = isJustified
+              ? `<span class="badge-contrast-info small"><i class="bi bi-shield-check me-1"></i>Justificada</span>`
+              : `<span class="badge-contrast-danger small"><i class="bi bi-exclamation-triangle-fill me-1"></i>Injustificada</span>`;
+
+            html += `
+              <tr>
+                <td class="ps-4 font-monospace fw-bold text-dark">${escapeHtml(r.fecha)}</td>
+                <td>
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                      style="width: 34px; height: 34px; font-size: 0.75rem; background: ${isJustified ? '#0284c7' : '#dc2626'};">
+                      ${escapeHtml(r.avatar)}
+                    </div>
+                    <div>
+                      <div class="fw-bold text-dark">${escapeHtml(r.estudiante_nombre)}</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="badge bg-light text-dark border">${escapeHtml(r.curso_nombre)}</span></td>
+                <td>
+                  <div class="fw-semibold text-dark">${escapeHtml(r.materia_nombre)}</div>
+                  <div class="text-secondary small">Docente: ${escapeHtml(r.docente_nombre)}</div>
+                </td>
+                <td class="text-center">${badge}</td>
+                <td class="text-secondary" style="max-width: 280px;">
+                  <div class="text-truncate" title="${escapeHtml(r.observacion)}">${escapeHtml(r.observacion)}</div>
+                </td>
+                <td class="text-center pe-4">
+                  <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar registro" onclick="deleteDocenteInasistencia('${r.id}')">
+                    <i class="bi bi-trash3"></i>
+                  </button>
+                </td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = html;
+        }
+      } catch (e) {
+        console.error("Error al cargar inasistencias:", e);
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="text-center py-4 text-danger">
+              <i class="bi bi-exclamation-circle me-1"></i> Error al conectar con la base de datos de inasistencias.
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    async function updateInasistenciaStudentsDropdown() {
+      const courseSel = document.getElementById('newInasistenciaCourse');
+      const studentSel = document.getElementById('newInasistenciaStudent');
+      if (!courseSel || !studentSel) return;
+
+      const courseId = courseSel.value;
+      let students = (typeof SophosDB !== 'undefined') ? SophosDB.getStudentsByCourse(courseId) : [];
+
+      if (!students || students.length === 0) {
+        try {
+          const res = await fetch(`../../api/docente.php?action=students&course=${courseId}`);
+          const data = await res.json();
+          if (data.success && data.students) {
+            students = data.students;
+          }
+        } catch (e) {
+          console.error("Error al obtener estudiantes:", e);
+        }
+      }
+
+      studentSel.innerHTML = '';
+      (students || []).forEach(st => {
+        const opt = document.createElement('option');
+        opt.value = st.id;
+        if (st.matricula_id) opt.dataset.matricula = st.matricula_id;
+        if (st.db_id) opt.dataset.dbId = st.db_id;
+        opt.textContent = st.name;
+        studentSel.appendChild(opt);
+      });
+    }
+
+    function openDocenteModalAddInasistencia() {
+      updateInasistenciaStudentsDropdown();
+      const dateInput = document.getElementById('newInasistenciaDate');
+      if (dateInput && !dateInput.value) {
+        dateInput.value = new Date().toISOString().split('T')[0];
+      }
+      const modalEl = document.getElementById('modalDocenteAddInasistencia');
+      if (modalEl) {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+      }
+    }
+
+    async function submitDocenteInasistencia(e) {
+      e.preventDefault();
+      const course = document.getElementById('newInasistenciaCourse').value;
+      const studentSel = document.getElementById('newInasistenciaStudent');
+      const studentId = studentSel.value;
+      const selectedOpt = studentSel.selectedOptions[0];
+      const matriculaId = selectedOpt?.dataset?.matricula || '';
+      const studentDbId = selectedOpt?.dataset?.dbId || '';
+      const subject = document.getElementById('newInasistenciaSubject').value;
+      const fecha = document.getElementById('newInasistenciaDate').value;
+      const estado = document.getElementById('newInasistenciaType').value;
+      const observacion = document.getElementById('newInasistenciaObs').value;
+      const btn = document.getElementById('btnSaveInasistencia');
+
+      if (!studentId || !fecha || !observacion.trim()) {
+        alert('Por favor completa todos los campos requeridos.');
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Guardando...';
+      }
+
+      try {
+        const res = await fetch('../../api/docente.php?action=save_inasistencia', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            course,
+            student_id: studentDbId || studentId,
+            matricula_id: matriculaId,
+            subject,
+            fecha,
+            estado,
+            observacion
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          const modalEl = document.getElementById('modalDocenteAddInasistencia');
+          if (modalEl) {
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+          }
+          document.getElementById('newInasistenciaObs').value = '';
+          loadDocenteInasistencias();
+          showDocenteToast(data.message || 'Inasistencia guardada con éxito.');
+        } else {
+          alert(data.error || 'No se pudo guardar la inasistencia.');
+        }
+      } catch (err) {
+        console.error("Error al registrar inasistencia:", err);
+        alert('Error al conectar con el servidor.');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="bi bi-check-circle me-1"></i> Guardar Inasistencia';
+        }
+      }
+    }
+
+    async function deleteDocenteInasistencia(id) {
+      if (!confirm('¿Estás seguro de que deseas eliminar este registro de inasistencia?')) return;
+
+      try {
+        const res = await fetch('../../api/docente.php?action=delete_inasistencia', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id_asistencia: id })
+        });
+        const data = await res.json();
+        if (data.success) {
+          loadDocenteInasistencias();
+          showDocenteToast('Registro de inasistencia eliminado.');
+        } else {
+          alert(data.error || 'No se pudo eliminar el registro.');
+        }
+      } catch (e) {
+        console.error("Error al eliminar inasistencia:", e);
+        alert('Error al comunicarse con el servidor.');
+      }
+    }
+
+    function showDocenteToast(message, type = 'success') {
+      const toastEl = document.createElement('div');
+      toastEl.className = `alert alert-${type} py-2 px-3 mb-3 shadow-sm d-flex align-items-center justify-content-between position-fixed top-0 end-0 m-4`;
+      toastEl.style.zIndex = '9999';
+      toastEl.style.minWidth = '280px';
+      const icon = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+      toastEl.innerHTML = `
+        <div><i class="bi ${icon} me-2"></i> ${escapeHtml(message)}</div>
+        <button type="button" class="btn-close ms-2" onclick="this.parentElement.remove()"></button>
+      `;
+      document.body.appendChild(toastEl);
+      setTimeout(() => {
+        if (toastEl.parentNode) toastEl.remove();
+      }, 4000);
+    }
+
+    // ==========================================
+    // SELECTOR DE PERÍODOS POR BOTONES
+    // ==========================================
+    function renderDocentePeriodButtons() {
+      const container = document.getElementById('docentePeriodButtonsGroup');
+      const statusIndicator = document.getElementById('docentePeriodStatusIndicator');
+      if (!container || typeof SophosDB === 'undefined') return;
+
+      const periods = SophosDB.getPeriods();
+      const activePeriodObj = SophosDB.getCurrentPeriod();
+      const currentActiveId = activePeriodObj ? activePeriodObj.id : 3;
+
+      container.innerHTML = '';
+
+      periods.forEach(p => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'period-pill-btn';
+
+        const isCurrentActive = (p.id === currentActiveId);
+        const isPastClosed = (p.status === 'closed');
+        const isFuturePending = (p.status === 'pending');
+
+        let badgeHTML = '';
+
+        if (isCurrentActive) {
+          badgeHTML = `<span class="period-pill-badge badge-active-live"><i class="bi bi-circle-fill" style="font-size: 0.45rem;"></i> Activo</span>`;
+          if (docenteCurrentPeriod === p.id) {
+            btn.classList.add('selected-active');
+          }
+        } else if (isPastClosed) {
+          btn.classList.add('period-closed');
+          badgeHTML = `<span class="period-pill-badge badge-closed"><i class="bi bi-eye"></i> Histórico</span>`;
+          if (docenteCurrentPeriod === p.id) {
+            btn.classList.add('selected-closed');
+          }
+        } else if (isFuturePending) {
+          btn.classList.add('period-locked');
+          btn.disabled = true;
+          btn.title = "Período inaccesible (Apertura futura)";
+          badgeHTML = `<span class="period-pill-badge badge-locked"><i class="bi bi-lock-fill"></i> Inaccesible</span>`;
+        }
+
+        btn.innerHTML = `
+                    <span>${p.shortName || 'P' + p.id} - ${p.name.replace('Período', 'P.')}</span>
+                    ${badgeHTML}
+                `;
+
+        if (!isFuturePending) {
+          btn.addEventListener('click', () => {
+            setDocentePeriod(p.id);
+          });
+        }
+
+        container.appendChild(btn);
+      });
+
+      // Actualizar indicador superior descriptivo
+      if (statusIndicator) {
+        const selectedObj = periods.find(p => p.id === docenteCurrentPeriod);
+        if (selectedObj && selectedObj.id === currentActiveId) {
+          statusIndicator.className = 'small fw-semibold text-success';
+          statusIndicator.innerHTML = `<i class="bi bi-pencil-fill me-1" style="font-size: 0.65rem;"></i> ${selectedObj.name} (Activo - Edición)`;
+        } else if (selectedObj && selectedObj.status === 'closed') {
+          statusIndicator.className = 'small fw-semibold text-warning-emphasis';
+          statusIndicator.innerHTML = `<i class="bi bi-eye-fill me-1" style="font-size: 0.65rem;"></i> ${selectedObj.name} (Cerrado - Solo Lectura)`;
+        }
+      }
+    }
+
+    function setDocentePeriod(periodId) {
+      docenteCurrentPeriod = periodId;
+      renderDocentePeriodButtons();
+      loadDocenteGradebook();
+    }
+
+    // ==========================================
+    // CARGA Y CONTROL DE LA LIBRETA DE NOTAS
+    // ==========================================
+    function loadDocenteGradebook() {
+      if (typeof SophosDB === 'undefined') return;
+
+      const emptyState = document.getElementById('docenteEmptyState');
+      const tableWrapper = document.getElementById('docenteTableWrapper');
+      const btnAddCol = document.getElementById('docenteBtnAddColumn');
+      const btnSave = document.getElementById('docenteBtnSave');
+      const headerTitle = document.getElementById('docenteTableHeaderTitle');
+      const modeBadge = document.getElementById('docentePeriodModeBadge');
+      const footerHelp = document.getElementById('docenteFooterHelpText');
+      const previewBtn = document.getElementById('docenteBtnPreviewReport');
+
+      const periods = SophosDB.getPeriods();
+      const periodObj = periods.find(p => p.id === docenteCurrentPeriod);
+      const activePeriodObj = SophosDB.getCurrentPeriod();
+      const isCurrentActive = periodObj && activePeriodObj && (periodObj.id === activePeriodObj.id);
+      const isReadOnly = !isCurrentActive;
+
+      // Flujo: Si NO hay Curso o NO hay Materia seleccionada, mantener cuadro vacío
+      if (!docenteCurrentCourse || !docenteCurrentSubject) {
+        if (emptyState) emptyState.classList.remove('d-none');
+        if (tableWrapper) tableWrapper.classList.add('d-none');
+        if (btnAddCol) {
+          btnAddCol.disabled = true;
+          btnAddCol.title = "Selecciona curso y materia para agregar notas";
+        }
+        if (btnSave) {
+          btnSave.disabled = true;
+          btnSave.title = "Selecciona curso y materia para guardar";
+        }
+        if (headerTitle) headerTitle.textContent = "Libreta de Calificaciones";
+        if (modeBadge) {
+          modeBadge.className = "badge bg-secondary-subtle text-secondary border ms-1";
+          modeBadge.innerHTML = `<i class="bi bi-funnel me-1"></i> Esperando filtros`;
+        }
+        if (previewBtn) {
+          previewBtn.classList.add('disabled');
+          previewBtn.setAttribute('aria-disabled', 'true');
+        }
+        return;
+      }
+
+      // Ambos filtros están presentes: Mostrar tabla y cargar estudiantes
+      if (emptyState) emptyState.classList.add('d-none');
+      if (tableWrapper) tableWrapper.classList.remove('d-none');
+
+      docenteActiveGradebook = SophosDB.getGradebook(docenteCurrentCourse, docenteCurrentSubject, docenteCurrentPeriod);
+      const students = SophosDB.getStudentsByCourse(docenteCurrentCourse);
+      const courseObj = SophosDB.getCourses().find(c => c.id === docenteCurrentCourse);
+      const subjectObj = SophosDB.getSubjects().find(s => s.id === docenteCurrentSubject);
+      const courseName = courseObj ? courseObj.name : docenteCurrentCourse;
+      const subjectName = subjectObj ? subjectObj.name : docenteCurrentSubject;
+      const periodName = periodObj ? periodObj.name : `Periodo ${docenteCurrentPeriod}`;
+
+      if (headerTitle) {
+        headerTitle.textContent = `${courseName} - ${subjectName} (${periodName})`;
+      }
+
+      // Configurar botones y avisos según el período sea Activo o Solo Lectura
+      if (isReadOnly) {
+        if (modeBadge) {
+          modeBadge.className = "badge bg-warning-subtle text-warning-emphasis border border-warning-subtle ms-1";
+          modeBadge.innerHTML = `<i class="bi bi-eye-fill me-1"></i> Modo Solo Lectura (Período Cerrado)`;
+        }
+        if (btnAddCol) {
+          btnAddCol.disabled = true;
+          btnAddCol.title = "No se pueden agregar notas a períodos cerrados";
+        }
+        if (btnSave) {
+          btnSave.disabled = true;
+          btnSave.title = "Las calificaciones de este período están archivadas en modo solo lectura";
+        }
+        if (footerHelp) {
+          footerHelp.innerHTML = `<span class="text-warning-emphasis fw-medium"><i class="bi bi-lock-fill me-1"></i> Período cerrado administrativamente. Las notas son históricas y no admiten modificaciones.</span>`;
+        }
+      } else {
+        if (modeBadge) {
+          modeBadge.className = "badge bg-success-subtle text-success border border-success-subtle ms-1";
+          modeBadge.innerHTML = `<i class="bi bi-pencil-fill me-1"></i> Período Activo (Edición Habilitada)`;
+        }
+        if (btnAddCol) {
+          btnAddCol.disabled = false;
+          btnAddCol.removeAttribute('title');
+        }
+        if (btnSave) {
+          btnSave.disabled = false;
+          btnSave.removeAttribute('title');
+        }
+        if (footerHelp) {
+          footerHelp.innerHTML = `Usa el botón <span class="badge bg-indigo"><i class="bi bi-stars"></i> IA</span> al lado de cada observación para sugerir una redacción pedagógica y profesional.`;
+        }
+      }
+
+      if (previewBtn) {
+        previewBtn.classList.remove('disabled');
+        previewBtn.removeAttribute('aria-disabled');
+      }
+
+      renderDocenteGradeTable(students, docenteActiveGradebook, isReadOnly);
+    }
+
+    // ==========================================
+    // RENDERIZADO DE LA TABLA DE CALIFICACIONES
+    // ==========================================
+    function renderDocenteGradeTable(students, gradebook, isReadOnly) {
+      const headRow = document.getElementById('docenteGradeHeadRow');
+      const body = document.getElementById('docenteGradeBody');
+      const tableElem = document.getElementById('docenteGradeTable');
+      if (!headRow || !body) return;
+
+      if (tableElem) {
+        if (isReadOnly) tableElem.classList.add('grade-table-readonly');
+        else tableElem.classList.remove('grade-table-readonly');
+      }
+
+      headRow.innerHTML = '';
+      body.innerHTML = '';
+
+      // 1. Encabezados de tabla
+      let headHTML = `<th class="ps-3" style="min-width: 200px;">Estudiante</th>`;
+      gradebook.columnTitles.forEach((title) => {
+        headHTML += `<th class="text-center" style="min-width: 90px;">${title}</th>`;
+      });
+      headHTML += `<th class="text-center" style="min-width: 100px;">Definitiva</th>`;
+      headHTML += `<th style="min-width: 320px;">Observación para Boletín ${isReadOnly ? '(Solo Lectura)' : '(IA ✨)'}</th>`;
+      headRow.innerHTML = headHTML;
+
+      // 2. Filas de cada estudiante
+      students.forEach(student => {
+        const record = gradebook.records[student.id] || { grades: gradebook.columnTitles.map(() => null), observation: "" };
+        const avg = SophosDB.calculateAverage(record.grades);
+        const avgBadgeClass = avg === null ? 'bg-light text-secondary' : (avg >= 4.0 ? 'avg-high' : (avg >= 3.0 ? 'avg-mid' : 'avg-low'));
+
+        let rowHTML = `
+                    <tr data-student-id="${student.id}">
+                        <td class="ps-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="avatar-circle small text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 32px; height: 32px; background: ${student.avatarColor || '#4f46e5'}; font-size: 0.8rem;">
+                                    ${student.avatar}
+                                </div>
+                                <div>
+                                    <div class="fw-semibold text-dark small">${student.name}</div>
+                                    <div class="text-muted" style="font-size: 0.72rem;">${student.id}</div>
+                                </div>
+                            </div>
+                        </td>
+                `;
+
+        // Celdas de Notas
+        gradebook.columnTitles.forEach((_, colIdx) => {
+          const gradeVal = (record.grades && record.grades[colIdx] !== undefined && record.grades[colIdx] !== null) ? record.grades[colIdx] : '';
+          let colorClass = '';
+          if (gradeVal !== '') {
+            const num = Number(gradeVal);
+            if (num >= 4.0) colorClass = 'grade-high';
+            else if (num >= 3.0) colorClass = 'grade-mid';
+            else colorClass = 'grade-low';
+          }
+
+          const inputAttrs = isReadOnly ? 'disabled readonly' : `oninput="onDocenteGradeChange('${student.id}', ${colIdx}, this)"`;
+
+          rowHTML += `
+                        <td class="text-center">
+                            <input type="number" step="0.1" min="1.0" max="5.0" class="grade-input ${colorClass}" data-col="${colIdx}" value="${gradeVal}" placeholder="-" ${inputAttrs}>
+                        </td>
+                    `;
+        });
+
+        // Celda de Definitiva en vivo
+        rowHTML += `
+                    <td class="text-center">
+                        <span class="average-badge ${avgBadgeClass}" id="docente-avg-${student.id}">
+                            ${avg !== null ? avg : '--'}
+                        </span>
+                    </td>
+                `;
+
+        // Celda de Observación
+        if (isReadOnly) {
+          rowHTML += `
+                        <td>
+                            <div class="observation-input-group">
+                                <input type="text" class="form-control observation-input bg-light" id="docente-obs-${student.id}" value="${record.observation || ''}" placeholder="Sin observación registrada" disabled readonly>
+                            </div>
+                        </td>
+                    </tr>`;
+        } else {
+          rowHTML += `
+                        <td>
+                            <div class="observation-input-group">
+                                <input type="text" class="form-control observation-input" id="docente-obs-${student.id}" value="${record.observation || ''}" placeholder="Escribe retroalimentación del periodo...">
+                                <button type="button" class="ai-sparkle-btn" title="Mejorar con IA" onclick="triggerDocenteAISuggestion('${student.id}', event)">
+                                    <i class="bi bi-stars"></i> IA
+                                </button>
+                            </div>
+                        </td>
+                    </tr>`;
+        }
+
+        body.innerHTML += rowHTML;
+      });
+    }
+
+    function onDocenteGradeChange(studentId, colIdx, inputElem) {
+      let val = inputElem.value;
+      let num = val !== '' ? parseFloat(val) : null;
+
+      if (num !== null) {
+        if (num > 5.0) { num = 5.0; inputElem.value = "5.0"; }
+        if (num < 1.0 && num >= 0) { num = 1.0; inputElem.value = "1.0"; }
+      }
+
+      inputElem.classList.remove('grade-high', 'grade-mid', 'grade-low');
+      if (num !== null) {
+        if (num >= 4.0) inputElem.classList.add('grade-high');
+        else if (num >= 3.0) inputElem.classList.add('grade-mid');
+        else inputElem.classList.add('grade-low');
+      }
+
+      if (!docenteActiveGradebook.records[studentId]) {
+        docenteActiveGradebook.records[studentId] = { grades: [], observation: "" };
+      }
+      docenteActiveGradebook.records[studentId].grades[colIdx] = num;
+
+      // Recalcular promedio en vivo
+      const avg = SophosDB.calculateAverage(docenteActiveGradebook.records[studentId].grades);
+      const badge = document.getElementById(`docente-avg-${studentId}`);
+      if (badge) {
+        badge.textContent = avg !== null ? avg : '--';
+        badge.className = 'average-badge ' + (avg === null ? 'bg-light text-secondary' : (avg >= 4.0 ? 'avg-high' : (avg >= 3.0 ? 'avg-mid' : 'avg-low')));
+      }
+    }
+
+    function addDocenteGradeColumn(newTitle) {
+      if (!docenteCurrentCourse || !docenteCurrentSubject || !docenteActiveGradebook) return;
+      const periodObj = SophosDB.getPeriods().find(p => p.id === docenteCurrentPeriod);
+      if (periodObj && periodObj.status !== 'active') return;
+
+      docenteActiveGradebook.columnTitles.push(newTitle);
+      const students = SophosDB.getStudentsByCourse(docenteCurrentCourse);
+      students.forEach(s => {
+        if (!docenteActiveGradebook.records[s.id]) {
+          docenteActiveGradebook.records[s.id] = { grades: [], observation: "" };
+        }
+        docenteActiveGradebook.records[s.id].grades.push(null);
+      });
+      SophosDB.saveGradebook(docenteCurrentCourse, docenteCurrentSubject, docenteCurrentPeriod, docenteActiveGradebook);
+      renderDocenteGradeTable(students, docenteActiveGradebook, false);
+    }
+
+    function saveDocenteGradebook() {
+      if (!docenteCurrentCourse || !docenteCurrentSubject || !docenteActiveGradebook) return;
+      const periodObj = SophosDB.getPeriods().find(p => p.id === docenteCurrentPeriod);
+      if (periodObj && periodObj.status !== 'active') return;
+
+      const students = SophosDB.getStudentsByCourse(docenteCurrentCourse);
+      students.forEach(s => {
+        const obsInput = document.getElementById(`docente-obs-${s.id}`);
+        if (obsInput && docenteActiveGradebook.records[s.id]) {
+          docenteActiveGradebook.records[s.id].observation = obsInput.value.trim();
+        }
+      });
+
+      SophosDB.saveGradebook(docenteCurrentCourse, docenteCurrentSubject, docenteCurrentPeriod, docenteActiveGradebook);
+
+      const toast = document.getElementById('docenteSaveToast');
+      if (toast) {
+        toast.classList.remove('d-none');
+        toast.classList.add('d-flex');
+        setTimeout(() => {
+          toast.classList.add('d-none');
+          toast.classList.remove('d-flex');
+        }, 3500);
+      }
+    }
+
+    // ==========================================
+    // ASISTENTE DE REDACCIÓN IA (TOOLTIP)
+    // ==========================================
+    function triggerDocenteAISuggestion(studentId, event) {
+      docenteActiveAIStudent = studentId;
+      const input = document.getElementById(`docente-obs-${studentId}`);
+      const originalText = (input ? input.value : "").trim();
+      const student = SophosDB.getStudentById(studentId);
+      const studentName = student ? student.name.split(' ')[0] : 'El estudiante';
+
+      const suggestion = generatePedagogicalSuggestion(originalText, studentName, studentId);
+
+      const tooltip = document.getElementById('docenteAiTooltip');
+      const tooltipText = document.getElementById('docenteAiTooltipText');
+      if (!tooltip || !tooltipText) return;
+
+      showCustomAITooltip(event.currentTarget, `"${suggestion}"`, () => {
+        if (input) {
+          input.value = suggestion;
+          if (docenteActiveGradebook.records[studentId]) {
+            docenteActiveGradebook.records[studentId].observation = suggestion;
+          }
+        }
+      }, {
+        title: 'Sugerencia IA Pedagógica',
+        question: '¿Aplicar cambio al boletín?',
+        isWide: false
+      });
+    }
+
+    function showCustomAITooltip(anchorElem, text, onAccept, options = {}) {
+      const tooltip = document.getElementById('docenteAiTooltip');
+      const tooltipText = document.getElementById('docenteAiTooltipText');
+      const tooltipTitle = document.getElementById('docenteAiTooltipTitle');
+      const tooltipQuestion = document.getElementById('docenteAiTooltipQuestion');
+      const btnAccept = document.getElementById('btnAcceptDocenteAISuggestion');
+      if (!tooltip || !tooltipText || !anchorElem) return;
+
+      if (tooltipTitle) tooltipTitle.textContent = options.title || 'Sugerencia Gemini AI';
+      if (tooltipQuestion) tooltipQuestion.textContent = options.question || '¿Aplicar sugerencia?';
+      tooltipText.textContent = text;
+
+      if (options.isWide) {
+        tooltip.classList.add('ai-tooltip-popover-wide');
+      } else {
+        tooltip.classList.remove('ai-tooltip-popover-wide');
+      }
+
+      tooltip.classList.remove('d-none');
+
+      const btnRect = anchorElem.getBoundingClientRect();
+      const tooltipWidth = tooltip.offsetWidth || (options.isWide ? 460 : 330);
+      const tooltipHeight = tooltip.offsetHeight || 180;
+
+      // Alineación horizontal: colocar hacia la izquierda del botón para no salirse de la pantalla
+      let leftPos = btnRect.right - tooltipWidth;
+      if (leftPos + tooltipWidth > window.innerWidth - 16) {
+        leftPos = window.innerWidth - tooltipWidth - 16;
+      }
+      if (leftPos < 16) {
+        leftPos = 16;
+      }
+
+      // Alineación vertical: preferir encima; si no cabe por el margen superior, ubicar debajo
+      let topPos = btnRect.top - tooltipHeight - 12;
+      let arrowPlacement = 'bottom';
+      if (topPos < 16) {
+        topPos = btnRect.bottom + 12;
+        arrowPlacement = 'top';
+      }
+
+      const arrowX = Math.min(Math.max(16, (btnRect.left + btnRect.width / 2) - leftPos - 6), tooltipWidth - 24);
+      tooltip.style.setProperty('--arrow-x', `${arrowX}px`);
+      tooltip.classList.remove('arrow-top', 'arrow-bottom');
+      tooltip.classList.add(arrowPlacement === 'top' ? 'arrow-top' : 'arrow-bottom');
+
+      tooltip.style.top = `${topPos}px`;
+      tooltip.style.left = `${leftPos}px`;
+
+      if (btnAccept) {
+        btnAccept.onclick = () => {
+          if (typeof onAccept === 'function') onAccept();
+          closeDocenteAITooltip();
+        };
+      }
+    }
+
+    function closeDocenteAITooltip() {
+      const tooltip = document.getElementById('docenteAiTooltip');
+      if (tooltip) {
+        tooltip.classList.add('d-none');
+        tooltip.classList.remove('ai-tooltip-popover-wide');
+      }
+      docenteActiveAIStudent = null;
+    }
+
+    function generatePedagogicalSuggestion(original, studentName, studentId) {
+      const avg = docenteActiveGradebook.records[studentId] ? SophosDB.calculateAverage(docenteActiveGradebook.records[studentId].grades) : null;
+      const numAvg = avg ? parseFloat(avg) : 3.5;
+
+      if (!original || original.length < 5) {
+        if (numAvg >= 4.5) return `${studentName} evidencia un desempeño sobresaliente, dominio conceptual riguroso y una participación constructiva constante en el aula.`;
+        if (numAvg >= 3.8) return `${studentName} demuestra buen cumplimiento de los objetivos de aprendizaje y mantiene una actitud receptiva y responsable en las actividades asignadas.`;
+        return `${studentName} presenta avances en la materia, requiriendo afianzar hábitos de estudio y seguimiento oportuno en la resolución de talleres.`;
+      }
+
+      const lower = original.toLowerCase();
+      if (lower.includes('habla') || lower.includes('distrae') || lower.includes('no hace caso') || lower.includes('indisciplina')) {
+        return `${studentName} posee alto potencial cognitivo; se recomienda fortalecer la autorregulación, la escucha activa y la focalización durante las sesiones de clase.`;
+      }
+      if (lower.includes('no entrega') || lower.includes('perezoso') || lower.includes('tarde') || lower.includes('incumplido')) {
+        return `${studentName} requiere implementar un cronograma de estudio que optimice la puntualidad y el compromiso en la entrega oportuna de evidencias formativas.`;
+      }
+      if (lower.includes('malo') || lower.includes('bajo') || lower.includes('pierde') || lower.includes('dificultad') || lower.includes('no entiende')) {
+        return `${studentName} evidencia oportunidades de mejora conceptual; se sugiere vincularse al plan de tutorías virtuales y afianzar las competencias básicas en casa.`;
+      }
+      if (lower.includes('bien') || lower.includes('bueno') || lower.includes('juicioso') || lower.includes('excelente')) {
+        return `${studentName} refleja un alto sentido de responsabilidad, pensamiento crítico destacado y excelente disposición hacia el trabajo colaborativo e individual.`;
+      }
+
+      return `${studentName}: ${original.charAt(0).toUpperCase() + original.slice(1)}. Se proyecta consolidar sus fortalezas mediante prácticas autónomas continuas.`;
+    }
+
+    // Cerrar tooltip si se hace clic afuera
+    document.addEventListener('click', (e) => {
+      const tooltip = document.getElementById('docenteAiTooltip');
+      if (tooltip && !tooltip.classList.contains('d-none') && !tooltip.contains(e.target) && !e.target.closest('.ai-sparkle-btn') && !e.target.closest('.ai-insignia-btn')) {
+        closeDocenteAITooltip();
+      }
+    });
+
+    // ==========================================================================
+    // MÓDULO: OBSERVADOR ESTUDIANTIL & ASISTENTE GEMINI AI
+    // ==========================================================================
+    let obsModalReportInstance = null;
+
+    function initObservadorEstudiantil() {
+      // Inicializar fecha de hoy por defecto
+      const dateInput = document.getElementById('obsInputDate');
+      if (dateInput) {
+        dateInput.value = new Date().toISOString().split('T')[0];
+      }
+
+      // Instancia del modal de reporte
+      const modalEl = document.getElementById('modalPreviewDocenteReport');
+      if (modalEl) {
+        obsModalReportInstance = new bootstrap.Modal(modalEl);
+      }
+
+      // Alternar entre Subsección 1 (Registro de Observación) y Subsección 2 (Generar Reporte)
+      const btnSubTabObs = document.getElementById('btnSubTabObservacion');
+      const btnSubTabRep = document.getElementById('btnSubTabReporte');
+      const subSecObs = document.getElementById('subseccionObservacionContainer');
+      const subSecRep = document.getElementById('subseccionReporteContainer');
+
+      if (btnSubTabObs && btnSubTabRep && subSecObs && subSecRep) {
+        btnSubTabObs.addEventListener('click', () => {
+          btnSubTabObs.className = 'btn btn-indigo flex-grow-1 py-2 fw-semibold';
+          btnSubTabRep.className = 'btn btn-outline-secondary flex-grow-1 py-2 fw-semibold';
+          subSecObs.classList.remove('d-none');
+          subSecRep.classList.add('d-none');
+        });
+
+        btnSubTabRep.addEventListener('click', () => {
+          btnSubTabRep.className = 'btn btn-indigo flex-grow-1 py-2 fw-semibold';
+          btnSubTabObs.className = 'btn btn-outline-secondary flex-grow-1 py-2 fw-semibold';
+          subSecRep.classList.remove('d-none');
+          subSecObs.classList.add('d-none');
+          updateReportContext();
+        });
+      }
+
+      // 1. Manejo de Selectores en Registro de Observación
+      const obsCourseSel = document.getElementById('obsSelectCourse');
+      const obsStudentSel = document.getElementById('obsSelectStudent');
+      if (obsCourseSel && obsStudentSel) {
+        populateStudentsSelect(obsCourseSel.value, obsStudentSel);
+        obsCourseSel.addEventListener('change', () => {
+          populateStudentsSelect(obsCourseSel.value, obsStudentSel);
+          renderObservadorHistorial(obsStudentSel.value);
+        });
+        obsStudentSel.addEventListener('change', () => {
+          renderObservadorHistorial(obsStudentSel.value);
+        });
+        renderObservadorHistorial(obsStudentSel.value);
+      }
+
+      // 2. Manejo de Selectores en Generar Reporte
+      const repCourseSel = document.getElementById('repSelectCourse');
+      const repStudentSel = document.getElementById('repSelectStudent');
+      if (repCourseSel && repStudentSel) {
+        populateStudentsSelect(repCourseSel.value, repStudentSel);
+        repCourseSel.addEventListener('change', () => {
+          populateStudentsSelect(repCourseSel.value, repStudentSel);
+          updateReportContext();
+          renderReportesHistorial(repStudentSel.value);
+        });
+        repStudentSel.addEventListener('change', () => {
+          updateReportContext();
+          renderReportesHistorial(repStudentSel.value);
+        });
+        document.querySelectorAll('input[name="repTypeRadio"]').forEach(radio => {
+          radio.addEventListener('change', updateReportContext);
+        });
+        updateReportContext();
+        renderReportesHistorial(repStudentSel.value);
+      }
+
+      // 3. Botón Mejorar Redacción con Gemini AI (Registro de Observación)
+      const btnMejorarObs = document.getElementById('btnMejorarObsIA');
+      if (btnMejorarObs) {
+        btnMejorarObs.addEventListener('click', handleMejorarObservacionConGemini);
+      }
+
+      // 4. Formulario Guardar Observación
+      const formObs = document.getElementById('formNuevaObservacion');
+      if (formObs) {
+        formObs.addEventListener('submit', handleGuardarObservacion);
+      }
+
+      // 5. Botón Generar Dictamen con Gemini AI (Generar Reporte)
+      const btnMejorarRep = document.getElementById('btnMejorarRepIA');
+      if (btnMejorarRep) {
+        btnMejorarRep.addEventListener('click', handleGenerarDictamenConGemini);
+      }
+
+      // 6. Botón Guardar / Radicar Reporte Oficial
+      const btnSaveRep = document.getElementById('btnGuardarReporte');
+      if (btnSaveRep) {
+        btnSaveRep.addEventListener('click', handleGuardarReporteOficial);
+      }
+
+      // 7. Botón Previsualizar / Imprimir Reporte
+      const btnPreviewRep = document.getElementById('btnPreviewReportModal');
+      if (btnPreviewRep) {
+        btnPreviewRep.addEventListener('click', handleAbrirPrevisualizacionReporte);
+      }
+    }
+
+    // Llenar selectores de estudiantes según el curso
+    function populateStudentsSelect(courseId, selectElem) {
+      if (!selectElem || typeof SophosDB === 'undefined') return;
+      selectElem.innerHTML = '';
+      const students = SophosDB.getStudentsByCourse(courseId);
+      students.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = s.name;
+        selectElem.appendChild(opt);
+      });
+    }
+
+    // ==========================================================================
+    // LLAMADA SEGURA AL BACKEND PHP (GEMINI API)
+    // ==========================================================================
+    async function callGeminiAssistant(rawText, studentName, type, context = '') {
+      try {
+        const response = await fetch('../../api/gemini-assistant.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: rawText,
+            studentName: studentName,
+            type: type,
+            context: context
+          })
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'Error al conectar con la API de Gemini');
+        }
+        return data;
+      } catch (err) {
+        console.error("Error Gemini API:", err);
+        throw err;
+      }
+    }
+
+    // ==========================================================================
+    // SUBSECCIÓN 1: ACCIONES DE REGISTRO DE OBSERVACIÓN
+    // ==========================================================================
+    async function handleMejorarObservacionConGemini() {
+      const textarea = document.getElementById('obsTextareaDraft');
+      const studentSel = document.getElementById('obsSelectStudent');
+      const categorySel = document.getElementById('obsSelectCategory');
+      const spinner = document.getElementById('obsIASpinner');
+      const icon = document.getElementById('obsIAIcon');
+      const btn = document.getElementById('btnMejorarObsIA');
+
+      const rawText = (textarea ? textarea.value : '').trim();
+      if (!rawText) {
+        showObservadorToast("Por favor escribe una descripción o borrador de los hechos antes de mejorar con IA.", "warning");
+        if (textarea) textarea.focus();
+        return;
+      }
+
+      const student = SophosDB.getStudentById(studentSel.value);
+      const studentName = student ? student.name : 'el estudiante';
+      const category = categorySel ? categorySel.value : 'Falta disciplinaria';
+
+      // Estado de carga
+      if (spinner) spinner.classList.remove('d-none');
+      if (icon) icon.classList.add('d-none');
+      if (btn) btn.disabled = true;
+
+      try {
+        const res = await callGeminiAssistant(rawText, studentName, 'observacion', category);
+        showCustomAITooltip(btn, res.text, () => {
+          if (textarea) textarea.value = res.text;
+          showObservadorToast(`¡Redacción aplicada a la observación!`, "success");
+        }, {
+          title: `Redacción Sugerida con IA (${res.model})`,
+          question: '¿Aceptar y aplicar a la observación?',
+          isWide: true
+        });
+      } catch (err) {
+        showObservadorToast(`Error de IA: ${err.message}`, "danger");
+      } finally {
+        if (spinner) spinner.classList.add('d-none');
+        if (icon) icon.classList.remove('d-none');
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    function handleGuardarObservacion(e) {
+      e.preventDefault();
+      const courseSel = document.getElementById('obsSelectCourse');
+      const studentSel = document.getElementById('obsSelectStudent');
+      const categorySel = document.getElementById('obsSelectCategory');
+      const dateInput = document.getElementById('obsInputDate');
+      const textDraft = document.getElementById('obsTextareaDraft');
+      const inputAgr = document.getElementById('obsInputAgreements');
+
+      const student = SophosDB.getStudentById(studentSel.value);
+      const desc = (textDraft ? textDraft.value : '').trim();
+      if (!desc) {
+        showObservadorToast("La descripción de los hechos no puede estar vacía.", "warning");
+        return;
+      }
+
+      const newObs = SophosDB.addObservation({
+        studentId: studentSel.value,
+        studentName: student ? student.name : 'Estudiante',
+        courseId: courseSel.value,
+        date: dateInput.value || new Date().toISOString().split('T')[0],
+        type: 'disciplinario',
+        category: categorySel.value,
+        description: desc,
+        agreements: inputAgr ? inputAgr.value.trim() : ''
+      });
+
+      showObservadorToast(`¡Observación ${newObs.id} registrada en el observador de ${newObs.studentName}!`, "success");
+      resetObservationForm();
+      renderObservadorHistorial(studentSel.value);
+      updateReportContext();
+    }
+
+    function resetObservationForm() {
+      const textDraft = document.getElementById('obsTextareaDraft');
+      const inputAgr = document.getElementById('obsInputAgreements');
+      if (textDraft) textDraft.value = '';
+      if (inputAgr) inputAgr.value = '';
+    }
+
+    function renderObservadorHistorial(studentId) {
+      const container = document.getElementById('obsHistorialListContainer');
+      const badge = document.getElementById('obsHistorialStudentBadge');
+      if (!container || typeof SophosDB === 'undefined') return;
+
+      const student = SophosDB.getStudentById(studentId);
+      if (badge) {
+        badge.textContent = student ? `${student.name} (${student.courseId === '11A' ? '11°A' : '10°A'})` : '-';
+      }
+
+      const list = SophosDB.getObservations(studentId);
+      container.innerHTML = '';
+
+      if (list.length === 0) {
+        container.innerHTML = `
+                    <div class="text-center py-4 text-muted">
+                        <i class="bi bi-journal-x fs-2 d-block mb-2 text-secondary opacity-50"></i>
+                        <span class="small">Este estudiante no tiene anotaciones registradas en el observador.</span>
+                    </div>
+                `;
+        return;
+      }
+
+      list.forEach(obs => {
+        const card = document.createElement('div');
+        card.className = 'border rounded-3 p-3 mb-2 bg-light shadow-sm';
+        card.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="badge bg-indigo-subtle text-indigo border border-indigo-subtle small">${obs.category}</span>
+                        <span class="small text-muted" style="font-size: 0.75rem;"><i class="bi bi-calendar3 me-1"></i>${obs.date}</span>
+                    </div>
+                    <p class="small text-dark mb-1 fw-normal" style="line-height: 1.5;">${obs.description}</p>
+                    ${obs.agreements ? `
+                        <div class="small text-muted pt-1 border-top mt-2" style="font-size: 0.78rem;">
+                            <strong class="text-secondary"><i class="bi bi-hand-thumbs-up me-1"></i>Compromiso:</strong> ${obs.agreements}
+                        </div>
+                    ` : ''}
+                    <div class="text-end text-muted mt-1" style="font-size: 0.7rem;">
+                        Docente: ${obs.teacher || 'Profe Mariana'}
+                    </div>
+                `;
+        container.appendChild(card);
+      });
+    }
+
+    function loadObservationExampleDraft() {
+      const textarea = document.getElementById('obsTextareaDraft');
+      const categorySel = document.getElementById('obsSelectCategory');
+      const inputAgr = document.getElementById('obsInputAgreements');
+      if (textarea) {
+        textarea.value = "Hoy el estudiante no trajo la tarea de derivadas, llegó 15 minutos tarde y cuando le llamé la atención se puso a reírse y contestó de forma irrespetuosa delante de todos sus compañeros.";
+      }
+      if (categorySel) categorySel.value = "Compromiso Convivencial";
+      if (inputAgr) inputAgr.value = "Se compromete a presentar la actividad en la próxima clase y a mantener un trato respetuoso.";
+    }
+
+    // ==========================================================================
+    // SUBSECCIÓN 2: ACCIONES DE GENERAR REPORTE
+    // ==========================================================================
+    function getSelectedReportType() {
+      const checked = document.querySelector('input[name="repTypeRadio"]:checked');
+      return checked ? checked.value : 'disciplinario';
+    }
+
+    function updateReportContext() {
+      const studentSel = document.getElementById('repSelectStudent');
+      const detailsEl = document.getElementById('repContextDetails');
+      const titleEl = document.getElementById('repContextTitle');
+      const metaInfo = document.getElementById('repStudentMetaInfo');
+      if (!studentSel || !detailsEl || typeof SophosDB === 'undefined') return;
+
+      const studentId = studentSel.value;
+      const student = SophosDB.getStudentById(studentId);
+      const reportType = getSelectedReportType();
+
+      if (!student) {
+        detailsEl.textContent = 'Selecciona un estudiante para cargar sus antecedentes.';
+        return;
+      }
+
+      if (metaInfo) metaInfo.textContent = `${student.name} • ${student.courseId === '11A' ? '11° Grado A' : '10° Grado A'}`;
+
+      if (reportType === 'disciplinario') {
+        if (titleEl) titleEl.innerHTML = `<i class="bi bi-shield-exclamation me-1 text-danger"></i> Antecedentes Convivenciales (Observador):`;
+        const observations = SophosDB.getObservations(studentId);
+        if (observations.length === 0) {
+          detailsEl.innerHTML = `<span class="text-success"><i class="bi bi-check-circle-fill me-1"></i> El estudiante tiene un historial de convivencia limpio sin faltas registradas.</span>`;
+        } else {
+          const listSummary = observations.map(o => `• [${o.date}] ${o.category}: "${o.description.slice(0, 75)}..."`).join('<br>');
+          detailsEl.innerHTML = `<strong>${observations.length} anotación(es) previa(s):</strong><br>${listSummary}`;
+        }
+      } else {
+        if (titleEl) titleEl.innerHTML = `<i class="bi bi-mortarboard me-1 text-primary"></i> Rendimiento Académico Registrado:`;
+        const summary = SophosDB.getStudentSummaryForAI(studentId);
+        if (summary && summary.subjects.length > 0) {
+          const subjText = summary.subjects.map(s => `<strong>${s.subjectName}:</strong> ${s.average !== null ? s.average : 'Sin notas'}`).join(' | ');
+          detailsEl.innerHTML = `Desempeño en el Período Activo: ${subjText}`;
+        } else {
+          detailsEl.textContent = 'Sin calificaciones registradas para el período actual.';
+        }
+      }
+    }
+
+    async function handleGenerarDictamenConGemini() {
+      const draftTextarea = document.getElementById('repTextareaDraft');
+      const studentSel = document.getElementById('repSelectStudent');
+      const spinner = document.getElementById('repIASpinner');
+      const icon = document.getElementById('repIAIcon');
+      const btn = document.getElementById('btnMejorarRepIA');
+
+      const rawDraft = (draftTextarea ? draftTextarea.value : '').trim();
+      if (!rawDraft) {
+        showObservadorToast("Ingresa los puntos clave o borrador para que Gemini redacte el informe oficial.", "warning");
+        if (draftTextarea) draftTextarea.focus();
+        return;
+      }
+
+      const student = SophosDB.getStudentById(studentSel.value);
+      const studentName = student ? student.name : 'el estudiante';
+      const reportType = getSelectedReportType();
+      const detailsEl = document.getElementById('repContextDetails');
+      const contextStr = detailsEl ? detailsEl.textContent.trim() : '';
+
+      if (spinner) spinner.classList.remove('d-none');
+      if (icon) icon.classList.add('d-none');
+      if (btn) btn.disabled = true;
+
+      try {
+        const res = await callGeminiAssistant(rawDraft, studentName, reportType, contextStr);
+        showCustomAITooltip(btn, res.text, () => {
+          if (draftTextarea) draftTextarea.value = res.text;
+          showObservadorToast("¡Dictamen institucional aplicado al reporte!", "success");
+        }, {
+          title: `Dictamen Oficial con IA (${res.model})`,
+          question: '¿Aceptar y aplicar este dictamen al reporte?',
+          isWide: true
+        });
+      } catch (err) {
+        showObservadorToast(`Error de IA al generar dictamen: ${err.message}`, "danger");
+      } finally {
+        if (spinner) spinner.classList.add('d-none');
+        if (icon) icon.classList.remove('d-none');
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    function handleGuardarReporteOficial() {
+      const studentSel = document.getElementById('repSelectStudent');
+      const courseSel = document.getElementById('repSelectCourse');
+      const draftTextarea = document.getElementById('repTextareaDraft');
+      const reportType = getSelectedReportType();
+
+      const text = (draftTextarea ? draftTextarea.value : '').trim();
+      if (!text) {
+        showObservadorToast("El contenido del reporte no puede estar vacío. Redáctalo o usa el botón insignia IA.", "warning");
+        return;
+      }
+
+      const student = SophosDB.getStudentById(studentSel.value);
+      const repTitle = reportType === 'disciplinario' ? 'Reporte Disciplinario y de Convivencia' : 'Informe de Seguimiento Académico';
+
+      const newRep = SophosDB.addReport({
+        studentId: studentSel.value,
+        studentName: student ? student.name : 'Estudiante',
+        courseId: courseSel.value,
+        type: reportType,
+        title: repTitle,
+        content: text
+      });
+
+      showObservadorToast(`¡${repTitle} (${newRep.id}) radicado exitosamente!`, "success");
+      renderReportesHistorial(studentSel.value);
+    }
+
+    function renderReportesHistorial(studentId) {
+      const container = document.getElementById('repHistorialListContainer');
+      if (!container || typeof SophosDB === 'undefined') return;
+
+      const list = SophosDB.getReports(studentId);
+      container.innerHTML = '';
+
+      if (list.length === 0) {
+        container.innerHTML = `
+                    <div class="text-center py-3 text-muted">
+                        <i class="bi bi-file-earmark-x fs-2 d-block mb-1 text-secondary opacity-50"></i>
+                        <span class="small">No hay reportes oficiales radicados para este estudiante.</span>
+                    </div>
+                `;
+        return;
+      }
+
+      list.forEach(rep => {
+        const card = document.createElement('div');
+        card.className = 'border rounded-3 p-3 mb-2 bg-light shadow-sm';
+        const isDisc = rep.type === 'disciplinario';
+        card.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge ${isDisc ? 'bg-danger-subtle text-danger border border-danger-subtle' : 'bg-primary-subtle text-primary border border-primary-subtle'}">
+                                ${rep.title}
+                            </span>
+                            <span class="badge bg-success-subtle text-success">${rep.status || 'Radicado'}</span>
+                        </div>
+                        <span class="small text-muted"><i class="bi bi-calendar3 me-1"></i>${rep.date}</span>
+                    </div>
+                    <p class="small text-dark mb-2 fw-normal" style="line-height: 1.6; white-space: pre-wrap;">${rep.content}</p>
+                    <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                        <small class="text-muted">Docente: ${rep.teacher || 'Profe Mariana'}</small>
+                        <button type="button" class="btn btn-sm btn-outline-dark" onclick="openReportInModal('${encodeURIComponent(JSON.stringify(rep))}')">
+                            <i class="bi bi-printer me-1"></i> Ver Formato Imprimible
+                        </button>
+                    </div>
+                `;
+        container.appendChild(card);
+      });
+    }
+
+    function handleAbrirPrevisualizacionReporte() {
+      const studentSel = document.getElementById('repSelectStudent');
+      const courseSel = document.getElementById('repSelectCourse');
+      const draftTextarea = document.getElementById('repTextareaDraft');
+      const reportType = getSelectedReportType();
+
+      const text = (draftTextarea ? draftTextarea.value : '').trim();
+      if (!text) {
+        showObservadorToast("El contenido del reporte no puede estar vacío para poder previsualizarlo.", "warning");
+        return;
+      }
+
+      const student = SophosDB.getStudentById(studentSel.value);
+      const reportObj = {
+        title: reportType === 'disciplinario' ? 'Reporte Disciplinario y de Convivencia' : 'Informe de Seguimiento Académico',
+        studentName: student ? student.name : 'Estudiante',
+        studentId: studentSel.value,
+        courseId: courseSel.value === '11A' ? '11° Grado A' : '10° Grado A',
+        date: new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' }),
+        content: text
+      };
+
+      openReportInModal(encodeURIComponent(JSON.stringify(reportObj)));
+    }
+
+    function openReportInModal(encodedRep) {
+      try {
+        const rep = JSON.parse(decodeURIComponent(encodedRep));
+        const badgeType = document.getElementById('modalRepBadgeType');
+        const dateEl = document.getElementById('modalRepDate');
+        const nameEl = document.getElementById('modalRepStudentName');
+        const idEl = document.getElementById('modalRepStudentID');
+        const courseEl = document.getElementById('modalRepStudentCourse');
+        const bodyEl = document.getElementById('modalRepBodyContent');
+
+        if (badgeType) badgeType.textContent = rep.title;
+        if (dateEl) dateEl.textContent = `Fecha: ${rep.date}`;
+        if (nameEl) nameEl.textContent = rep.studentName;
+        if (idEl) idEl.textContent = rep.studentId;
+        if (courseEl) courseEl.textContent = rep.courseId === '11A' ? '11° Grado A' : (rep.courseId === '10A' ? '10° Grado A' : rep.courseId);
+        if (bodyEl) bodyEl.textContent = rep.content;
+
+        if (obsModalReportInstance) obsModalReportInstance.show();
+      } catch (e) {
+        console.error("Error al abrir reporte modal:", e);
+      }
+    }
+
+    function showObservadorToast(message, type = 'success') {
+      const toast = document.getElementById('obsAlertToast');
+      const msgEl = document.getElementById('obsAlertToastMessage');
+      if (!toast || !msgEl) return;
+
+      toast.className = `alert alert-${type} py-2 px-3 mb-3 shadow-sm d-flex align-items-center justify-content-between`;
+      const icon = type === 'success' ? 'bi-check-circle-fill' : (type === 'danger' ? 'bi-exclamation-triangle-fill' : 'bi-info-circle-fill');
+      msgEl.innerHTML = `<i class="bi ${icon} me-2"></i> ${message}`;
+
+      setTimeout(() => {
+        toast.classList.add('d-none');
+      }, 4500);
+    }
+  </script>
+</body>
+
+</html>

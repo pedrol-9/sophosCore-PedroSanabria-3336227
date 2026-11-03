@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophos Core - Acceso al Sistema y Seguridad</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- Estilos generales y módulos -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/landing.css">
+    <link rel="stylesheet" href="../../assets/css/modules.css">
+</head>
+<body class="landing-page d-flex align-items-center justify-content-center min-vh-100 p-3">
+
+    <!-- Blobs decorativos de fondo -->
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+
+    <div class="container" style="max-width: 480px; position: relative; z-index: 10;">
+        <div class="text-center mb-4">
+            <a href="../../index.html" class="d-inline-flex align-items-center gap-2 text-decoration-none">
+                <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-lg" style="width: 46px; height: 46px;">
+                    <i class="bi bi-mortarboard-fill text-white fs-4"></i>
+                </div>
+                <span class="fw-bold fs-3 premium-font text-white">Sophos<span class="text-indigo">Core</span></span>
+            </a>
+            <p class="text-secondary small mt-2">Plataforma Educativa Institucional</p>
+        </div>
+
+        <div class="card glass-card p-4 p-md-5 rounded-4 border-0 shadow-lg">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <div>
+                    <h4 class="fw-bold text-white mb-1">Iniciar Sesión</h4>
+                    <span class="badge bg-indigo bg-opacity-25 text-white border border-indigo small">Acceso Seguro</span>
+                </div>
+                <i class="bi bi-shield-lock-fill text-indigo fs-2"></i>
+            </div>
+
+            <div id="authAlert" class="alert alert-danger py-2 px-3 small d-none mb-3" style="font-size: 0.82rem;"></div>
+
+            <form id="authLoginForm">
+                <div class="mb-3">
+                    <label for="authEmail" class="form-label text-white small fw-medium">Correo Electrónico</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-secondary text-white-50"><i class="bi bi-envelope"></i></span>
+                        <input type="email" class="form-control bg-transparent text-white border-secondary" id="authEmail" required placeholder="nombre@sophoscore.edu.co">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label for="authPassword" class="form-label text-white small fw-medium mb-0">Contraseña</label>
+                        <a href="#" class="text-indigo text-decoration-none small" style="font-size: 0.75rem;">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-secondary text-white-50"><i class="bi bi-key"></i></span>
+                        <input type="password" class="form-control bg-transparent text-white border-secondary" id="authPassword" required placeholder="••••••••">
+                        <button class="btn btn-outline-secondary border-secondary text-white-50" type="button" id="toggleAuthPassword" title="Mostrar u ocultar contraseña">
+                            <i class="bi bi-eye" id="toggleAuthIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" id="authSubmitBtn" class="btn btn-glow w-100 py-2 rounded-pill fw-semibold premium-font fs-6">
+                    Ingresar a la Plataforma <i class="bi bi-arrow-right ms-1"></i>
+                </button>
+            </form>
+
+            <div class="text-center mt-4 pt-2 border-top border-secondary border-opacity-25">
+                <a href="../../index.html" class="text-secondary text-decoration-none small hover-white">
+                    <i class="bi bi-arrow-left"></i> Volver a la página principal
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const toggleAuthBtn = document.getElementById('toggleAuthPassword');
+        const authPassInput = document.getElementById('authPassword');
+        const toggleAuthIcon = document.getElementById('toggleAuthIcon');
+
+        if (toggleAuthBtn && authPassInput) {
+            toggleAuthBtn.addEventListener('click', () => {
+                const isPass = authPassInput.type === 'password';
+                authPassInput.type = isPass ? 'text' : 'password';
+                if (toggleAuthIcon) {
+                    toggleAuthIcon.classList.toggle('bi-eye', !isPass);
+                    toggleAuthIcon.classList.toggle('bi-eye-slash', isPass);
+                }
+            });
+        }
+
+        document.getElementById('authLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = (document.getElementById('authEmail').value || '').trim();
+            const password = (document.getElementById('authPassword').value || '').trim();
+            const alertBox = document.getElementById('authAlert');
+            const submitBtn = document.getElementById('authSubmitBtn');
+
+            if (alertBox) alertBox.classList.add('d-none');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Verificando credenciales...';
+            }
+
+            try {
+                const response = await fetch('../../api/login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    sessionStorage.setItem('sophos_session', JSON.stringify(data.user));
+                    let redirect = data.redirect_url;
+                    // Ajustar ruta relativa desde Views/m1-autenticacion/
+                    if (redirect.startsWith('Views/')) {
+                        redirect = '../' + redirect.replace('Views/', '');
+                    }
+                    window.location.href = redirect;
+                } else {
+                    if (alertBox) {
+                        alertBox.textContent = data.error || 'Credenciales inválidas.';
+                        alertBox.classList.remove('d-none');
+                    } else {
+                        alert(data.error);
+                    }
+                }
+            } catch (err) {
+                console.error("Error al autenticar:", err);
+                if (alertBox) {
+                    alertBox.textContent = 'Error de conexión con el servidor de autenticación.';
+                    alertBox.classList.remove('d-none');
+                }
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Ingresar a la Plataforma <i class="bi bi-arrow-right ms-1"></i>';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="70 45 372 310" role="img" aria-labelledby="title desc">
+  <title id="title">Cabeza de búho animada</title>
+  <desc id="desc">La cabeza original del búho geométrico, aislada y con un parpadeo suave.</desc>
+  <defs>
+    <linearGradient id="head" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff845b"/><stop offset=".55" stop-color="#ffb844"/><stop offset="1" stop-color="#ff6c87"/></linearGradient>
+    <linearGradient id="brow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffcf55"/><stop offset=".55" stop-color="#ff795c"/><stop offset="1" stop-color="#a33ce0"/></linearGradient>
+  </defs>
+  <style>
+    .eye,.right-eye { animation: eye-blink 5s ease-in-out infinite; }
+    .lids { opacity:0; animation: lid-blink 5s ease-in-out infinite; }
+    .closed { opacity:0; animation: closed-blink 5s ease-in-out infinite; }
+    @keyframes eye-blink { 0%,40%,48%,100% { opacity:1 } 43%,45% { opacity:0 } }
+    @keyframes lid-blink { 0%,40%,48%,100% { opacity:0 } 42%,46% { opacity:1 } }
+    @keyframes closed-blink { 0%,40%,48%,100% { opacity:0 } 43%,45% { opacity:1 } }
+    @media (prefers-reduced-motion: reduce) { .eye,.right-eye,.lids,.closed { animation:none } .eye,.right-eye { opacity:1 } .lids,.closed { opacity:0 } }
+  </style>
+  <g class="head">
+    <path d="M128 178c-8-31-8-59-4-88 20 26 44 40 77 47 19-16 37-23 55-23s36 7 55 23c33-7 57-21 77-47 4 29 4 57-4 88-17 48-65 74-128 74s-111-26-128-74z" fill="url(#head)" stroke="#5135a9" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M124 92c20 25 43 38 77 45-17 15-36 23-57 23-15-17-22-40-20-68zm264 0c-20 25-43 38-77 45 17 15 36 23 57 23 15-17 22-40 20-68z" fill="url(#brow)"/>
+    <ellipse cx="195" cy="190" rx="59" ry="62" fill="#ffe7a0" stroke="#623aa8" stroke-width="8"/>
+    <ellipse cx="317" cy="190" rx="59" ry="62" fill="#ffe7a0" stroke="#623aa8" stroke-width="8"/>
+    <g class="eye">
+      <circle cx="195" cy="191" r="38" fill="#243c63"/><circle cx="195" cy="191" r="26" fill="#26c5d2"/><circle cx="195" cy="191" r="17" fill="#172b4d"/><circle cx="184" cy="178" r="8" fill="white"/><circle cx="205" cy="202" r="4" fill="#a8f7fa"/>
+    </g>
+    <g class="right-eye"><circle cx="317" cy="191" r="38" fill="#243c63"/><circle cx="317" cy="191" r="26" fill="#26c5d2"/><circle cx="317" cy="191" r="17" fill="#172b4d"/><circle cx="306" cy="178" r="8" fill="white"/><circle cx="327" cy="202" r="4" fill="#a8f7fa"/></g>
+    <g class="lids" fill="url(#head)"><ellipse cx="195" cy="190" rx="59" ry="62"/><ellipse cx="317" cy="190" rx="59" ry="62"/></g>
+    <g class="closed" fill="none" stroke="#623aa8" stroke-width="8" stroke-linecap="round"><path d="M151 194q44 31 88 0"/><path d="M273 194q44 31 88 0"/></g>
+    <path d="m233 250 23-25 23 25-23 38z" fill="#20c7ce" stroke="#4b3ba1" stroke-width="7" stroke-linejoin="round"/>
+    <path d="m256 225 23 25-23 8z" fill="#10aebd"/>
+  </g>
+</svg>

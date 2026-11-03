@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophos Core - Inicio Académico (Docente)</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/modules.css">
+</head>
+<body class="dashboard-body role-docente">
+
+    <header class="glass-header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <button id="sidebarToggle" class="sidebar-toggle-btn" title="Ocultar/Mostrar Menú">
+                    <i class="bi bi-layout-sidebar-inset"></i>
+                </button>
+                <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
+                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm" style="width: 34px; height: 34px;">
+                        <i class="bi bi-mortarboard-fill text-white fs-6"></i>
+                    </div>
+                    <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
+                </a>
+                <span class="badge badge-role badge-role-docente ms-2">Gestión Académica</span>
+            </div>
+            <div class="top-icons">
+                <div class="badge-date-pill d-flex align-items-center gap-2 me-3" id="periodHeaderBadge">
+                    <i class="bi bi-calendar3 text-indigo"></i>
+                    <span id="periodHeaderName">Periodo 3 Activo</span>
+                </div>
+                <a href="../m1-autenticacion/login.html" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                    <i class="bi bi-box-arrow-right"></i> Salir
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-layout d-flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar py-3 d-flex flex-column justify-content-between">
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="inicio.html">
+                        <i class="bi bi-grid-1x2"></i> <span class="nav-text">Panel General</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="notas.html">
+                        <i class="bi bi-journal-check"></i> <span class="nav-text">Registro de Notas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="boletin.html">
+                        <i class="bi bi-file-earmark-bar-graph"></i> <span class="nav-text">Boletines</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../m3-asistente-docente/nuevo-asistente.html">
+                        <i class="bi bi-robot"></i> <span class="nav-text">Asistente IA Docente</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../m4-tutor-academico/nuevo-tutor.html">
+                        <i class="bi bi-chat-heart"></i> <span class="nav-text">Tutor Virtual Estudiante</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../admin.html">
+                        <i class="bi bi-shield-lock"></i> <span class="nav-text">Panel Admin</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-user-footer px-3 pt-3">
+                <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
+                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #059669, #10b981);">
+                        M
+                    </div>
+                    <div class="user-details overflow-hidden">
+                        <div class="fw-bold text-white small text-truncate">Profe Mariana</div>
+                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">Docente Matemáticas</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="panel-main">
+            <div class="container-fluid">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                    <div>
+                        <h2 class="fw-bold mb-1 text-dark">Gestión Académica</h2>
+                        <p class="text-secondary small mb-0">Control de cursos, libretas de calificaciones y seguimiento pedagógico</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="notas.html" class="btn btn-indigo shadow-sm">
+                            <i class="bi bi-pencil-square me-1"></i> Ir a Registro de Notas
+                        </a>
+                        <a href="boletin.html" class="btn btn-outline-dark">
+                            <i class="bi bi-printer me-1"></i> Ver Boletines
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Banner Periodo Actual -->
+                <div class="card card-custom p-4 mb-4 border-0 shadow-sm" style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white;">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <span class="badge bg-white text-indigo fw-bold mb-2">Periodo en Curso</span>
+                            <h3 class="fw-bold mb-1" id="bannerPeriodTitle">Tercer Período Académico 2026</h3>
+                            <p class="mb-0 text-white-50" id="bannerPeriodSub">Fecha límite programada de cierre: <strong>19 de Octubre de 2026</strong>. Recuerda consolidar tus notas y observaciones cualitativas antes de la fecha límite.</p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <a href="notas.html" class="btn btn-light text-indigo fw-bold px-4 py-2 rounded-pill shadow">
+                                Calificar Ahora <i class="bi bi-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Métricas Rápidas -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 h-100 shadow-sm border-0">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-secondary small fw-bold text-uppercase">Cursos Asignados</span>
+                                <div class="bg-indigo bg-opacity-10 text-indigo rounded-3 p-2">
+                                    <i class="bi bi-people-fill fs-5"></i>
+                                </div>
+                            </div>
+                            <h3 class="fw-bold text-dark mb-1">2 Grupos</h3>
+                            <div class="text-secondary small">10° Grado A (5 est.) y 11° Grado A (5 est.)</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 h-100 shadow-sm border-0">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-secondary small fw-bold text-uppercase">Materia Principal</span>
+                                <div class="bg-success bg-opacity-10 text-success rounded-3 p-2">
+                                    <i class="bi bi-calculator-fill fs-5"></i>
+                                </div>
+                            </div>
+                            <h3 class="fw-bold text-dark mb-1">Matemáticas</h3>
+                            <div class="text-secondary small">4 evaluaciones base por periodo + soporte IA</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-custom p-4 h-100 shadow-sm border-0">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-secondary small fw-bold text-uppercase">Herramientas IA</span>
+                                <div class="bg-warning bg-opacity-10 text-warning rounded-3 p-2">
+                                    <i class="bi bi-stars fs-5"></i>
+                                </div>
+                            </div>
+                            <h3 class="fw-bold text-dark mb-1">Asistente Activo</h3>
+                            <div class="text-secondary small">Redacción pedagógica en notas y observador</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cursos y acceso rápido -->
+                <div class="card card-custom border-0 shadow-sm p-4">
+                    <h5 class="fw-bold text-dark mb-3">Mis Asignaciones</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="border rounded-3 p-3 bg-light d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-1">11° Grado A - Matemáticas</h6>
+                                    <div class="text-secondary small">5 Estudiantes matriculados</div>
+                                </div>
+                                <a href="notas.html?curso=11A" class="btn btn-sm btn-indigo">Abrir Libreta</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="border rounded-3 p-3 bg-light d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-1">10° Grado A - Matemáticas</h6>
+                                    <div class="text-secondary small">5 Estudiantes matriculados</div>
+                                </div>
+                                <a href="notas.html?curso=10A" class="btn btn-sm btn-indigo">Abrir Libreta</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/sophos-client-db.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPeriod = SophosDB.getCurrentPeriod();
+            if (currentPeriod) {
+                document.getElementById('periodHeaderName').textContent = `${currentPeriod.name} (${currentPeriod.status === 'active' ? 'Activo' : 'Cerrado'})`;
+                document.getElementById('bannerPeriodTitle').textContent = `${currentPeriod.name} 2026`;
+                if (currentPeriod.id === 3) {
+                    document.getElementById('bannerPeriodSub').innerHTML = `Fecha límite programada de cierre: <strong>19 de Octubre de 2026</strong>. Consolida tus calificaciones y observaciones para boletín.`;
+                } else if (currentPeriod.id === 4) {
+                    document.getElementById('bannerPeriodSub').innerHTML = `¡El <strong>Cuarto Período</strong> está activo! La libreta está lista con 4 columnas en blanco para el nuevo período.`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
