@@ -20,345 +20,8 @@
   <!-- Estilos para impresión oficial de boletines -->
   <link rel="stylesheet" href="../../assets/css/print.css" media="print">
 
-  <style>
-    /* =========================================================
-           BADGES DE ALTO CONTRASTE (Legibilidad Garantizada)
-           ========================================================= */
-    .badge-contrast-success {
-      background-color: #15803d !important;
-      color: #ffffff !important;
-      font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 9999px;
-      letter-spacing: 0.02em;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 1px 3px rgba(21, 128, 61, 0.3);
-    }
-
-    .badge-contrast-info {
-      background-color: #0369a1 !important;
-      color: #ffffff !important;
-      font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 9999px;
-      letter-spacing: 0.02em;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 1px 3px rgba(3, 105, 161, 0.3);
-    }
-
-    .badge-contrast-warning {
-      background-color: #b45309 !important;
-      color: #ffffff !important;
-      font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 9999px;
-      letter-spacing: 0.02em;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 1px 3px rgba(180, 83, 9, 0.3);
-    }
-
-    .badge-contrast-danger {
-      background-color: #b91c1c !important;
-      color: #ffffff !important;
-      font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 9999px;
-      letter-spacing: 0.02em;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 1px 3px rgba(185, 28, 28, 0.3);
-    }
-
-    .badge-contrast-purple {
-      background-color: #6d28d9 !important;
-      color: #ffffff !important;
-      font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 9999px;
-      letter-spacing: 0.02em;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 1px 3px rgba(109, 40, 217, 0.3);
-    }
-
-    .badge-contrast-dark {
-      background-color: #1e293b !important;
-      color: #ffffff !important;
-      font-weight: 700;
-      padding: 5px 11px;
-      border-radius: 9999px;
-      letter-spacing: 0.02em;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* Promedios en tarjeta de calificaciones con alto contraste */
-    .average-badge.avg-high {
-      background-color: #15803d !important;
-      color: #ffffff !important;
-      box-shadow: 0 4px 10px rgba(21, 128, 61, 0.35);
-    }
-
-    .average-badge.avg-mid {
-      background-color: #b45309 !important;
-      color: #ffffff !important;
-      box-shadow: 0 4px 10px rgba(180, 83, 9, 0.35);
-    }
-
-    .average-badge.avg-low {
-      background-color: #b91c1c !important;
-      color: #ffffff !important;
-      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.35);
-    }
-
-    /* Tarjetas de estadísticas y secciones */
-    .student-stat-card {
-      border-radius: 16px;
-      border: 1px solid #e2e8f0;
-      background: #ffffff;
-      transition: all 0.25s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .student-stat-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px -6px rgba(2, 132, 199, 0.14);
-      border-color: #93c5fd;
-    }
-
-    .student-stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.35rem;
-      flex-shrink: 0;
-    }
-
-    .subject-overview-card {
-      border-radius: 16px;
-      border: 1px solid #e2e8f0;
-      background: #ffffff;
-      transition: all 0.25s ease;
-    }
-
-    .subject-overview-card:hover {
-      border-color: #0284c7;
-      box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.15);
-    }
-
-    .learning-step-card {
-      border-radius: 14px;
-      border: 1px solid #e2e8f0;
-      background: #ffffff;
-      transition: all 0.2s ease;
-    }
-
-    .learning-step-card:hover {
-      transform: translateY(-2px);
-      border-color: #38bdf8;
-      box-shadow: 0 8px 18px rgba(2, 132, 199, 0.1);
-    }
-
-    .pulse-live-indicator {
-      width: 9px;
-      height: 9px;
-      background-color: #22c55e;
-      border-radius: 50%;
-      display: inline-block;
-      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-      animation: pulseGreen 1.8s infinite;
-    }
-
-    @keyframes pulseGreen {
-      0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-      }
-
-      70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 7px rgba(34, 197, 94, 0);
-      }
-
-      100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-      }
-    }
-
-    /* =========================================================
-           WIDGET FLOTANTE SOPHOSBOT (BÚHO ANIMADO & CHAT OVERLAY)
-           ========================================================= */
-    .sophos-fab-container {
-      position: fixed;
-      bottom: 24px;
-      right: 28px;
-      z-index: 1060;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 12px;
-    }
-
-    .sophos-fab-btn {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: rgba(109, 40, 217, 0.15);
-      border: none;
-      box-shadow: 0 0 18px 8px rgba(109, 40, 217, 0.32);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      padding: 0;
-      overflow: visible;
-    }
-
-    .sophos-fab-btn:hover {
-      transform: scale(1.08) translateY(-3px);
-      background: rgba(124, 58, 237, 0.22);
-      box-shadow: 0 0 22px 10px rgba(124, 58, 237, 0.42);
-    }
-
-    .sophos-fab-btn.chat-active {
-      background: rgba(217, 119, 6, 0.18);
-      box-shadow: 0 0 18px 8px rgba(245, 158, 11, 0.35);
-    }
-
-    .sophos-fab-img {
-      width: 94px;
-      height: 94px;
-      max-width: none;
-      max-height: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      transition: transform 0.25s ease;
-      filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.2));
-    }
-
-    .sophos-fab-btn:hover .sophos-fab-img {
-      transform: translate(-50%, -55%) scale(1.05);
-    }
-
-    /* Panel de Chat Superpuesto Flotante */
-    .sophos-chat-overlay {
-      position: fixed;
-      bottom: 118px;
-      right: 28px;
-      width: 410px;
-      max-width: calc(100vw - 36px);
-      height: 560px;
-      max-height: calc(100vh - 135px);
-      border-radius: 20px;
-      background: #ffffff;
-      box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(226, 232, 240, 0.8);
-      z-index: 1059;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      transform-origin: bottom right;
-    }
-
-    .sophos-chat-overlay.d-none {
-      display: none !important;
-      transform: scale(0.85) translateY(20px);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .sophos-chat-overlay:not(.d-none) {
-      display: flex !important;
-      transform: scale(1) translateY(0);
-      opacity: 1;
-      animation: flyIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes flyIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9) translateY(25px);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    .quick-chip {
-      background: #f1f5f9;
-      color: #1e293b;
-      border: 1px solid #cbd5e1;
-      border-radius: 9999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 11px;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      user-select: none;
-    }
-
-    .quick-chip:hover {
-      background: #0284c7;
-      color: #ffffff;
-      border-color: #0284c7;
-      transform: translateY(-1px);
-    }
-
-    /* Impresión limpia del boletín oficial */
-    @media print {
-      body {
-        background: white !important;
-      }
-
-      .glass-header,
-      .sidebar,
-      .sophos-fab-container,
-      .sophos-chat-overlay,
-      .no-print {
-        display: none !important;
-      }
-
-      .panel-main {
-        padding: 0 !important;
-        background: white !important;
-        margin: 0 !important;
-      }
-
-      .card-report {
-        box-shadow: none !important;
-        border: 1px solid #cbd5e1 !important;
-      }
-
-      .spa-section:not(#boletines) {
-        display: none !important;
-      }
-
-      #boletines {
-        display: block !important;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="../../assets/css/estudiante.css">
+  <link rel="stylesheet" href="../../assets/css/views.css">
 </head>
 
 <body class="dashboard-body role-estudiante">
@@ -372,8 +35,8 @@
           <i class="bi bi-layout-sidebar-inset"></i>
         </button>
         <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
-          <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm"
-            style="width: 34px; height: 34px;">
+          <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm sidebar-brand-mark"
+           >
             <i class="bi bi-mortarboard-fill text-white fs-6"></i>
           </div>
           <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
@@ -428,13 +91,13 @@
       <div class="sidebar-user-footer px-3 pt-3">
         <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
           <div
-            class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
-            style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #0284c7, #06b6d4);">
+            class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 student-profile-avatar"
+           >
             AJ
           </div>
           <div class="user-details overflow-hidden">
             <div class="fw-bold text-white small text-truncate">Alex Johnson</div>
-            <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">11° Grado A • Estudiante</div>
+            <div class="text-white-50 text-truncate view-text-caption">11° Grado A • Estudiante</div>
           </div>
         </div>
         <a href="../../index.html" class="btn btn-link btn-logout text-decoration-none p-2 w-100"
@@ -454,8 +117,8 @@
         <!-- ============================================================== -->
         <div id="panel-general" class="spa-section active">
           <!-- Banner de Bienvenida -->
-          <div class="card border-0 rounded-4 text-white p-4 mb-4 shadow-sm"
-            style="background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #2563eb 100%);">
+          <div class="card border-0 rounded-4 text-white p-4 mb-4 shadow-sm student-hero-banner"
+           >
             <div class="row align-items-center g-3">
               <div class="col-lg-8">
                 <div class="d-flex align-items-center gap-2 mb-2">
@@ -619,17 +282,17 @@
                   </div>
 
                   <!-- Call to Action Principal hacia SophosBot -->
-                  <div class="p-3 rounded-4 mb-3"
-                    style="background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%); border: 1px solid #e0e7ff;">
+                  <div class="p-3 rounded-4 mb-3 student-feature-card"
+                   >
                     <div class="d-flex align-items-start gap-3">
                       <div
-                        class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0"
-                        style="width: 44px; height: 44px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
+                        class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0 student-feature-icon"
+                       >
                         <i class="bi bi-robot fs-5"></i>
                       </div>
                       <div class="flex-grow-1">
                         <div class="fw-bold text-dark small mb-1">¿Qué tema necesitas reforzar hoy?</div>
-                        <p class="text-secondary small mb-2" style="font-size: 0.8rem;">
+                        <p class="text-secondary small mb-2 view-text-supporting">
                           Coméntale a <strong>SophosBot</strong> tus dudas o pide una ruta guiada. El tutor IA analizará
                           tu diagnóstico académico en tiempo real.
                         </p>
@@ -640,7 +303,7 @@
                             onkeydown="if(event.key==='Enter') triggerRefuerzoPrompt()">
                           <button class="btn btn-primary px-3 fw-semibold d-flex align-items-center gap-1" type="button"
                             onclick="triggerRefuerzoPrompt()">
-                            <span>Consultar</span> <i class="bi bi-send-fill" style="font-size: 0.75rem;"></i>
+                            <span>Consultar</span> <i class="bi bi-send-fill view-text-caption"></i>
                           </button>
                         </div>
                       </div>
@@ -654,11 +317,11 @@
                         class="p-2 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between hover-shadow transition cursor-pointer"
                         onclick="askSophosBotDirect('Por favor genera mi ruta de refuerzo personalizada paso a paso para Matemáticas, enfocada en Regla de la Cadena y Optimización.')">
                         <div>
-                          <div class="d-flex align-items-center gap-1 text-primary fw-bold mb-1"
-                            style="font-size: 0.78rem;">
+                          <div class="d-flex align-items-center gap-1 text-primary fw-bold mb-1 view-text-emphasis"
+                           >
                             <i class="bi bi-compass-fill"></i> Ruta Completa
                           </div>
-                          <div class="text-secondary" style="font-size: 0.73rem;">Plan de estudio estructurado paso a
+                          <div class="text-secondary view-text-detail">Plan de estudio estructurado paso a
                             paso.</div>
                         </div>
                         <div
@@ -672,16 +335,16 @@
                         class="p-2 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between hover-shadow transition cursor-pointer"
                         onclick="askSophosBotDirect('Plantéame 3 ejercicios prácticos de derivadas con regla de la cadena y acompáñame a resolverlos con retroalimentación.')">
                         <div>
-                          <div class="d-flex align-items-center gap-1 text-purple fw-bold mb-1"
-                            style="font-size: 0.78rem; color: #7c3aed;">
+                          <div class="d-flex align-items-center gap-1 text-purple fw-bold mb-1 student-plan-caption"
+                           >
                             <i class="bi bi-pencil-square"></i> Ejercicios IA
                           </div>
-                          <div class="text-secondary" style="font-size: 0.73rem;">3 ejercicios formativos con solución
+                          <div class="text-secondary view-text-detail">3 ejercicios formativos con solución
                             guiada.</div>
                         </div>
                         <div
-                          class="mt-2 text-purple fw-semibold small d-flex align-items-center justify-content-between"
-                          style="color: #7c3aed;">
+                          class="mt-2 text-purple fw-semibold small d-flex align-items-center justify-content-between student-purple-accent"
+                         >
                           <span>Practicar</span> <i class="bi bi-arrow-right-short fs-5"></i>
                         </div>
                       </div>
@@ -691,11 +354,11 @@
                         class="p-2 rounded-3 border bg-light h-100 d-flex flex-column justify-content-between hover-shadow transition cursor-pointer"
                         onclick="askSophosBotDirect('¿Cuáles son los temas clave y tips para sacar la mejor nota en el examen de cálculo del 19 de Octubre?')">
                         <div>
-                          <div class="d-flex align-items-center gap-1 text-warning-emphasis fw-bold mb-1"
-                            style="font-size: 0.78rem;">
+                          <div class="d-flex align-items-center gap-1 text-warning-emphasis fw-bold mb-1 view-text-emphasis"
+                           >
                             <i class="bi bi-lightbulb-fill text-warning"></i> Tips Examen
                           </div>
-                          <div class="text-secondary" style="font-size: 0.73rem;">Estrategias clave para el cierre del
+                          <div class="text-secondary view-text-detail">Estrategias clave para el cierre del
                             19 de Octubre.</div>
                         </div>
                         <div class="mt-2 text-dark fw-semibold small d-flex align-items-center justify-content-between">
@@ -707,11 +370,10 @@
                 </div>
 
                 <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
-                  <span class="text-muted small" style="font-size: 0.75rem;">
+                  <span class="text-muted small view-text-caption">
                     <i class="bi bi-shield-check text-success"></i> Información procesada por Gemini 2.5 Flash
                   </span>
-                  <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill fw-semibold"
-                    style="font-size: 0.72rem;"
+                  <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-pill fw-semibold view-text-meta"
                     onclick="askSophosBotDirect('Actualiza mi diagnóstico y sugiere nuevas áreas de refuerzo según mi rendimiento.')">
                     <i class="bi bi-arrow-repeat me-1"></i> Actualizar con IA
                   </button>
@@ -739,7 +401,7 @@
                       <i class="bi bi-youtube text-danger fs-4"></i>
                       <div>
                         <div class="fw-bold small">Matemáticas Profe Alex</div>
-                        <div class="text-secondary" style="font-size: 0.72rem;">Cálculo diferencial, derivadas y límites
+                        <div class="text-secondary view-text-meta">Cálculo diferencial, derivadas y límites
                         </div>
                       </div>
                     </div>
@@ -754,7 +416,7 @@
                       <i class="bi bi-youtube text-danger fs-4"></i>
                       <div>
                         <div class="fw-bold small">JulioProfe Oficial</div>
-                        <div class="text-secondary" style="font-size: 0.72rem;">Álgebra, trigonometría y física clásica
+                        <div class="text-secondary view-text-meta">Álgebra, trigonometría y física clásica
                         </div>
                       </div>
                     </div>
@@ -769,7 +431,7 @@
                       <i class="bi bi-youtube text-danger fs-4"></i>
                       <div>
                         <div class="fw-bold small">Daniel Carreón</div>
-                        <div class="text-secondary" style="font-size: 0.72rem;">Fundamentos y explicaciones intuitivas
+                        <div class="text-secondary view-text-meta">Fundamentos y explicaciones intuitivas
                         </div>
                       </div>
                     </div>
@@ -935,7 +597,6 @@
                       <th class="ps-4">Fecha</th>
                       <th>Materia</th>
                       <th>Docente</th>
-                      <th>Tipo de Inasistencia</th>
                       <th>Observación</th>
                       <th class="text-center pe-4">Estado</th>
                     </tr>
@@ -945,7 +606,6 @@
                       <td class="ps-4 fw-medium text-dark">09 de Oct, 2026</td>
                       <td>Física</td>
                       <td>Mariana Ruiz</td>
-                      <td><span class="badge-contrast-warning small">Inasistencia</span></td>
                       <td class="text-secondary small">Cita médica odontológica programada</td>
                       <td class="text-center pe-4"><span class="badge-contrast-info small">Justificada</span></td>
                     </tr>
@@ -953,7 +613,6 @@
                       <td class="ps-4 fw-medium text-dark">25 de Sep, 2026</td>
                       <td>Matemáticas</td>
                       <td>Mariana Ruiz</td>
-                      <td><span class="badge-contrast-warning small">Inasistencia</span></td>
                       <td class="text-secondary small">Calamidad doméstica informada por acudiente</td>
                       <td class="text-center pe-4"><span class="badge-contrast-info small">Justificada</span></td>
                     </tr>
@@ -1003,19 +662,19 @@
           </div>
 
           <!-- Formato Oficial del Boletín Institucional -->
-          <div class="card card-custom p-4 p-md-5 border-0 shadow mx-auto card-report"
-            style="max-width: 860px; background: white;" id="bulletinCardContent">
+          <div class="card card-custom p-4 p-md-5 border-0 shadow mx-auto card-report report-content-card"
+            id="bulletinCardContent">
             <!-- Cabecera Institucional -->
             <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
               <div class="d-flex align-items-center gap-3">
-                <div class="d-flex align-items-center justify-content-center bg-indigo rounded-3 text-white"
-                  style="width: 52px; height: 52px;">
+                <div class="d-flex align-items-center justify-content-center bg-indigo rounded-3 text-white view-avatar-large"
+                 >
                   <i class="bi bi-mortarboard-fill fs-3"></i>
                 </div>
                 <div>
                   <h4 class="fw-bold mb-0 text-dark">COLEGIO SOPHOS CORE</h4>
                   <div class="text-secondary small">Resolución Oficial No. 2026-A • Educación Media Vocacional</div>
-                  <div class="text-muted" style="font-size: 0.72rem;">Código DANE: 168001004523 • NIT: 900.842.120-1
+                  <div class="text-muted view-text-meta">Código DANE: 168001004523 • NIT: 900.842.120-1
                   </div>
                 </div>
               </div>
@@ -1052,8 +711,8 @@
                   <tr>
                     <th class="text-start">Asignatura</th>
                     <th>Calificaciones del Período</th>
-                    <th style="width: 110px;">Definitiva</th>
-                    <th style="width: 140px;">Desempeño</th>
+                    <th class="gradebook-column-final-score">Definitiva</th>
+                    <th class="gradebook-column-performance">Desempeño</th>
                   </tr>
                 </thead>
                 <tbody id="bulletinTableBody">
@@ -1069,7 +728,7 @@
                 <h6 class="fw-bold text-dark mb-0">Observaciones y Recomendaciones Pedagógicas</h6>
                 <span class="badge-contrast-purple small ms-auto no-print">Validado por Docente & IA</span>
               </div>
-              <p class="mb-0 text-dark" id="bulletinObservationText" style="line-height: 1.6; font-style: italic;">
+              <p class="mb-0 text-dark report-observation" id="bulletinObservationText">
                 "Demuestra gran capacidad analítica y trabajo colaborativo."
               </p>
             </div>
@@ -1079,30 +738,30 @@
               <div class="col-6">
                 <div class="border-top border-dark mx-auto w-75 pt-2">
                   <div class="fw-bold small">Profe Mariana</div>
-                  <div class="text-muted" style="font-size: 0.75rem;">Docente Titular / Coordinadora</div>
+                  <div class="text-muted view-text-caption">Docente Titular / Coordinadora</div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="border-top border-dark mx-auto w-75 pt-2">
                   <div class="fw-bold small">Rectoría Institucional</div>
-                  <div class="text-muted" style="font-size: 0.75rem;">Colegio SophosCore</div>
+                  <div class="text-muted view-text-caption">Colegio SophosCore</div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Aviso de Período en Curso (Cuando el boletín aún no se ha generado) -->
-          <div class="card card-custom p-5 border-0 shadow-sm mx-auto text-center d-none" style="max-width: 860px;" id="bulletinPendingCard">
+          <div class="card card-custom p-5 border-0 shadow-sm mx-auto text-center d-none student-report-card" id="bulletinPendingCard">
             <div class="mb-3">
-              <span class="rounded-circle d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning" style="width: 72px; height: 72px;">
+              <span class="rounded-circle d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning view-empty-state-icon">
                 <i class="bi bi-hourglass-split fs-1"></i>
               </span>
             </div>
             <h4 class="fw-bold text-dark mb-2">Boletín Oficial Aún No Generado</h4>
-            <p class="text-secondary mx-auto mb-4" style="max-width: 540px;">
+            <p class="text-secondary mx-auto mb-4 student-chat-window">
               El boletín oficial del <strong id="pendingPeriodName">Tercer Período</strong> no se encuentra generado todavía, ya que este período académico está actualmente en curso.
             </p>
-            <div class="alert alert-light border text-start mx-auto mb-4 p-3 rounded-3" style="max-width: 580px;">
+            <div class="alert alert-light border text-start mx-auto mb-4 p-3 rounded-3 view-empty-state-notice">
               <div class="d-flex align-items-start gap-2 mb-2">
                 <i class="bi bi-calendar-event text-primary mt-1"></i>
                 <div>
@@ -1150,17 +809,17 @@
     <div
       class="p-3 bg-dark text-white d-flex justify-content-between align-items-center border-bottom border-secondary border-opacity-25">
       <div class="d-flex align-items-center gap-2">
-        <div class="rounded-circle d-flex align-items-center justify-content-center text-white"
-          style="width: 40px; height: 40px; background: radial-gradient(circle, rgba(165,180,252,0.4) 0%, rgba(99,102,241,0.25) 100%); border: 1.5px solid rgba(199,210,254,0.45);">
+        <div class="rounded-circle d-flex align-items-center justify-content-center text-white student-chat-launcher"
+         >
           <img src="../../assets/img/sophos-bot-chat-abierto.svg" alt="Owl Head" width="32" height="32"
-            style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+            class="student-chat-image">
         </div>
         <div>
           <div class="fw-bold small mb-0 d-flex align-items-center gap-1">
-            SophosBot <span class="badge badge-contrast-purple py-0 px-2" style="font-size: 0.65rem;">Gemini AI</span>
+            SophosBot <span class="badge badge-contrast-purple py-0 px-2 view-text-compact">Gemini AI</span>
           </div>
-          <div class="text-white-50 small d-flex align-items-center gap-1" style="font-size: 0.72rem;">
-            <span class="pulse-live-indicator" style="width: 7px; height: 7px;"></span> En línea • Apoyo a Alex
+          <div class="text-white-50 small d-flex align-items-center gap-1 view-text-meta">
+            <span class="pulse-live-indicator student-online-indicator"></span> En línea • Apoyo a Alex
           </div>
         </div>
       </div>
@@ -1177,12 +836,12 @@
     </div>
 
     <!-- Área de Mensajes del Chat -->
-    <div class="chat-messages" id="studentChatArea"
-      style="flex: 1; overflow-y: auto; padding: 14px; background: #f8fafc;">
+    <div class="chat-messages student-chat-messages" id="studentChatArea"
+     >
       <!-- Mensaje de bienvenida -->
       <div class="chat-bubble-ai mb-2">
         <div class="d-flex align-items-center gap-2 mb-1">
-          <span class="badge-contrast-purple small" style="font-size: 0.7rem;">SophosBot IA</span>
+          <span class="badge-contrast-purple small view-text-footnote">SophosBot IA</span>
           <small class="text-muted">Ahora</small>
         </div>
         <p class="mb-2 text-dark small">
@@ -1215,7 +874,7 @@
         <input type="text" class="form-control form-control-sm rounded-pill px-3" id="studentChatInput"
           placeholder="Escribe tu pregunta académica..." autocomplete="off">
         <button type="submit" class="btn btn-sm btn-indigo rounded-pill px-3 fw-bold d-flex align-items-center gap-1">
-          <span>Enviar</span> <i class="bi bi-send-fill" style="font-size: 0.75rem;"></i>
+          <span>Enviar</span> <i class="bi bi-send-fill view-text-caption"></i>
         </button>
       </form>
     </div>
@@ -1286,7 +945,7 @@
   </div>
 
   <!-- Toast de Notificación Flotante -->
-  <div class="toast-container position-fixed bottom-0 start-0 p-3" style="z-index: 1090;">
+  <div class="toast-container position-fixed bottom-0 start-0 p-3 student-toast-layer">
     <div id="studentToast" class="toast align-items-center text-bg-primary border-0 shadow-lg" role="alert"
       aria-live="assertive" aria-atomic="true">
       <div class="d-flex">
@@ -1464,7 +1123,7 @@
         if (details) {
           details.innerHTML = `
                         <div class="fw-bold text-white small text-truncate">${escapeHtml(student.nombre_completo)}</div>
-                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">${escapeHtml(student.curso_nombre)} • ${escapeHtml(student.rol)}</div>
+                        <div class="text-white-50 text-truncate view-text-caption">${escapeHtml(student.curso_nombre)} • ${escapeHtml(student.rol)}</div>
                     `;
         }
       }
@@ -1505,12 +1164,13 @@
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <div>
                                         <h6 class="fw-bold text-dark mb-0">${escapeHtml(subj.materia_nombre)}</h6>
-                                        <span class="text-secondary" style="font-size: 0.75rem;">Docente: ${escapeHtml(subj.docente_nombre)}</span>
+                                        <span class="text-secondary view-text-caption">Docente: ${escapeHtml(subj.docente_nombre)}</span>
                                     </div>
                                     <span class="${badgeClass} fs-6">${avgNum !== null ? avgNum.toFixed(1) : '—'}</span>
                                 </div>
-                                <div class="progress mb-2" style="height: 7px; background-color: #e2e8f0;">
-                                    <div class="progress-bar ${avgNum && avgNum >= 4.0 ? 'bg-success' : 'bg-warning'}" role="progressbar" style="width: ${progressWidth}%"></div>
+                                <div class="progress mb-2 student-progress-track">
+                                    <div class="progress-bar ${avgNum && avgNum >= 4.0 ? 'bg-success' : 'bg-warning'} student-progress-fill" role="progressbar" data-progress="${progressWidth}">
+                                    </div>
                                 </div>
                                 <p class="text-dark small mb-3 fst-italic">
                                     "${escapeHtml(obsText)}"
@@ -1530,6 +1190,9 @@
       });
 
       container.innerHTML = html;
+      container.querySelectorAll('.student-progress-fill').forEach(progressBar => {
+        progressBar.style.setProperty('--progress-width', `${progressBar.dataset.progress}%`);
+      });
 
       // Actualizar métricas del panel general
       const genAvgEl = document.getElementById('statGeneralAvg');
@@ -1818,10 +1481,10 @@
 
       bubble.innerHTML = `
                 <div class="d-flex align-items-center justify-content-between mb-1">
-                    <span class="badge-contrast-purple small" style="font-size: 0.65rem;">
+                    <span class="badge-contrast-purple small view-text-compact">
                         <i class="bi bi-robot"></i> ${escapeHtml(modelName)}
                     </span>
-                    <small class="text-muted" style="font-size: 0.7rem;">Ahora</small>
+                    <small class="text-muted view-text-footnote">Ahora</small>
                 </div>
                 <p class="mb-0 text-dark small">${formattedText}</p>
             `;
@@ -1849,7 +1512,7 @@
       chatArea.innerHTML = `
                 <div class="chat-bubble-ai mb-2">
                     <div class="d-flex align-items-center gap-2 mb-1">
-                        <span class="badge-contrast-purple small" style="font-size: 0.7rem;">SophosBot IA</span>
+                        <span class="badge-contrast-purple small view-text-footnote">SophosBot IA</span>
                         <small class="text-muted">Ahora</small>
                     </div>
                     <p class="mb-2 text-dark small">
@@ -1885,7 +1548,7 @@
       if (inasistencias.length === 0) {
         table.innerHTML = `
           <tr>
-            <td colspan="6" class="text-center py-4 text-muted small">
+            <td colspan="5" class="text-center py-4 text-muted small">
               <i class="bi bi-check-circle-fill text-success fs-4 d-block mb-1"></i>
               No presenta registros de inasistencias en este período académico.
             </td>
@@ -1897,17 +1560,14 @@
       let html = '';
       inasistencias.forEach(rec => {
         const isJustified = rec.estado === 'FALTA_JUSTIFICADA';
-        const badgeTipo = isJustified ? 'badge-contrast-warning' : 'badge-contrast-danger';
-        const labelTipo = isJustified ? 'Inasistencia' : 'Inasistencia Injustificada';
         const badgeEstado = isJustified ? 'badge-contrast-info' : 'badge-contrast-danger';
-        const labelEstado = isJustified ? 'Justificada' : 'Sin Justificar';
+        const labelEstado = isJustified ? 'Justificada' : 'Injustificada';
 
         html += `
           <tr>
             <td class="ps-4 fw-medium text-dark">${escapeHtml(rec.fecha)}</td>
             <td>${escapeHtml(rec.materia_nombre || 'Matemáticas')}</td>
             <td>${escapeHtml(rec.docente_nombre || 'Mariana Ruiz')}</td>
-            <td><span class="${badgeTipo} small">${labelTipo}</span></td>
             <td class="text-secondary small">${escapeHtml(rec.observacion || 'Sin observación')}</td>
             <td class="text-center pe-4"><span class="${badgeEstado} small">${labelEstado}</span></td>
           </tr>

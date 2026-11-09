@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../../assets/css/modules.css">
   <!-- Estilos para impresión oficial de boletines -->
   <link rel="stylesheet" href="../../assets/css/print.css" media="print">
+  <link rel="stylesheet" href="../../assets/css/views.css">
 </head>
 
 <body class="dashboard-body role-docente">
@@ -28,8 +29,8 @@
           <i class="bi bi-layout-sidebar-inset"></i>
         </button>
         <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
-          <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm"
-            style="width: 34px; height: 34px;">
+          <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm sidebar-brand-mark"
+           >
             <i class="bi bi-mortarboard-fill text-white fs-6"></i>
           </div>
           <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
@@ -63,7 +64,7 @@
             data-bs-toggle="tooltip" data-bs-placement="right" title="Registro Académico">
             <i class="bi bi-mortarboard"></i> <span class="nav-text">Registro Académico</span>
           </a>
-          <div class="academic-submenu" id="academicSubmenu" style="display: none;">
+          <div class="academic-submenu" id="academicSubmenu">
             <a class="submenu-item active" href="#" id="submenuItemNotas" data-bs-toggle="tooltip"
               data-bs-placement="right" title="Notas" onclick="switchAcademicTab('notas', event)">
               <i class="bi bi-journal-text me-2"></i> <span class="submenu-text">Notas</span>
@@ -96,13 +97,13 @@
       <div class="sidebar-user-footer px-3 pt-3">
         <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
           <div
-            class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0"
-            style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #059669, #10b981);">
+            class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 teacher-profile-avatar"
+           >
             M
           </div>
           <div class="user-details overflow-hidden">
             <div class="fw-bold text-white small text-truncate">Profe Mariana</div>
-            <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">Docente</div>
+            <div class="text-white-50 text-truncate view-text-caption">Docente</div>
           </div>
         </div>
         <a href="../../index.html" class="btn btn-link btn-logout text-decoration-none p-2 w-100"
@@ -128,20 +129,20 @@
             <div class="row g-3">
               <div class="col-md-4">
                 <label class="form-label text-secondary small fw-medium">Materia</label>
-                <select class="form-select bg-light border-0">
-                  <option>Matemáticas</option>
-                  <option>Física</option>
+                <select class="form-select bg-light border-0" id="dashboardSubjectFilter" disabled>
+                  <option value="">Cargando materias...</option>
                 </select>
               </div>
               <div class="col-md-4">
                 <label class="form-label text-secondary small fw-medium">Grado</label>
-                <select class="form-select bg-light border-0">
-                  <option>11°A</option>
-                  <option>10°B</option>
+                <select class="form-select bg-light border-0" id="dashboardCourseFilter" disabled>
+                  <option value="">Cargando cursos...</option>
                 </select>
               </div>
               <div class="col-md-4 d-flex align-items-end">
-                <button class="btn btn-indigo w-100"><i class="bi bi-filter"></i> Aplicar Filtros</button>
+                <button type="button" class="btn btn-indigo w-100" id="applyDashboardFilters" disabled>
+                  <i class="bi bi-filter"></i> Aplicar Filtros
+                </button>
               </div>
             </div>
           </div>
@@ -149,7 +150,7 @@
           <!-- Listado de Estudiantes -->
           <div class="card card-custom">
             <div class="card-header bg-white border-bottom p-3">
-              <h5 class="mb-0 fw-bold">Listado de Estudiantes (11°A)</h5>
+              <h5 class="mb-0 fw-bold" id="dashboardStudentsHeading">Listado de Estudiantes</h5>
             </div>
             <div class="card-body p-0">
               <div class="table-responsive">
@@ -157,39 +158,12 @@
                   <thead class="table-light">
                     <tr>
                       <th class="ps-4">Estudiante</th>
-                      <th>Estado</th>
-                      <th>Última Evidencia</th>
-                      <th class="text-end pe-4">Acciones</th>
+                      <th>Correo electrónico</th>
+                      <th>Curso</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td class="ps-4">
-                        <div class="d-flex align-items-center gap-3">
-                          <img src="https://ui-avatars.com/api/?name=Alex+J&background=random" class="avatar-sm" alt="">
-                          <span class="fw-medium text-dark">Alex Johnson</span>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-success bg-opacity-10 text-success">Activo</span></td>
-                      <td><span class="text-secondary small">Hace 2 días</span></td>
-                      <td class="text-end pe-4">
-                        <button class="btn btn-sm btn-outline-secondary">Ver Perfil</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="ps-4">
-                        <div class="d-flex align-items-center gap-3">
-                          <img src="https://ui-avatars.com/api/?name=Maria+G&background=random" class="avatar-sm"
-                            alt="">
-                          <span class="fw-medium text-dark">Maria Gonzalez</span>
-                        </div>
-                      </td>
-                      <td><span class="badge bg-success bg-opacity-10 text-success">Activo</span></td>
-                      <td><span class="text-secondary small">Hace 5 horas</span></td>
-                      <td class="text-end pe-4">
-                        <button class="btn btn-sm btn-outline-secondary">Ver Perfil</button>
-                      </td>
-                    </tr>
+                  <tbody id="dashboardStudentsTable" aria-live="polite">
+                    <tr><td colspan="3" class="text-center py-4 text-muted">Cargando estudiantes...</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -261,7 +235,7 @@
                   <div class="d-flex justify-content-between align-items-center mb-1">
                     <label class="form-label text-secondary small fw-medium mb-0">Período Académico</label>
                     <span id="docentePeriodStatusIndicator" class="small fw-semibold text-success">
-                      <i class="bi bi-circle-fill me-1" style="font-size: 0.55rem;"></i> Período 3 Activo
+                      <i class="bi bi-circle-fill me-1 view-text-indicator"></i> Período 3 Activo
                     </span>
                   </div>
                   <div class="period-buttons-container" id="docentePeriodButtonsGroup">
@@ -295,12 +269,12 @@
               <!-- Estado Vacío Inicial cuando no hay filtros seleccionados -->
               <div id="docenteEmptyState" class="text-center py-5 px-3">
                 <div
-                  class="mx-auto mb-3 text-indigo bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm"
-                  style="width: 70px; height: 70px; font-size: 1.8rem;">
+                  class="mx-auto mb-3 text-indigo bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm gradebook-empty-icon"
+                 >
                   <i class="bi bi-funnel"></i>
                 </div>
                 <h5 class="fw-bold text-dark mb-1">Selecciona un Curso y una Materia</h5>
-                <p class="text-secondary small mb-0 mx-auto" style="max-width: 480px;">
+                <p class="text-secondary small mb-0 mx-auto gradebook-empty-description">
                   Para comenzar el registro o visualización de calificaciones, selecciona el <strong>Curso /
                     Grupo</strong> y la <strong>Materia</strong> en los filtros superiores.
                 </p>
@@ -336,15 +310,15 @@
               <div class="fw-bold text-indigo d-flex align-items-center gap-1">
                 <i class="bi bi-stars"></i> <span id="docenteAiTooltipTitle">Sugerencia IA Pedagógica</span>
               </div>
-              <button type="button" class="btn-close" style="font-size: 0.65rem;"
+              <button type="button" class="btn-close view-text-compact"
                 onclick="closeDocenteAITooltip()"></button>
             </div>
-            <div class="text-secondary mb-2 overflow-y-auto" id="docenteAiTooltipText"
-              style="line-height: 1.5; max-height: 250px; font-size: 0.85rem; white-space: pre-wrap;">
+            <div class="text-secondary mb-2 overflow-y-auto teacher-ai-tooltip-copy" id="docenteAiTooltipText"
+             >
               Cargando sugerencia...
             </div>
             <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-              <span class="small text-muted" id="docenteAiTooltipQuestion" style="font-size: 0.75rem;">¿Aplicar
+              <span class="small text-muted view-text-caption" id="docenteAiTooltipQuestion">¿Aplicar
                 cambio?</span>
               <div class="d-flex gap-2">
                 <button type="button" class="ai-action-btn-accept" id="btnAcceptDocenteAISuggestion"
@@ -396,7 +370,7 @@
                     <span class="text-secondary small fw-bold text-uppercase">Total Inasistencias</span>
                     <h3 class="fw-bold text-dark mt-1 mb-0" id="statDocenteTotalInasistencias">0</h3>
                   </div>
-                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark bg-opacity-10 text-dark" style="width: 44px; height: 44px;">
+                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-dark bg-opacity-10 text-dark teacher-summary-icon">
                     <i class="bi bi-calendar-x fs-5"></i>
                   </div>
                 </div>
@@ -410,7 +384,7 @@
                     <span class="text-secondary small fw-bold text-uppercase">Injustificadas</span>
                     <h3 class="fw-bold text-danger mt-1 mb-0" id="statDocenteInjustificadas">0</h3>
                   </div>
-                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-danger bg-opacity-10 text-danger" style="width: 44px; height: 44px;">
+                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-danger bg-opacity-10 text-danger teacher-summary-icon">
                     <i class="bi bi-exclamation-octagon fs-5"></i>
                   </div>
                 </div>
@@ -426,7 +400,7 @@
                     <span class="text-secondary small fw-bold text-uppercase">Justificadas</span>
                     <h3 class="fw-bold text-info mt-1 mb-0" id="statDocenteJustificadas">0</h3>
                   </div>
-                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-info bg-opacity-10 text-info" style="width: 44px; height: 44px;">
+                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-info bg-opacity-10 text-info teacher-summary-icon">
                     <i class="bi bi-shield-check fs-5"></i>
                   </div>
                 </div>
@@ -442,7 +416,7 @@
                     <span class="text-secondary small fw-bold text-uppercase">Estudiantes</span>
                     <h3 class="fw-bold text-indigo mt-1 mb-0" id="statDocenteEstudiantesAfectados">0</h3>
                   </div>
-                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-indigo bg-opacity-10 text-indigo" style="width: 44px; height: 44px;">
+                  <div class="d-flex align-items-center justify-content-center rounded-3 bg-indigo bg-opacity-10 text-indigo teacher-summary-icon">
                     <i class="bi bi-people fs-5"></i>
                   </div>
                 </div>
@@ -502,13 +476,13 @@
               <table class="table table-hover align-middle mb-0">
                 <thead class="table-light text-secondary small">
                   <tr>
-                    <th class="ps-4" style="width: 120px;">Fecha</th>
+                    <th class="ps-4 attendance-date-column">Fecha</th>
                     <th>Estudiante</th>
                     <th>Curso</th>
                     <th>Asignatura</th>
-                    <th class="text-center" style="width: 150px;">Tipo de Inasistencia</th>
+                    <th class="text-center attendance-type-column">Tipo de Inasistencia</th>
                     <th>Observación</th>
-                    <th class="text-center pe-4" style="width: 90px;">Acciones</th>
+                    <th class="text-center pe-4 attendance-actions-column">Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="docenteInasistenciasTableBody">
@@ -618,19 +592,19 @@
           </div>
 
           <!-- Formato Oficial del Boletín -->
-          <div class="card card-custom p-4 p-md-5 border-0 shadow mx-auto card-report"
-            style="max-width: 860px; background: white;" id="docenteBoletinContent">
+          <div class="card card-custom p-4 p-md-5 border-0 shadow mx-auto card-report report-content-card"
+            id="docenteBoletinContent">
             <!-- Cabecera Institucional -->
             <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
               <div class="d-flex align-items-center gap-3">
-                <div class="d-flex align-items-center justify-content-center bg-indigo rounded-3 text-white"
-                  style="width: 52px; height: 52px;">
+                <div class="d-flex align-items-center justify-content-center bg-indigo rounded-3 text-white view-avatar-large"
+                 >
                   <i class="bi bi-mortarboard-fill fs-3"></i>
                 </div>
                 <div>
                   <h4 class="fw-bold mb-0 text-dark">COLEGIO SOPHOS CORE</h4>
                   <div class="text-secondary small">Resolución Oficial No. 2026-A • Educación Media Vocacional</div>
-                  <div class="text-muted" style="font-size: 0.72rem;">Código DANE: 168001004523 • NIT: 900.842.120-1
+                  <div class="text-muted view-text-meta">Código DANE: 168001004523 • NIT: 900.842.120-1
                   </div>
                 </div>
               </div>
@@ -666,8 +640,8 @@
                   <tr>
                     <th class="text-start">Asignatura</th>
                     <th>Calificaciones del Período</th>
-                    <th style="width: 110px;">Definitiva</th>
-                    <th style="width: 140px;">Desempeño</th>
+                    <th class="gradebook-column-final-score">Definitiva</th>
+                    <th class="gradebook-column-performance">Desempeño</th>
                   </tr>
                 </thead>
                 <tbody id="docenteBoletinTableBody">
@@ -683,7 +657,7 @@
                 <h6 class="fw-bold text-dark mb-0">Observaciones y Recomendaciones Pedagógicas</h6>
                 <span class="badge-contrast-purple small ms-auto no-print">Validado por Docente & IA</span>
               </div>
-              <p class="mb-0 text-dark" id="docenteBoletinObservationText" style="line-height: 1.6; font-style: italic;">
+              <p class="mb-0 text-dark report-observation" id="docenteBoletinObservationText">
                 "El estudiante demuestra un proceso continuo de aprendizaje..."
               </p>
             </div>
@@ -693,34 +667,34 @@
               <div class="col-6">
                 <div class="border-top border-dark mx-auto w-75 pt-2">
                   <div class="fw-bold small" id="docenteBoletinSignDocente">Profe Mariana</div>
-                  <div class="text-muted" style="font-size: 0.75rem;">Docente Titular / Coordinadora</div>
+                  <div class="text-muted view-text-caption">Docente Titular / Coordinadora</div>
                 </div>
               </div>
               <div class="col-6">
                 <div class="border-top border-dark mx-auto w-75 pt-2">
                   <div class="fw-bold small">Rectoría Institucional</div>
-                  <div class="text-muted" style="font-size: 0.75rem;">Colegio SophosCore</div>
+                  <div class="text-muted view-text-caption">Colegio SophosCore</div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Aviso de Período en Curso para Docente -->
-          <div class="card card-custom p-5 border-0 shadow-sm mx-auto text-center d-none" style="max-width: 880px;"
+          <div class="card card-custom p-5 border-0 shadow-sm mx-auto text-center d-none gradebook-empty-card"
             id="docenteBoletinPendingCard">
             <div class="mb-3">
               <span
-                class="rounded-circle d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning"
-                style="width: 72px; height: 72px;">
+                class="rounded-circle d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning view-empty-state-icon"
+               >
                 <i class="bi bi-hourglass-split fs-1"></i>
               </span>
             </div>
             <h4 class="fw-bold text-dark mb-2">Boletín Oficial No Generado</h4>
-            <p class="text-secondary mx-auto mb-4" style="max-width: 560px;">
+            <p class="text-secondary mx-auto mb-4 view-empty-state-guidance">
               El boletín oficial del <strong id="docentePendingPeriodName">Tercer Período (2026)</strong> aún no puede
               emitirse ni imprimirse debido a que el período académico se encuentra actualmente en curso.
             </p>
-            <div class="alert alert-light border text-start mx-auto mb-4 p-3 rounded-3" style="max-width: 580px;">
+            <div class="alert alert-light border text-start mx-auto mb-4 p-3 rounded-3 view-empty-state-notice">
               <div class="d-flex align-items-start gap-2 mb-2">
                 <i class="bi bi-calendar-event text-primary mt-1"></i>
                 <div>
@@ -750,7 +724,7 @@
 
       <!-- Sección: Evidencias (En Construcción) -->
       <div id="evidencias" class="spa-section">
-        <div class="under-construction-card shadow-sm mx-auto" style="max-width: 600px; margin-top: 50px;">
+        <div class="under-construction-card shadow-sm mx-auto construction-card">
           <i class="bi bi-folder-check under-construction-icon"></i>
           <h3 class="fw-bold text-dark">Evidencias LMS</h3>
           <p class="text-secondary mt-3">
@@ -849,8 +823,8 @@
                         docente)</label>
                       <button type="button" class="ai-insignia-btn" id="btnMejorarObsIA"
                         title="Mejorar redacción con Gemini AI">
-                        <span id="obsIASpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                          style="width: 0.72rem; height: 0.72rem;"></span>
+                        <span id="obsIASpinner" class="spinner-border spinner-border-sm d-none view-pulse-indicator--compact" role="status"
+                         ></span>
                         <i class="bi bi-stars" id="obsIAIcon"></i> <span>IA</span>
                       </button>
                     </div>
@@ -887,7 +861,7 @@
                   </h6>
                   <span class="badge bg-light text-secondary border" id="obsHistorialStudentBadge">-</span>
                 </div>
-                <div class="overflow-y-auto flex-grow-1" style="max-height: 480px;" id="obsHistorialListContainer">
+                <div class="overflow-y-auto flex-grow-1 teacher-observer-list" id="obsHistorialListContainer">
                   <!-- Poblado dinámicamente -->
                 </div>
               </div>
@@ -954,8 +928,8 @@
                   Oficial</label>
                 <button type="button" class="ai-insignia-btn" id="btnMejorarRepIA"
                   title="Generar dictamen con Gemini AI">
-                  <span id="repIASpinner" class="spinner-border spinner-border-sm d-none" role="status"
-                    style="width: 0.72rem; height: 0.72rem;"></span>
+                  <span id="repIASpinner" class="spinner-border spinner-border-sm d-none view-pulse-indicator--compact" role="status"
+                   ></span>
                   <i class="bi bi-stars" id="repIAIcon"></i> <span>IA</span>
                 </button>
               </div>
@@ -1005,8 +979,8 @@
             <!-- Membrete -->
             <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
               <div class="d-flex align-items-center gap-2">
-                <div class="bg-indigo text-white p-2 rounded-circle d-flex align-items-center justify-content-center"
-                  style="width: 42px; height: 42px;">
+                <div class="bg-indigo text-white p-2 rounded-circle d-flex align-items-center justify-content-center teacher-report-mark"
+                 >
                   <i class="bi bi-mortarboard-fill fs-5"></i>
                 </div>
                 <div>
@@ -1040,8 +1014,8 @@
             <div class="mb-4">
               <h6 class="fw-bold text-dark border-bottom pb-1 text-uppercase small">Dictamen y Disposiciones Pedagógicas
               </h6>
-              <p class="text-dark p-2 bg-light rounded" id="modalRepBodyContent"
-                style="white-space: pre-wrap; line-height: 1.7; font-size: 0.92rem;">
+              <p class="text-dark p-2 bg-light rounded teacher-report-copy" id="modalRepBodyContent"
+               >
                 Sin contenido.
               </p>
             </div>
@@ -1051,19 +1025,19 @@
               <div class="col-4">
                 <div class="border-top border-dark mx-auto w-75 pt-1">
                   <div class="fw-bold small">Profe Mariana</div>
-                  <div class="text-muted" style="font-size: 0.72rem;">Docente Titular</div>
+                  <div class="text-muted view-text-meta">Docente Titular</div>
                 </div>
               </div>
               <div class="col-4">
                 <div class="border-top border-dark mx-auto w-75 pt-1">
                   <div class="fw-bold small">Rectoría / Convivencia</div>
-                  <div class="text-muted" style="font-size: 0.72rem;">Colegio Sophos Core</div>
+                  <div class="text-muted view-text-meta">Colegio Sophos Core</div>
                 </div>
               </div>
               <div class="col-4">
                 <div class="border-top border-dark mx-auto w-75 pt-1">
                   <div class="fw-bold small">Firma Acudiente</div>
-                  <div class="text-muted" style="font-size: 0.72rem;">C.C. ________________</div>
+                  <div class="text-muted view-text-meta">C.C. ________________</div>
                 </div>
               </div>
             </div>
@@ -1095,8 +1069,12 @@
     let docenteCurrentPeriod = 3;
     let docenteActiveGradebook = null;
     let docenteActiveAIStudent = null;
+    let dashboardTeacherId = "";
+    let dashboardAssignments = [];
 
     document.addEventListener('DOMContentLoaded', () => {
+      initDashboardStudentFilters();
+
       // Sincronizar período actual activo de la base de datos
       if (typeof SophosDB !== 'undefined') {
         const activePeriod = SophosDB.getCurrentPeriod();
@@ -1126,6 +1104,16 @@
           docenteCurrentSubject = e.target.value;
           loadDocenteGradebook();
         });
+      }
+
+      const dashboardCourseFilter = document.getElementById('dashboardCourseFilter');
+      if (dashboardCourseFilter) {
+        dashboardCourseFilter.addEventListener('change', updateDashboardSubjectOptions);
+      }
+
+      const applyDashboardFilters = document.getElementById('applyDashboardFilters');
+      if (applyDashboardFilters) {
+        applyDashboardFilters.addEventListener('click', loadDashboardStudents);
       }
 
       // Botón Guardar Notas
@@ -1180,13 +1168,131 @@
             else if (itemBol && itemBol.classList.contains('active')) subTab = 'boletines';
             switchAcademicTab(subTab);
           } else {
-            // SI ESTÁ EN CUALQUIER OTRO APARTADO QUE NO SEA REGISTRO ACADÉMICO:
-            // Ocultar inmediatamente las dos opciones (Notas y Asistencia)
             if (submenu) submenu.style.display = 'none';
           }
         });
       });
     });
+
+    async function initDashboardStudentFilters() {
+      const courseSelect = document.getElementById('dashboardCourseFilter');
+      const subjectSelect = document.getElementById('dashboardSubjectFilter');
+      const applyButton = document.getElementById('applyDashboardFilters');
+      const table = document.getElementById('dashboardStudentsTable');
+      if (!courseSelect || !subjectSelect || !applyButton || !table) return;
+
+      try {
+        const response = await fetch('../../api/docente.php?action=class_filters');
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'No se pudieron cargar los cursos y materias.');
+        }
+
+        dashboardTeacherId = data.docente_id;
+        dashboardAssignments = data.assignments || [];
+        courseSelect.innerHTML = '';
+        (data.courses || []).forEach(course => {
+          const option = document.createElement('option');
+          option.value = course.id;
+          option.textContent = course.name;
+          courseSelect.appendChild(option);
+        });
+
+        if (courseSelect.options.length === 0) {
+          throw new Error('No hay cursos asignados a este docente para el año lectivo actual.');
+        }
+
+        courseSelect.disabled = false;
+        updateDashboardSubjectOptions();
+        subjectSelect.disabled = subjectSelect.options.length === 0;
+        applyButton.disabled = subjectSelect.disabled;
+        if (applyButton.disabled) {
+          table.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-muted">No hay materias asignadas para este curso.</td></tr>';
+          return;
+        }
+        await loadDashboardStudents();
+      } catch (error) {
+        console.error('Error al cargar filtros del panel docente:', error);
+        table.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-danger">${escapeHtml(error.message)}</td></tr>`;
+      }
+    }
+
+    function updateDashboardSubjectOptions() {
+      const courseSelect = document.getElementById('dashboardCourseFilter');
+      const subjectSelect = document.getElementById('dashboardSubjectFilter');
+      const applyButton = document.getElementById('applyDashboardFilters');
+      if (!courseSelect || !subjectSelect) return;
+
+      const previousSubject = subjectSelect.value;
+      const courseId = courseSelect.value;
+      const subjects = dashboardAssignments.filter(assignment => assignment.course_id === courseId);
+      subjectSelect.innerHTML = '';
+      subjects.forEach(assignment => {
+        if (Array.from(subjectSelect.options).some(option => option.value === assignment.subject_id)) return;
+        const option = document.createElement('option');
+        option.value = assignment.subject_id;
+        option.textContent = assignment.subject_name;
+        subjectSelect.appendChild(option);
+      });
+
+      if (Array.from(subjectSelect.options).some(option => option.value === previousSubject)) {
+        subjectSelect.value = previousSubject;
+      }
+      subjectSelect.disabled = subjectSelect.options.length === 0;
+      if (applyButton) applyButton.disabled = subjectSelect.disabled;
+    }
+
+    async function loadDashboardStudents() {
+      const courseSelect = document.getElementById('dashboardCourseFilter');
+      const subjectSelect = document.getElementById('dashboardSubjectFilter');
+      const table = document.getElementById('dashboardStudentsTable');
+      const heading = document.getElementById('dashboardStudentsHeading');
+      if (!courseSelect || !subjectSelect || !table) return;
+
+      const selectedCourse = courseSelect.selectedOptions[0];
+      const selectedSubject = subjectSelect.selectedOptions[0];
+      if (!selectedCourse || !selectedSubject) return;
+
+      table.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-muted">Consultando estudiantes en la base de datos...</td></tr>';
+      try {
+        const query = new URLSearchParams({
+          action: 'students',
+          course: courseSelect.value,
+          subject: subjectSelect.value,
+          docente_id: dashboardTeacherId
+        });
+        const response = await fetch(`../../api/docente.php?${query}`);
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.error || 'No se pudieron cargar los estudiantes.');
+        }
+
+        if (heading) {
+          heading.textContent = `Listado de Estudiantes (${selectedCourse.textContent} · ${selectedSubject.textContent})`;
+        }
+        if (!data.students || data.students.length === 0) {
+          table.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-muted">No hay estudiantes matriculados en este curso para el año lectivo actual.</td></tr>';
+          return;
+        }
+
+        table.innerHTML = data.students.map(student => `
+          <tr>
+            <td class="ps-4">
+              <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-indigo text-white d-flex align-items-center justify-content-center fw-bold assistant-profile-icon"
+                 >${escapeHtml(student.avatar)}</div>
+                <span class="fw-medium text-dark">${escapeHtml(student.name)}</span>
+              </div>
+            </td>
+            <td>${escapeHtml(student.email)}</td>
+            <td>${escapeHtml(student.courseName)}</td>
+          </tr>
+        `).join('');
+      } catch (error) {
+        console.error('Error al cargar estudiantes del curso:', error);
+        table.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-danger">${escapeHtml(error.message)}</td></tr>`;
+      }
+    }
 
     // ==========================================
     // GESTIÓN DE REGISTRO ACADÉMICO (NOTAS | ASISTENCIA)
@@ -1207,10 +1313,9 @@
       const navAcad = document.getElementById('navRegistroAcademico');
       if (navAcad) navAcad.classList.add('active');
 
+      // 3. Manejo de submenú lateral y vistas
       const submenu = document.getElementById('academicSubmenu');
       if (submenu) submenu.style.display = 'flex';
-
-      // 3. Manejo de submenú lateral y vistas
       const itemNotas = document.getElementById('submenuItemNotas');
       const itemAsis = document.getElementById('submenuItemAsistencia');
       const itemBol = document.getElementById('submenuItemBoletines');
@@ -1522,8 +1627,7 @@
                 <td class="ps-4 font-monospace fw-bold text-dark">${escapeHtml(r.fecha)}</td>
                 <td>
                   <div class="d-flex align-items-center gap-2">
-                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
-                      style="width: 34px; height: 34px; font-size: 0.75rem; background: ${isJustified ? '#0284c7' : '#dc2626'};">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold teacher-absence-avatar ${isJustified ? 'teacher-absence-avatar--justified' : 'teacher-absence-avatar--unjustified'}">
                       ${escapeHtml(r.avatar)}
                     </div>
                     <div>
@@ -1537,7 +1641,7 @@
                   <div class="text-secondary small">Docente: ${escapeHtml(r.docente_nombre)}</div>
                 </td>
                 <td class="text-center">${badge}</td>
-                <td class="text-secondary" style="max-width: 280px;">
+                <td class="text-secondary teacher-observation-copy">
                   <div class="text-truncate" title="${escapeHtml(r.observacion)}">${escapeHtml(r.observacion)}</div>
                 </td>
                 <td class="text-center pe-4">
@@ -1732,7 +1836,7 @@
         let badgeHTML = '';
 
         if (isCurrentActive) {
-          badgeHTML = `<span class="period-pill-badge badge-active-live"><i class="bi bi-circle-fill" style="font-size: 0.45rem;"></i> Activo</span>`;
+          badgeHTML = `<span class="period-pill-badge badge-active-live"><i class="bi bi-circle-fill view-status-dot"></i> Activo</span>`;
           if (docenteCurrentPeriod === p.id) {
             btn.classList.add('selected-active');
           }
@@ -1768,10 +1872,10 @@
         const selectedObj = periods.find(p => p.id === docenteCurrentPeriod);
         if (selectedObj && selectedObj.id === currentActiveId) {
           statusIndicator.className = 'small fw-semibold text-success';
-          statusIndicator.innerHTML = `<i class="bi bi-pencil-fill me-1" style="font-size: 0.65rem;"></i> ${selectedObj.name} (Activo - Edición)`;
+          statusIndicator.innerHTML = `<i class="bi bi-pencil-fill me-1 view-text-compact"></i> ${selectedObj.name} (Activo - Edición)`;
         } else if (selectedObj && selectedObj.status === 'closed') {
           statusIndicator.className = 'small fw-semibold text-warning-emphasis';
-          statusIndicator.innerHTML = `<i class="bi bi-eye-fill me-1" style="font-size: 0.65rem;"></i> ${selectedObj.name} (Cerrado - Solo Lectura)`;
+          statusIndicator.innerHTML = `<i class="bi bi-eye-fill me-1 view-text-compact"></i> ${selectedObj.name} (Cerrado - Solo Lectura)`;
         }
       }
     }
@@ -1904,12 +2008,12 @@
       body.innerHTML = '';
 
       // 1. Encabezados de tabla
-      let headHTML = `<th class="ps-3" style="min-width: 200px;">Estudiante</th>`;
+      let headHTML = `<th class="ps-3 gradebook-column-student">Estudiante</th>`;
       gradebook.columnTitles.forEach((title) => {
-        headHTML += `<th class="text-center" style="min-width: 90px;">${title}</th>`;
+        headHTML += `<th class="text-center gradebook-column-score">${title}</th>`;
       });
-      headHTML += `<th class="text-center" style="min-width: 100px;">Definitiva</th>`;
-      headHTML += `<th style="min-width: 320px;">Observación para Boletín ${isReadOnly ? '(Solo Lectura)' : '(IA ✨)'}</th>`;
+      headHTML += `<th class="text-center gradebook-column-final">Definitiva</th>`;
+      headHTML += `<th class="gradebook-column-observation">Observación para Boletín ${isReadOnly ? '(Solo Lectura)' : '(IA ✨)'}</th>`;
       headRow.innerHTML = headHTML;
 
       // 2. Filas de cada estudiante
@@ -1922,12 +2026,12 @@
                     <tr data-student-id="${student.id}">
                         <td class="ps-3">
                             <div class="d-flex align-items-center gap-2">
-                                <div class="avatar-circle small text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 32px; height: 32px; background: ${student.avatarColor || '#4f46e5'}; font-size: 0.8rem;">
+                                <div class="avatar-circle small text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 gradebook-avatar" data-avatar-color="${student.avatarColor || '#4f46e5'}">
                                     ${student.avatar}
                                 </div>
                                 <div>
                                     <div class="fw-semibold text-dark small">${student.name}</div>
-                                    <div class="text-muted" style="font-size: 0.72rem;">${student.id}</div>
+                                    <div class="text-muted view-text-meta">${student.id}</div>
                                 </div>
                             </div>
                         </td>
@@ -1985,6 +2089,8 @@
         }
 
         body.innerHTML += rowHTML;
+        const avatar = body.lastElementChild?.querySelector('.gradebook-avatar');
+        if (avatar) avatar.style.setProperty('--avatar-color', avatar.dataset.avatarColor);
       });
     }
 
@@ -2455,15 +2561,15 @@
         card.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <span class="badge bg-indigo-subtle text-indigo border border-indigo-subtle small">${obs.category}</span>
-                        <span class="small text-muted" style="font-size: 0.75rem;"><i class="bi bi-calendar3 me-1"></i>${obs.date}</span>
+                        <span class="small text-muted view-text-caption"><i class="bi bi-calendar3 me-1"></i>${obs.date}</span>
                     </div>
-                    <p class="small text-dark mb-1 fw-normal" style="line-height: 1.5;">${obs.description}</p>
+                    <p class="small text-dark mb-1 fw-normal readable-copy">${obs.description}</p>
                     ${obs.agreements ? `
-                        <div class="small text-muted pt-1 border-top mt-2" style="font-size: 0.78rem;">
+                        <div class="small text-muted pt-1 border-top mt-2 view-text-emphasis">
                             <strong class="text-secondary"><i class="bi bi-hand-thumbs-up me-1"></i>Compromiso:</strong> ${obs.agreements}
                         </div>
                     ` : ''}
-                    <div class="text-end text-muted mt-1" style="font-size: 0.7rem;">
+                    <div class="text-end text-muted mt-1 view-text-footnote">
                         Docente: ${obs.teacher || 'Profe Mariana'}
                     </div>
                 `;
@@ -2631,7 +2737,7 @@
                         </div>
                         <span class="small text-muted"><i class="bi bi-calendar3 me-1"></i>${rep.date}</span>
                     </div>
-                    <p class="small text-dark mb-2 fw-normal" style="line-height: 1.6; white-space: pre-wrap;">${rep.content}</p>
+                    <p class="small text-dark mb-2 fw-normal view-preformatted-copy">${rep.content}</p>
                     <div class="d-flex justify-content-between align-items-center pt-2 border-top">
                         <small class="text-muted">Docente: ${rep.teacher || 'Profe Mariana'}</small>
                         <button type="button" class="btn btn-sm btn-outline-dark" onclick="openReportInModal('${encodeURIComponent(JSON.stringify(rep))}')">

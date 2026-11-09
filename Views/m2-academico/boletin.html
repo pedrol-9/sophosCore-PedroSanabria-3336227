@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="../../assets/css/modules.css">
     <!-- Estilos para impresión oficial de boletines -->
     <link rel="stylesheet" href="../../assets/css/print.css" media="print">
+  <link rel="stylesheet" href="../../assets/css/views.css">
 </head>
 <body class="dashboard-body role-docente">
 
@@ -28,7 +29,7 @@
                     <i class="bi bi-layout-sidebar-inset"></i>
                 </button>
                 <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm" style="width: 34px; height: 34px;">
+                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm sidebar-brand-mark">
                         <i class="bi bi-mortarboard-fill text-white fs-6"></i>
                     </div>
                     <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
@@ -81,12 +82,12 @@
 
             <div class="sidebar-user-footer px-3 pt-3">
                 <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
-                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #059669, #10b981);">
+                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 teacher-profile-avatar">
                         M
                     </div>
                     <div class="user-details overflow-hidden">
                         <div class="fw-bold text-white small text-truncate">Profe Mariana</div>
-                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">Docente Matemáticas</div>
+                        <div class="text-white-50 text-truncate view-text-caption">Docente Matemáticas</div>
                     </div>
                 </div>
             </div>
@@ -140,11 +141,11 @@
                 </div>
 
                 <!-- Formato Oficial del Boletín -->
-                <div class="card card-custom p-4 p-md-5 border-0 shadow-sm mx-auto card-report" style="max-width: 860px; background: white;" id="boletinContent">
+                <div class="card card-custom p-4 p-md-5 border-0 shadow-sm mx-auto card-report report-content-card" id="boletinContent">
                     <!-- Cabecera Institucional -->
                     <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
                         <div class="d-flex align-items-center gap-3">
-                            <div class="d-flex align-items-center justify-content-center bg-indigo rounded-3 text-white" style="width: 50px; height: 50px;">
+                            <div class="d-flex align-items-center justify-content-center bg-indigo rounded-3 text-white report-brand-mark">
                                 <i class="bi bi-mortarboard-fill fs-3"></i>
                             </div>
                             <div>
@@ -201,7 +202,7 @@
                             <h6 class="fw-bold text-dark mb-0">Observaciones y Recomendaciones Pedagógicas</h6>
                             <span class="badge bg-indigo bg-opacity-10 text-indigo small ms-auto no-print">Redacción IA Validada</span>
                         </div>
-                        <p class="mb-0 text-dark" id="bObservationText" style="line-height: 1.6; font-style: italic;">
+                        <p class="mb-0 text-dark report-observation" id="bObservationText">
                             "Demuestra gran capacidad analítica y trabajo colaborativo."
                         </p>
                     </div>
@@ -211,13 +212,13 @@
                         <div class="col-6">
                             <div class="border-top border-dark mx-auto w-75 pt-1">
                                 <div class="fw-bold small">Profe Mariana</div>
-                                <div class="text-muted" style="font-size: 0.75rem;">Docente Titular</div>
+                                <div class="text-muted view-text-caption">Docente Titular</div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="border-top border-dark mx-auto w-75 pt-1">
                                 <div class="fw-bold small">Rectoría Institucional</div>
-                                <div class="text-muted" style="font-size: 0.75rem;">Colegio SophosCore</div>
+                                <div class="text-muted view-text-caption">Colegio SophosCore</div>
                             </div>
                         </div>
                     </div>

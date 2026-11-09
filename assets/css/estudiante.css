@@ -1,0 +1,337 @@
+/* =========================================================
+           BADGES DE ALTO CONTRASTE (Legibilidad Garantizada)
+           ========================================================= */
+    .badge-contrast-success {
+      background-color: #15803d !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(21, 128, 61, 0.3);
+    }
+
+    .badge-contrast-info {
+      background-color: #0369a1 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(3, 105, 161, 0.3);
+    }
+
+    .badge-contrast-warning {
+      background-color: #b45309 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(180, 83, 9, 0.3);
+    }
+
+    .badge-contrast-danger {
+      background-color: #b91c1c !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(185, 28, 28, 0.3);
+    }
+
+    .badge-contrast-purple {
+      background-color: #6d28d9 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(109, 40, 217, 0.3);
+    }
+
+    .badge-contrast-dark {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Promedios en tarjeta de calificaciones con alto contraste */
+    .average-badge.avg-high {
+      background-color: #15803d !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(21, 128, 61, 0.35);
+    }
+
+    .average-badge.avg-mid {
+      background-color: #b45309 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(180, 83, 9, 0.35);
+    }
+
+    .average-badge.avg-low {
+      background-color: #b91c1c !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(185, 28, 28, 0.35);
+    }
+
+    /* Tarjetas de estadísticas y secciones */
+    .student-stat-card {
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .student-stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -6px rgba(2, 132, 199, 0.14);
+      border-color: #93c5fd;
+    }
+
+    .student-stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+    }
+
+    .subject-overview-card {
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      transition: all 0.25s ease;
+    }
+
+    .subject-overview-card:hover {
+      border-color: #0284c7;
+      box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.15);
+    }
+
+    .learning-step-card {
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      transition: all 0.2s ease;
+    }
+
+    .learning-step-card:hover {
+      transform: translateY(-2px);
+      border-color: #38bdf8;
+      box-shadow: 0 8px 18px rgba(2, 132, 199, 0.1);
+    }
+
+    .pulse-live-indicator {
+      width: 9px;
+      height: 9px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      animation: pulseGreen 1.8s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+      }
+
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 7px rgba(34, 197, 94, 0);
+      }
+
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+      }
+    }
+
+    /* =========================================================
+           WIDGET FLOTANTE SOPHOSBOT (BÚHO ANIMADO & CHAT OVERLAY)
+           ========================================================= */
+    .sophos-fab-container {
+      position: fixed;
+      bottom: 24px;
+      right: 28px;
+      z-index: 1060;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .sophos-fab-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(109, 40, 217, 0.15);
+      border: none;
+      box-shadow: 0 0 18px 8px rgba(109, 40, 217, 0.32);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      padding: 0;
+      overflow: visible;
+    }
+
+    .sophos-fab-btn:hover {
+      transform: scale(1.08) translateY(-3px);
+      background: rgba(124, 58, 237, 0.22);
+      box-shadow: 0 0 22px 10px rgba(124, 58, 237, 0.42);
+    }
+
+    .sophos-fab-btn.chat-active {
+      background: rgba(217, 119, 6, 0.18);
+      box-shadow: 0 0 18px 8px rgba(245, 158, 11, 0.35);
+    }
+
+    .sophos-fab-img {
+      width: 94px;
+      height: 94px;
+      max-width: none;
+      max-height: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      transition: transform 0.25s ease;
+      filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.2));
+    }
+
+    .sophos-fab-btn:hover .sophos-fab-img {
+      transform: translate(-50%, -55%) scale(1.05);
+    }
+
+    /* Panel de Chat Superpuesto Flotante */
+    .sophos-chat-overlay {
+      position: fixed;
+      bottom: 118px;
+      right: 28px;
+      width: 410px;
+      max-width: calc(100vw - 36px);
+      height: 560px;
+      max-height: calc(100vh - 135px);
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.35), 0 0 0 1px rgba(226, 232, 240, 0.8);
+      z-index: 1059;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-origin: bottom right;
+    }
+
+    .sophos-chat-overlay.d-none {
+      display: none !important;
+      transform: scale(0.85) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .sophos-chat-overlay:not(.d-none) {
+      display: flex !important;
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      animation: flyIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes flyIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .quick-chip {
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 11px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+
+    .quick-chip:hover {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      transform: translateY(-1px);
+    }
+
+    /* Impresión limpia del boletín oficial */
+    @media print {
+      body {
+        background: white !important;
+      }
+
+      .glass-header,
+      .sidebar,
+      .sophos-fab-container,
+      .sophos-chat-overlay,
+      .no-print {
+        display: none !important;
+      }
+
+      .panel-main {
+        padding: 0 !important;
+        background: white !important;
+        margin: 0 !important;
+      }
+
+      .card-report {
+        box-shadow: none !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+
+      .spa-section:not(#boletines) {
+        display: none !important;
+      }
+
+      #boletines {
+        display: block !important;
+      }
+    }

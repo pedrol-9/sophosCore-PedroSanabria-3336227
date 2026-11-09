@@ -1,0 +1,441 @@
+/* Shared presentation details for views and reusable UI components. */
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+}
+
+.sidebar-brand-mark {
+  width: 34px;
+  height: 34px;
+}
+
+.landing-status-badge {
+  background-color: rgba(79, 70, 229, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.landing-hero-content {
+  animation-delay: 0.2s;
+}
+
+.landing-login-dialog {
+  max-width: 390px;
+}
+
+.landing-login-mark {
+  width: 32px;
+  height: 32px;
+}
+
+.login-content-shell {
+  max-width: 480px;
+  position: relative;
+  z-index: 10;
+}
+
+.login-brand-mark {
+  width: 46px;
+  height: 46px;
+}
+
+.login-alert {
+  font-size: 0.82rem;
+}
+
+.view-text-caption {
+  font-size: 0.75rem;
+}
+
+.view-text-supporting {
+  font-size: 0.8rem;
+}
+
+.view-text-meta {
+  font-size: 0.72rem;
+}
+
+.view-text-action {
+  font-size: 0.9rem;
+}
+
+.view-text-footnote {
+  font-size: 0.7rem;
+}
+
+.view-text-detail {
+  font-size: 0.73rem;
+}
+
+.view-text-emphasis {
+  font-size: 0.78rem;
+}
+
+.view-text-overline {
+  font-size: 0.65rem;
+}
+
+.view-text-indicator {
+  font-size: 0.55rem;
+}
+
+.view-text-status-indicator {
+  font-size: 0.45rem;
+}
+
+.view-text-duration {
+  font-size: 0.68rem;
+}
+
+.teacher-profile-avatar {
+  width: 42px;
+  height: 42px;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.student-profile-avatar {
+  width: 42px;
+  height: 42px;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #0284c7, #06b6d4);
+}
+
+.admin-profile-avatar {
+  width: 42px;
+  height: 42px;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+.report-content-card {
+  max-width: 860px;
+  background: #fff;
+}
+
+.report-brand-mark {
+  width: 50px;
+  height: 50px;
+}
+
+.report-observation {
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.academic-summary-banner {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: #fff;
+}
+
+.gradebook-empty-icon {
+  width: 70px;
+  height: 70px;
+  font-size: 1.8rem;
+}
+
+.gradebook-empty-description {
+  max-width: 480px;
+  line-height: 1.4;
+}
+
+.gradebook-column-student {
+  min-width: 200px;
+}
+
+.gradebook-column-score {
+  min-width: 90px;
+}
+
+.gradebook-column-final {
+  min-width: 100px;
+}
+
+.gradebook-column-observation {
+  min-width: 320px;
+}
+
+.gradebook-avatar {
+  width: 32px;
+  height: 32px;
+  font-size: 0.8rem;
+  background: var(--avatar-color, #4f46e5);
+}
+
+.reports-history-list {
+  max-height: 240px;
+}
+
+.assistant-profile-icon {
+  width: 36px;
+  height: 36px;
+}
+
+.assistant-source-text {
+  min-height: 160px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.assistant-suggestion-panel {
+  background: #f5f3ff;
+  border-color: #ddd6fe !important;
+}
+
+.assistant-suggestion-text {
+  min-height: 160px;
+  line-height: 1.6;
+  border-color: #c7d2fe !important;
+  white-space: pre-wrap;
+}
+
+.tutor-student-select {
+  width: 240px;
+}
+
+.tutor-avatar-mark {
+  width: 40px;
+  height: 40px;
+}
+
+.tutor-online-indicator {
+  background: #10b981;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.tutor-prompt-button {
+  font-size: 0.75rem;
+}
+
+.tutor-video-duration {
+  font-size: 0.68rem;
+}
+
+.readable-copy {
+  line-height: 1.5;
+}
+
+.admin-live-mark {
+  width: 28px;
+  height: 28px;
+}
+
+.admin-monitoring-list {
+  max-height: 420px;
+}
+
+.admin-overview-banner {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  color: #fff;
+}
+
+.construction-card {
+  max-width: 600px;
+  margin-top: 50px;
+}
+
+.admin-student-avatar {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+.admin-grade-progress {
+  width: var(--progress-width, 0%);
+}
+
+.admin-event-icon {
+  background: var(--event-background);
+  color: var(--event-color);
+}
+
+.teacher-ai-tooltip-copy {
+  line-height: 1.5;
+  max-height: 250px;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}
+
+.teacher-summary-icon {
+  width: 44px;
+  height: 44px;
+}
+
+.attendance-date-column {
+  width: 120px;
+}
+
+.attendance-type-column {
+  width: 150px;
+}
+
+.attendance-actions-column {
+  width: 90px;
+}
+
+.view-avatar-large {
+  width: 52px;
+  height: 52px;
+}
+
+.gradebook-column-final-score {
+  width: 110px;
+}
+
+.gradebook-column-performance {
+  width: 140px;
+}
+
+.gradebook-empty-card {
+  max-width: 880px;
+}
+
+.view-empty-state-icon {
+  width: 72px;
+  height: 72px;
+}
+
+.gradebook-empty-guidance {
+  max-width: 560px;
+}
+
+.gradebook-empty-alert {
+  max-width: 580px;
+}
+
+.teacher-observer-list {
+  max-height: 480px;
+}
+
+.teacher-report-mark {
+  width: 42px;
+  height: 42px;
+}
+
+.teacher-report-copy {
+  white-space: pre-wrap;
+  line-height: 1.7;
+  font-size: 0.92rem;
+}
+
+.teacher-absence-avatar {
+  width: 34px;
+  height: 34px;
+  font-size: 0.75rem;
+}
+
+.teacher-absence-avatar--justified {
+  background: #0284c7;
+}
+
+.teacher-absence-avatar--unjustified {
+  background: #dc2626;
+}
+
+.teacher-observation-copy {
+  max-width: 280px;
+}
+
+.student-progress-track {
+  height: 7px;
+  background-color: #e2e8f0;
+}
+
+.student-progress-fill {
+  width: var(--progress-width, 0%);
+}
+
+.student-hero-banner {
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #2563eb 100%);
+}
+
+.student-report-card {
+  max-width: 860px;
+}
+
+.student-feature-card {
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+  border: 1px solid #e0e7ff;
+}
+
+.student-feature-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.student-plan-caption {
+  font-size: 0.78rem;
+  color: #7c3aed;
+}
+
+.student-purple-accent {
+  color: #7c3aed;
+}
+
+.student-chat-window {
+  max-width: 540px;
+}
+
+.student-chat-launcher {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(165, 180, 252, 0.4) 0%, rgba(99, 102, 241, 0.25) 100%);
+  border: 1.5px solid rgba(199, 210, 254, 0.45);
+}
+
+.student-chat-image {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.student-online-indicator {
+  width: 7px;
+  height: 7px;
+}
+
+.student-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  background: #f8fafc;
+}
+
+.student-toast-layer {
+  z-index: 1090;
+}
+
+.view-text-compact {
+  font-size: 0.65rem;
+}
+
+.view-status-dot {
+  font-size: 0.45rem;
+}
+
+.view-pulse-indicator--compact {
+  width: 0.72rem;
+  height: 0.72rem;
+}
+
+.view-empty-state-guidance {
+  max-width: 560px;
+}
+
+.view-empty-state-notice {
+  max-width: 580px;
+}
+
+.view-preformatted-copy {
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.gradebook-column-student-score {
+  width: 110px;
+}
+
+.gradebook-column-student-performance {
+  width: 140px;
+}

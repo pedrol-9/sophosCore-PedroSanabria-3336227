@@ -122,18 +122,98 @@ try {
         // ==============================================================
         // 2. ESTUDIANTES POR CURSO
         // ==============================================================
+        case 'class_filters':
+            $docenteId = $_GET['docente_id'] ?? 'b0000001-0000-0000-0000-000000000002';
+
+            $stmtFilters = $pdo->prepare("
+                SELECT DISTINCT
+                    c.id_curso,
+                    c.nombre AS curso_nombre,
+                    m.id_materia,
+                    m.nombre AS materia_nombre
+                FROM asignaciones_academicas aa
+                JOIN cursos c ON aa.id_curso = c.id_curso
+                JOIN materias m ON aa.id_materia = m.id_materia
+                WHERE aa.id_docente = ? AND aa.ano_lectivo = 2026
+                ORDER BY c.nombre DESC,
+                    CASE WHEN m.nombre = 'Matemáticas' THEN 0 ELSE 1 END,
+                    m.nombre ASC
+            ");
+            $stmtFilters->execute([$docenteId]);
+            $assignments = $stmtFilters->fetchAll();
+
+            $courses = [];
+            $courseIds = [];
+            foreach ($assignments as $assignment) {
+                if (!isset($courseIds[$assignment['id_curso']])) {
+                    $courseIds[$assignment['id_curso']] = true;
+                    $courses[] = [
+                        'id' => $assignment['id_curso'],
+                        'name' => $assignment['curso_nombre']
+                    ];
+                }
+            }
+
+            echo json_encode([
+                'success' => true,
+                'docente_id' => $docenteId,
+                'courses' => $courses,
+                'assignments' => array_map(static function ($assignment) {
+                    return [
+                        'course_id' => $assignment['id_curso'],
+                        'course_name' => $assignment['curso_nombre'],
+                        'subject_id' => $assignment['id_materia'],
+                        'subject_name' => $assignment['materia_nombre']
+                    ];
+                }, $assignments)
+            ]);
+            break;
+
         case 'students':
             $courseKey = $_GET['course'] ?? '11A';
-            $dbCourseId = $courseCodeMap[$courseKey]['id'] ?? 'c0000001-0000-0000-0000-000000000001';
+            $dbCourseId = $courseCodeMap[$courseKey]['id'] ?? $courseKey;
+            $docenteId = $_GET['docente_id'] ?? 'b0000001-0000-0000-0000-000000000002';
+            $subjectKey = $_GET['subject'] ?? '';
+            $dbSubjectId = $subjectCodeMap[$subjectKey]['id'] ?? $subjectKey;
+
+            $stmtCourse = $pdo->prepare("SELECT nombre FROM cursos WHERE id_curso = ?");
+            $stmtCourse->execute([$dbCourseId]);
+            $courseName = $stmtCourse->fetchColumn();
+            if (!$courseName) {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Curso no válido']);
+                break;
+            }
+
+            $assignmentSql = "
+                SELECT 1
+                FROM asignaciones_academicas
+                WHERE id_docente = ? AND id_curso = ? AND ano_lectivo = 2026
+            ";
+            $assignmentParams = [$docenteId, $dbCourseId];
+            if ($subjectKey !== '') {
+                $assignmentSql .= " AND id_materia = ?";
+                $assignmentParams[] = $dbSubjectId;
+            }
+            $assignmentSql .= " LIMIT 1";
+            $stmtAssignment = $pdo->prepare($assignmentSql);
+            $stmtAssignment->execute($assignmentParams);
+            if (!$stmtAssignment->fetchColumn()) {
+                http_response_code(404);
+                echo json_encode(['success' => false, 'error' => 'No hay una asignación docente para este curso y materia']);
+                break;
+            }
 
             $stmt = $pdo->prepare("
                 SELECT 
                     u.id_usuario,
                     u.nombre_completo,
                     u.email,
-                    em.id_matricula
+                    em.id_matricula,
+                    c.nombre AS curso_nombre
                 FROM estudiantes_matriculados em
                 JOIN usuarios u ON em.id_estudiante = u.id_usuario
+                JOIN cursos c ON em.id_curso = c.id_curso
                 WHERE em.id_curso = ? AND em.ano_lectivo = 2026
                 ORDER BY u.nombre_completo ASC
             ");
@@ -159,6 +239,7 @@ try {
                     'matricula_id' => $r['id_matricula'],
                     'name' => $r['nombre_completo'],
                     'email' => $r['email'],
+                    'courseName' => $r['curso_nombre'],
                     'courseId' => $courseKey,
                     'avatar' => strtoupper($initials),
                     'avatarColor' => ($counter % 2 == 0) ? '#4f46e5' : '#059669'

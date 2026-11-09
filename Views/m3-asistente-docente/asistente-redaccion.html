@@ -16,6 +16,7 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/modules.css">
+  <link rel="stylesheet" href="../../assets/css/views.css">
 </head>
 <body class="dashboard-body role-docente">
 
@@ -26,7 +27,7 @@
                     <i class="bi bi-layout-sidebar-inset"></i>
                 </button>
                 <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm" style="width: 34px; height: 34px;">
+                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm sidebar-brand-mark">
                         <i class="bi bi-mortarboard-fill text-white fs-6"></i>
                     </div>
                     <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
@@ -79,12 +80,12 @@
 
             <div class="sidebar-user-footer px-3 pt-3">
                 <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
-                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #059669, #10b981);">
+                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 teacher-profile-avatar">
                         M
                     </div>
                     <div class="user-details overflow-hidden">
                         <div class="fw-bold text-white small text-truncate">Profe Mariana</div>
-                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">Docente Matemáticas</div>
+                        <div class="text-white-50 text-truncate view-text-caption">Docente Matemáticas</div>
                     </div>
                 </div>
             </div>
@@ -135,7 +136,7 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                         <label class="form-label small fw-medium text-secondary mb-0">Descripción de los hechos (Borrador)</label>
-                                        <span class="small text-muted" style="font-size: 0.75rem;">Escribe como surja; la IA lo profesionalizará</span>
+                                        <span class="small text-muted view-text-caption">Escribe como surja; la IA lo profesionalizará</span>
                                     </div>
                                     <textarea class="form-control" id="reportRawText" rows="6" placeholder="Ej: El estudiante hoy llegó 30 minutos tarde, se sentó en el fondo a molestar con el celular y cuando le pedí que lo guardara respondió de manera grosera delante de los compañeros..."></textarea>
                                 </div>
@@ -181,11 +182,11 @@
                         <!-- Historial de Reportes Recientes -->
                         <div class="card card-custom p-4 border-0 shadow-sm">
                             <h6 class="fw-bold text-dark mb-3"><i class="bi bi-clock-history text-indigo me-1"></i> Reportes Recientes Registrados</h6>
-                            <div class="overflow-y-auto" style="max-height: 240px;" id="reportsHistoryList">
+                            <div class="overflow-y-auto reports-history-list" id="reportsHistoryList">
                                 <div class="p-2 border rounded-3 mb-2 bg-light">
                                     <div class="d-flex justify-content-between small">
                                         <strong class="text-dark">Carlos Mendoza (11°A)</strong>
-                                        <span class="text-muted" style="font-size: 0.72rem;">07 Oct 2026</span>
+                                        <span class="text-muted view-text-meta">07 Oct 2026</span>
                                     </div>
                                     <p class="small text-secondary mb-0 mt-1 text-truncate">
                                         Se evidencia oportunidad de mejora en la entrega oportuna de las guías de cálculo.
@@ -206,7 +207,7 @@
             <div class="modal-content rounded-4 border-0 shadow-lg">
                 <div class="modal-header border-bottom bg-light">
                     <div class="d-flex align-items-center gap-2">
-                        <div class="bg-indigo text-white p-2 rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
+                        <div class="bg-indigo text-white p-2 rounded-circle d-flex align-items-center justify-content-center assistant-profile-icon">
                             <i class="bi bi-stars"></i>
                         </div>
                         <div>
@@ -225,19 +226,19 @@
                                     <span class="badge bg-secondary text-uppercase">Borrador Original</span>
                                     <small class="text-muted"><i class="bi bi-pencil"></i> Docente</small>
                                 </div>
-                                <div class="p-3 bg-white rounded border text-secondary small" id="modalOriginalText" style="min-height: 160px; line-height: 1.6; white-space: pre-wrap;">
+                                <div class="p-3 bg-white rounded border text-secondary small assistant-source-text" id="modalOriginalText">
                                     (Sin texto)
                                 </div>
                             </div>
                         </div>
                         <!-- Columna: Sugerencia de la IA -->
                         <div class="col-md-6">
-                            <div class="h-100 p-3 rounded-3 border" style="background: #f5f3ff; border-color: #ddd6fe !important;">
+                            <div class="h-100 p-3 rounded-3 border assistant-suggestion-panel">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="badge bg-indigo text-uppercase"><i class="bi bi-stars"></i> Sugerencia IA</span>
                                     <small class="text-indigo fw-semibold"><i class="bi bi-check2-all"></i> Tono Asertivo</small>
                                 </div>
-                                <div class="p-3 bg-white rounded border text-dark small" id="modalSuggestedText" style="min-height: 160px; line-height: 1.6; border-color: #c7d2fe !important; white-space: pre-wrap;">
+                                <div class="p-3 bg-white rounded border text-dark small assistant-suggestion-text" id="modalSuggestedText">
                                     Generando propuesta...
                                 </div>
                             </div>
@@ -309,7 +310,7 @@
                 newItem.innerHTML = `
                     <div class="d-flex justify-content-between small">
                         <strong class="text-dark">${student ? student.name : 'Estudiante'}</strong>
-                        <span class="text-muted" style="font-size: 0.72rem;">Hoy</span>
+                        <span class="text-muted view-text-meta">Hoy</span>
                     </div>
                     <p class="small text-secondary mb-0 mt-1 text-truncate">${text}</p>
                 `;

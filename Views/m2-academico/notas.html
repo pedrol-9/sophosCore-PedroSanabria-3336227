@@ -16,6 +16,7 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/modules.css">
+  <link rel="stylesheet" href="../../assets/css/views.css">
 </head>
 <body class="dashboard-body role-docente">
 
@@ -26,7 +27,7 @@
                     <i class="bi bi-layout-sidebar-inset"></i>
                 </button>
                 <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm" style="width: 34px; height: 34px;">
+                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm sidebar-brand-mark">
                         <i class="bi bi-mortarboard-fill text-white fs-6"></i>
                     </div>
                     <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
@@ -83,12 +84,12 @@
 
             <div class="sidebar-user-footer px-3 pt-3">
                 <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
-                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #059669, #10b981);">
+                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 teacher-profile-avatar">
                         M
                     </div>
                     <div class="user-details overflow-hidden">
                         <div class="fw-bold text-white small text-truncate">Profe Mariana</div>
-                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">Docente Matemáticas</div>
+                        <div class="text-white-50 text-truncate view-text-caption">Docente Matemáticas</div>
                     </div>
                 </div>
             </div>
@@ -137,7 +138,7 @@
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <label class="form-label text-secondary small fw-medium mb-0">Período Académico</label>
                                 <span id="notasPeriodStatusIndicator" class="small fw-semibold text-success">
-                                    <i class="bi bi-circle-fill me-1" style="font-size: 0.55rem;"></i> Período 3 Activo
+                                    <i class="bi bi-circle-fill me-1 view-text-indicator"></i> Período 3 Activo
                                 </span>
                             </div>
                             <div class="period-buttons-container" id="notasPeriodButtonsGroup">
@@ -165,11 +166,11 @@
 
                     <!-- Estado Vacío Inicial cuando no hay filtros -->
                     <div id="notasEmptyState" class="text-center py-5 px-3">
-                        <div class="mx-auto mb-3 text-indigo bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 70px; height: 70px; font-size: 1.8rem;">
+                        <div class="mx-auto mb-3 text-indigo bg-light rounded-circle d-flex align-items-center justify-content-center shadow-sm gradebook-empty-icon">
                             <i class="bi bi-funnel"></i>
                         </div>
                         <h5 class="fw-bold text-dark mb-1">Selecciona un Curso y una Materia</h5>
-                        <p class="text-secondary small mb-0 mx-auto" style="max-width: 480px;">
+                        <p class="text-secondary small mb-0 mx-auto gradebook-empty-description">
                             Para comenzar el registro o visualización de calificaciones, selecciona el <strong>Curso / Grupo</strong> y la <strong>Materia</strong> en los filtros superiores.
                         </p>
                     </div>
@@ -209,13 +210,13 @@
             <div class="fw-bold text-indigo d-flex align-items-center gap-1">
                 <i class="bi bi-stars"></i> Sugerencia IA Pedagógica
             </div>
-            <button type="button" class="btn-close" style="font-size: 0.65rem;" onclick="closeAITooltip()"></button>
+            <button type="button" class="btn-close view-text-compact" onclick="closeAITooltip()"></button>
         </div>
-        <p class="text-secondary mb-2" id="aiTooltipSuggestionText" style="line-height: 1.4;">
+        <p class="text-secondary mb-2 gradebook-empty-description" id="aiTooltipSuggestionText">
             Cargando sugerencia...
         </p>
         <div class="d-flex justify-content-between align-items-center pt-1 border-top">
-            <span class="small text-muted" style="font-size: 0.72rem;">¿Aplicar cambio al boletín?</span>
+            <span class="small text-muted view-text-meta">¿Aplicar cambio al boletín?</span>
             <div class="d-flex gap-2">
                 <button type="button" class="ai-action-btn-accept" id="btnAcceptAISuggestion" title="Aceptar sugerencia">
                     <i class="bi bi-check-lg"></i> Aceptar
@@ -328,7 +329,7 @@
                 let badgeHTML = '';
 
                 if (isCurrentActive) {
-                    badgeHTML = `<span class="period-pill-badge badge-active-live"><i class="bi bi-circle-fill" style="font-size: 0.45rem;"></i> Activo</span>`;
+                    badgeHTML = `<span class="period-pill-badge badge-active-live"><i class="bi bi-circle-fill view-status-dot"></i> Activo</span>`;
                     if (currentPeriodId === p.id) {
                         btn.classList.add('selected-active');
                     }
@@ -365,10 +366,10 @@
                 const selectedObj = periods.find(p => p.id === currentPeriodId);
                 if (selectedObj && selectedObj.id === currentActiveId) {
                     statusIndicator.className = 'small fw-semibold text-success';
-                    statusIndicator.innerHTML = `<i class="bi bi-pencil-fill me-1" style="font-size: 0.65rem;"></i> ${selectedObj.name} (Activo - Edición)`;
+                    statusIndicator.innerHTML = `<i class="bi bi-pencil-fill me-1 view-text-compact"></i> ${selectedObj.name} (Activo - Edición)`;
                 } else if (selectedObj && selectedObj.status === 'closed') {
                     statusIndicator.className = 'small fw-semibold text-warning-emphasis';
-                    statusIndicator.innerHTML = `<i class="bi bi-eye-fill me-1" style="font-size: 0.65rem;"></i> ${selectedObj.name} (Cerrado - Solo Lectura)`;
+                    statusIndicator.innerHTML = `<i class="bi bi-eye-fill me-1 view-text-compact"></i> ${selectedObj.name} (Cerrado - Solo Lectura)`;
                 }
             }
         }
@@ -479,12 +480,12 @@
             body.innerHTML = '';
 
             // 1. Renderizar encabezados
-            let headHTML = `<th class="ps-3" style="min-width: 200px;">Estudiante</th>`;
+            let headHTML = `<th class="ps-3 gradebook-column-student">Estudiante</th>`;
             gradebook.columnTitles.forEach((title, idx) => {
-                headHTML += `<th class="text-center" style="min-width: 90px;">${title}</th>`;
+                headHTML += `<th class="text-center gradebook-column-score">${title}</th>`;
             });
-            headHTML += `<th class="text-center" style="min-width: 100px;">Definitiva</th>`;
-            headHTML += `<th style="min-width: 320px;">Observación para Boletín ${isReadOnly ? '(Solo Lectura)' : '(IA ✨)'}</th>`;
+            headHTML += `<th class="text-center gradebook-column-final">Definitiva</th>`;
+            headHTML += `<th class="gradebook-column-observation">Observación para Boletín ${isReadOnly ? '(Solo Lectura)' : '(IA ✨)'}</th>`;
             headRow.innerHTML = headHTML;
 
             // 2. Renderizar filas por estudiante
@@ -497,12 +498,12 @@
                     <tr data-student-id="${student.id}">
                         <td class="ps-3">
                             <div class="d-flex align-items-center gap-2">
-                                <div class="avatar-circle small text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 32px; height: 32px; background: ${student.avatarColor || '#4f46e5'}; font-size: 0.8rem;">
+                                <div class="avatar-circle small text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 gradebook-avatar" data-avatar-color="${student.avatarColor || '#4f46e5'}">
                                     ${student.avatar}
                                 </div>
                                 <div>
                                     <div class="fw-semibold text-dark small">${student.name}</div>
-                                    <div class="text-muted" style="font-size: 0.72rem;">${student.id}</div>
+                                    <div class="text-muted view-text-meta">${student.id}</div>
                                 </div>
                             </div>
                         </td>
@@ -560,6 +561,8 @@
                 }
 
                 body.innerHTML += rowHTML;
+                const avatar = body.lastElementChild?.querySelector('.gradebook-avatar');
+                if (avatar) avatar.style.setProperty('--avatar-color', avatar.dataset.avatarColor);
             });
         }
 

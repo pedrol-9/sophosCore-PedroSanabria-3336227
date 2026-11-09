@@ -16,6 +16,7 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/modules.css">
+  <link rel="stylesheet" href="../../assets/css/views.css">
 </head>
 <body class="dashboard-body role-estudiante">
 
@@ -26,7 +27,7 @@
                     <i class="bi bi-layout-sidebar-inset"></i>
                 </button>
                 <a href="../../index.html" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm" style="width: 34px; height: 34px;">
+                    <div class="d-flex align-items-center justify-content-center bg-indigo rounded-circle shadow-sm sidebar-brand-mark">
                         <i class="bi bi-mortarboard-fill text-white fs-6"></i>
                     </div>
                     <span class="fw-bold fs-5 text-white tracking-tight">Sophos <span class="gradient-text">Core</span></span>
@@ -73,12 +74,12 @@
 
             <div class="sidebar-user-footer px-3 pt-3">
                 <div class="d-flex align-items-center gap-3 mb-2 user-profile-box">
-                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 42px; height: 42px; font-size: 1.1rem; background: linear-gradient(135deg, #0284c7, #06b6d4);">
+                    <div class="avatar-circle text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0 student-profile-avatar">
                         A
                     </div>
                     <div class="user-details overflow-hidden">
                         <div class="fw-bold text-white small text-truncate" id="sidebarStudentName">Alex Johnson</div>
-                        <div class="text-white-50 text-truncate" style="font-size: 0.75rem;">11° Grado A • Estudiante</div>
+                        <div class="text-white-50 text-truncate view-text-caption">11° Grado A • Estudiante</div>
                     </div>
                 </div>
             </div>
@@ -95,10 +96,21 @@
                     </div>
                     <div class="d-flex align-items-center gap-2">
                         <span class="small text-secondary">Estudiante activo:</span>
-                        <select class="form-select form-select-sm bg-light border-0 fw-semibold" id="selActiveStudent" style="width: 200px;">
-                            <option value="EST-1101">Alex Johnson</option>
-                            <option value="EST-1103">Carlos Mendoza</option>
-                            <option value="EST-1001">Juan Diego Pérez</option>
+                        <select class="form-select form-select-sm bg-light border-0 fw-semibold tutor-student-select" id="selActiveStudent">
+                            <optgroup label="11° Grado A">
+                                <option value="EST-1101">Alex Johnson</option>
+                                <option value="EST-1102">Carlos Andrés Mendoza H.</option>
+                                <option value="EST-1103">Daniel Felipe Mora</option>
+                                <option value="EST-1104">Isabella Ríos</option>
+                                <option value="EST-1105">Valentina Herrera</option>
+                            </optgroup>
+                            <optgroup label="10° Grado A">
+                                <option value="EST-1001">Camila Andrea Torres</option>
+                                <option value="EST-1002">Juan Diego Pérez</option>
+                                <option value="EST-1003">Lucas Sebastián Ramírez</option>
+                                <option value="EST-1004">Mateo Alejandro Rodríguez</option>
+                                <option value="EST-1005">Sofía Gómez</option>
+                            </optgroup>
                         </select>
                     </div>
                 </div>
@@ -120,7 +132,7 @@
                                     <span class="small fw-semibold text-dark">Matemáticas</span>
                                     <span class="badge bg-success" id="studentAvgBadge">4.3 / 5.0</span>
                                 </div>
-                                <div class="text-muted small" style="font-size: 0.75rem;" id="studentObsSnippet">
+                                <div class="text-muted small view-text-caption" id="studentObsSnippet">
                                     "Demuestra gran capacidad analítica y trabajo colaborativo."
                                 </div>
                             </div>
@@ -153,14 +165,14 @@
                                     <i class="bi bi-play-circle-fill text-danger fs-5"></i>
                                     <div>
                                         <div class="fw-semibold text-dark">Matemáticas con Profe Alex</div>
-                                        <span class="text-muted" style="font-size: 0.7rem;">Cálculo y Álgebra</span>
+                                        <span class="text-muted view-text-footnote">Cálculo y Álgebra</span>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center gap-2 p-2 bg-light rounded-3">
                                     <i class="bi bi-play-circle-fill text-danger fs-5"></i>
                                     <div>
                                         <div class="fw-semibold text-dark">JulioProfe Oficial</div>
-                                        <span class="text-muted" style="font-size: 0.7rem;">Física y Trigonometría</span>
+                                        <span class="text-muted view-text-footnote">Física y Trigonometría</span>
                                     </div>
                                 </div>
                             </div>
@@ -173,13 +185,13 @@
                             <!-- Cabecera del Chat -->
                             <div class="p-3 bg-dark text-white d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center gap-3">
-                                    <div class="bg-indigo rounded-circle d-flex align-items-center justify-content-center text-white" style="width: 40px; height: 40px;">
+                                    <div class="bg-indigo rounded-circle d-flex align-items-center justify-content-center text-white brand-mark">
                                         <i class="bi bi-robot fs-5"></i>
                                     </div>
                                     <div>
                                         <div class="fw-bold mb-0">SophosBot - Tutor de Apoyo</div>
-                                        <div class="text-white-50 small d-flex align-items-center gap-1" style="font-size: 0.75rem;">
-                                            <span class="pulse-dot-ai" style="background: #10b981; width: 8px; height: 8px; border-radius: 50%; display: inline-block;"></span> En línea • Listo para ayudarte
+                                        <div class="text-white-50 small d-flex align-items-center gap-1 view-text-caption">
+                                            <span class="pulse-dot-ai tutor-online-indicator"></span> En línea • Listo para ayudarte
                                         </div>
                                     </div>
                                 </div>
@@ -200,10 +212,10 @@
                                         ¡Hola, Alex! 🎓 Soy tu Tutor Virtual de SophosCore. He revisado tus calificaciones de Matemáticas y vas muy bien (Promedio 4.3). ¿En qué tema quisieras profundizar hoy o qué dudas tienes sobre tus talleres?
                                     </p>
                                     <div class="d-flex flex-wrap gap-1">
-                                        <button class="btn btn-xs btn-outline-secondary py-1 px-2 rounded-pill small" style="font-size: 0.75rem;" onclick="askQuickPrompt('¿Cómo entender los límites al infinito?')">
+                                        <button class="btn btn-xs btn-outline-secondary py-1 px-2 rounded-pill small view-text-caption" onclick="askQuickPrompt('¿Cómo entender los límites al infinito?')">
                                             Límites al infinito
                                         </button>
-                                        <button class="btn btn-xs btn-outline-secondary py-1 px-2 rounded-pill small" style="font-size: 0.75rem;" onclick="askQuickPrompt('Dame consejos para el examen del 19 de Octubre')">
+                                        <button class="btn btn-xs btn-outline-secondary py-1 px-2 rounded-pill small view-text-caption" onclick="askQuickPrompt('Dame consejos para el examen del 19 de Octubre')">
                                             Preparar examen de cierre
                                         </button>
                                     </div>
@@ -300,7 +312,7 @@
                         <div class="yt-card">
                             <div class="yt-card-thumb">
                                 <i class="bi bi-youtube yt-play-icon"></i>
-                                <span class="position-absolute bottom-0 end-0 bg-dark text-white px-2 py-1 small m-2 rounded" style="font-size: 0.68rem;">${responseData.video.duration}</span>
+                                <span class="position-absolute bottom-0 end-0 bg-dark text-white px-2 py-1 small m-2 rounded tutor-video-duration">${responseData.video.duration}</span>
                             </div>
                             <div class="p-3">
                                 <div class="badge bg-danger mb-1"><i class="bi bi-youtube"></i> Recurso Educativo</div>
@@ -319,7 +331,7 @@
                         <span class="badge bg-indigo small">Tutor IA</span>
                         <small class="text-muted">Justo ahora</small>
                     </div>
-                    <div class="text-dark small mb-2" style="line-height: 1.5;">
+                    <div class="text-dark small mb-2 readable-copy">
                         ${responseData.text}
                     </div>
                     ${ytHTML}
