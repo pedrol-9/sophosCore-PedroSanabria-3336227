@@ -9,7 +9,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
@@ -48,7 +48,7 @@ try {
 
             // 1.4 Plan de Suscripción e Institución
             $stmtInst = $pdo->query("
-                SELECT i.nombre_legal, i.nit, i.estado_suscripcion, i.fecha_vencimiento_suscripcion,
+                SELECT i.nombre_legal, i.nit, i.estado_suscripcion, i.fecha_expiracion,
                        p.nombre as plan_nombre, p.precio, p.limite_usuarios
                 FROM instituciones i
                 JOIN planes_suscripcion p ON i.id_suscripcion = p.id_suscripcion
@@ -85,7 +85,7 @@ try {
             // Obtener promedio real de cada estudiante para el periodo activo
             foreach ($studentsRaw as $st) {
                 $stmtAvg = $pdo->prepare("
-                    SELECT AVG(calificacion_numerica) as promedio
+                    SELECT AVG(nota) as promedio
                     FROM calificaciones
                     WHERE id_matricula = ? AND id_periodo = ?
                 ");
@@ -93,12 +93,12 @@ try {
                 $avgRow = $stmtAvg->fetch();
                 $avg = $avgRow['promedio'] ? round((float)$avgRow['promedio'], 2) : 0.0;
 
-                // Si no hay calificaciones en el periodo actual, buscar periodo 3
+                // Si no hay calificaciones en el periodo actual, buscar por número de periodo (periodo = 3)
                 if ($avg == 0.0) {
                     $stmtAvgP3 = $pdo->prepare("
-                        SELECT AVG(calificacion_numerica) as promedio
+                        SELECT AVG(nota) as promedio
                         FROM calificaciones
-                        WHERE id_matricula = ? AND periodo_academico = 3
+                        WHERE id_matricula = ? AND periodo = 3
                     ");
                     $stmtAvgP3->execute([$st['id_matricula']]);
                     $avgRowP3 = $stmtAvgP3->fetch();
@@ -148,18 +148,18 @@ try {
 
             // 1.6 Registros Reales del Observador Digital y Asistente IA
             $stmtObs = $pdo->query("
-                SELECT
-                    o.id_observacion,
-                    o.tipo_falta,
-                    o.titulo,
-                    o.descripcion,
-                    o.fecha_suceso,
+                SELECT 
+                    o.id_observador,
+                    o.tipo_nota,
+                    o.observacion_informal,
+                    o.observacion_formal_ia,
+                    o.fecha_registro,
                     u.nombre_completo as estudiante_nombre,
                     d.nombre_completo as docente_nombre
                 FROM observador_digital o
                 JOIN usuarios u ON o.id_estudiante = u.id_usuario
-                JOIN usuarios d ON o.id_creador = d.id_usuario
-                ORDER BY o.fecha_suceso DESC
+                JOIN usuarios d ON o.id_docente = d.id_usuario
+                ORDER BY o.fecha_registro DESC
                 LIMIT 6
             ");
             $observaciones = $stmtObs->fetchAll();
@@ -170,28 +170,34 @@ try {
                 $icon = 'bi-info-circle-fill';
                 $color = '#4f46e5';
                 $bg = 'rgba(79, 70, 229, 0.1)';
+                $titulo = 'Seguimiento Pedagógico';
 
-                if ($obs['tipo_falta'] === 'LOGRO_DESTACADO') {
+                if ($obs['tipo_nota'] === 'LOGRO_DESTACADO') {
                     $icon = 'bi-award-fill';
                     $color = '#059669';
                     $bg = 'rgba(16, 185, 129, 0.12)';
-                } elseif ($obs['tipo_falta'] === 'DISCIPLINARIA') {
+                    $titulo = 'Logro Académico Destacado';
+                } elseif ($obs['tipo_nota'] === 'DISCIPLINARIA') {
                     $icon = 'bi-exclamation-triangle-fill';
                     $color = '#d97706';
                     $bg = 'rgba(245, 158, 11, 0.12)';
-                } elseif ($obs['tipo_falta'] === 'PEDAGOGICA') {
+                    $titulo = 'Reporte de Convivencia';
+                } elseif ($obs['tipo_nota'] === 'PEDAGOGICA') {
                     $icon = 'bi-cpu-fill';
                     $color = '#0284c7';
                     $bg = 'rgba(2, 132, 199, 0.12)';
+                    $titulo = 'Acompañamiento Pedagógico';
                 }
 
+                $descripcion = !empty($obs['observacion_formal_ia']) ? $obs['observacion_formal_ia'] : $obs['observacion_informal'];
+
                 $aiMonitoring[] = [
-                    'tipo' => $obs['tipo_falta'],
-                    'titulo' => $obs['titulo'],
+                    'tipo' => $obs['tipo_nota'],
+                    'titulo' => $titulo,
                     'estudiante' => $obs['estudiante_nombre'],
                     'docente' => $obs['docente_nombre'],
-                    'fecha' => date('d/m/Y', strtotime($obs['fecha_suceso'])),
-                    'descripcion' => $obs['descripcion'],
+                    'fecha' => date('d/m/Y', strtotime($obs['fecha_registro'])),
+                    'descripcion' => $descripcion,
                     'icon' => $icon,
                     'color' => $color,
                     'bg' => $bg
