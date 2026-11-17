@@ -93,16 +93,16 @@ try {
                 $avgRow = $stmtAvg->fetch();
                 $avg = $avgRow['promedio'] ? round((float)$avgRow['promedio'], 2) : 0.0;
 
-                // Si no hay calificaciones en el periodo actual, buscar por número de periodo (periodo = 3)
+                // Si no hay calificaciones por id_periodo, buscar por número de periodo activo
                 if ($avg == 0.0) {
-                    $stmtAvgP3 = $pdo->prepare("
+                    $stmtAvgNum = $pdo->prepare("
                         SELECT AVG(nota) as promedio
                         FROM calificaciones
-                        WHERE id_matricula = ? AND periodo = 3
+                        WHERE id_matricula = ? AND periodo = ?
                     ");
-                    $stmtAvgP3->execute([$st['id_matricula']]);
-                    $avgRowP3 = $stmtAvgP3->fetch();
-                    $avg = $avgRowP3['promedio'] ? round((float)$avgRowP3['promedio'], 2) : 3.5;
+                    $stmtAvgNum->execute([$st['id_matricula'], $periodoActivoNum]);
+                    $avgRowNum = $stmtAvgNum->fetch();
+                    $avg = $avgRowNum['promedio'] ? round((float)$avgRowNum['promedio'], 2) : 3.5;
                 }
 
                 // Determinar estado cualitativo oficial

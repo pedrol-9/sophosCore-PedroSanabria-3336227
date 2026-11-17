@@ -92,11 +92,16 @@ try {
             $periods = [];
             $currentPeriodId = 3;
             foreach ($periodsRaw as $p) {
+                if ($p['activo'] == 1) {
+                    $currentPeriodId = (int)$p['numero_periodo'];
+                    break;
+                }
+            }
+            foreach ($periodsRaw as $p) {
                 $status = 'closed';
                 if ($p['activo'] == 1) {
                     $status = 'active';
-                    $currentPeriodId = (int)$p['numero_periodo'];
-                } elseif ((int)$p['numero_periodo'] > 3) {
+                } elseif ((int)$p['numero_periodo'] > $currentPeriodId) {
                     $status = 'pending';
                 }
                 $periods[] = [
