@@ -1625,18 +1625,22 @@
       table.innerHTML = html;
     }
 
-    // Llenar selector exclusivamente con períodos cerrados
+    // Llenar selector exclusivamente con períodos cerrados (excluye período activo y futuros)
     function populateBulletinPeriodSelector(bulletins) {
       const select = document.getElementById('bulletinPeriodSelector');
       if (!select) return;
       const periodNames = { 1: 'Primer Período', 2: 'Segundo Período', 3: 'Tercer Período', 4: 'Cuarto Período' };
       const currentVal = select.value;
+      const activeNum = (studentPortalData && studentPortalData.active_period) ? parseInt(studentPortalData.active_period.numero_periodo) : 3;
 
       let html = '<option value="">Seleccionar período...</option>';
       (bulletins || []).forEach(b => {
         const num = parseInt(b.numero_periodo);
-        const name = periodNames[num] || `Período ${num}`;
-        html += `<option value="${num}" ${currentVal == num ? 'selected' : ''}>${name}</option>`;
+        // Excluir estrictamente períodos activos y futuros
+        if (num < activeNum) {
+          const name = periodNames[num] || `Período ${num}`;
+          html += `<option value="${num}" ${currentVal == num ? 'selected' : ''}>${name}</option>`;
+        }
       });
       select.innerHTML = html;
       if (!currentVal) {

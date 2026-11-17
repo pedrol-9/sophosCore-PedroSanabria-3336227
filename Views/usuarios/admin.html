@@ -65,6 +65,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="#" data-target="libreta-calificaciones" id="navLinkAdminGradebook" data-bs-toggle="tooltip" data-bs-placement="right" title="Libreta Institucional de Notas">
+                        <i class="bi bi-journal-check"></i> <span class="nav-text">Libreta Institucional</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#" data-target="config-academicas" data-bs-toggle="tooltip" data-bs-placement="right" title="Config. Académicas">
                         <i class="bi bi-book"></i> <span class="nav-text">Config. Académicas</span>
                     </a>
@@ -205,10 +210,10 @@
                                         <h5 class="mb-0 fw-bold text-dark">Cuadro de Honor</h5>
                                         <span class="badge bg-indigo text-white rounded-pill" id="adminBadgePeriodoTabla">Periodo 3</span>
                                     </div>
-                                    <a href="../m2-academico/notas.html" class="btn-action-light text-decoration-none">
+                                    <button type="button" class="btn-action-light text-decoration-none border-0 bg-transparent" id="btnAdminGoGradebook" title="Ver Libreta Institucional de Calificaciones">
                                         <span>Ir a Libreta Completa</span>
                                         <i class="bi bi-arrow-right"></i>
-                                    </a>
+                                    </button>
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
@@ -261,6 +266,117 @@
                     </div>
                 </div>
 
+                <!-- Sección: Libreta Institucional de Calificaciones (Auditoría Centralizada) -->
+                <div id="libreta-calificaciones" class="spa-section">
+                    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                        <div>
+                            <h2 class="fw-bold mb-1 text-dark">Libreta Institucional de Calificaciones</h2>
+                            <p class="text-secondary small mb-0">Auditoría centralizada y consulta de calificaciones de todos los grados, asignaturas y estudiantes.</p>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-indigo text-white px-3 py-2 rounded-pill shadow-sm">
+                                <i class="bi bi-shield-lock-fill me-1"></i> Modo Rectoría / Administrador
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta de Filtros Avanzados -->
+                    <div class="card card-custom p-4 mb-4 border-0 shadow-sm">
+                        <div class="row g-3 align-items-end">
+                            <!-- Filtro Curso / Grado -->
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-secondary mb-1">
+                                    <i class="bi bi-mortarboard text-indigo me-1"></i> Curso / Grado
+                                </label>
+                                <select class="form-select bg-light border-0 fw-semibold" id="adminGbFilterCourse">
+                                    <option value="ALL" selected>Todos los Cursos</option>
+                                    <option value="c0000001-0000-0000-0000-000000000001">11° Grado A</option>
+                                    <option value="c0000001-0000-0000-0000-000000000002">10° Grado A</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtro Materia -->
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-secondary mb-1">
+                                    <i class="bi bi-book text-indigo me-1"></i> Materia
+                                </label>
+                                <select class="form-select bg-light border-0 fw-semibold" id="adminGbFilterSubject">
+                                    <option value="ALL" selected>Todas las Materias</option>
+                                    <option value="d0000001-0000-0000-0000-000000000001">Matemáticas</option>
+                                    <option value="d0000001-0000-0000-0000-000000000002">Física</option>
+                                    <option value="d0000001-0000-0000-0000-000000000003">Química</option>
+                                    <option value="d0000001-0000-0000-0000-000000000004">Lengua Castellana</option>
+                                    <option value="d0000001-0000-0000-0000-000000000005">Lectura Crítica</option>
+                                </select>
+                            </div>
+
+                            <!-- Filtro Período -->
+                            <div class="col-md-2">
+                                <label class="form-label small fw-bold text-secondary mb-1">
+                                    <i class="bi bi-calendar3 text-indigo me-1"></i> Período
+                                </label>
+                                <select class="form-select bg-light border-0 fw-semibold" id="adminGbFilterPeriod">
+                                    <option value="1">Período 1</option>
+                                    <option value="2">Período 2</option>
+                                    <option value="3" selected>Período 3</option>
+                                    <option value="4">Período 4</option>
+                                </select>
+                            </div>
+
+                            <!-- Buscador de Estudiante Específico -->
+                            <div class="col-md-3">
+                                <label class="form-label small fw-bold text-secondary mb-1">
+                                    <i class="bi bi-person-search text-indigo me-1"></i> Estudiante Específico
+                                </label>
+                                <input type="text" class="form-control bg-light border-0 fw-semibold" id="adminGbSearchStudent" placeholder="Filtrar por nombre...">
+                            </div>
+
+                            <!-- Botón Limpiar Filtros -->
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-outline-secondary w-100 fw-semibold" id="adminGbBtnReset" title="Limpiar todos los filtros">
+                                    <i class="bi bi-arrow-counterclockwise"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla de Calificaciones y Desempeño -->
+                    <div class="card card-custom border-0 shadow-sm" id="adminGbCardTable">
+                        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <h5 class="mb-0 fw-bold text-dark">Libreta General de Calificaciones</h5>
+                                <span class="badge bg-indigo text-white rounded-pill px-3 py-1" id="adminGbRecordsBadge">Cargando...</span>
+                            </div>
+                            <div class="small text-muted fw-semibold" id="adminGbPeriodIndicator">
+                                Período 3 Activo
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-custom align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="ps-4">Estudiante</th>
+                                            <th class="text-center">Grado</th>
+                                            <th>Materia & Docente</th>
+                                            <th>Actividades Evaluadas</th>
+                                            <th class="text-center">Promedio</th>
+                                            <th class="text-center pe-4">Desempeño</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="adminGbTableBody">
+                                        <tr>
+                                            <td colspan="6" class="text-center py-5 text-muted">
+                                                <span class="spinner-border spinner-border-sm me-2"></span> Cargando libreta institucional...
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Sección 2: Configuraciones Académicas (Gestión de Períodos) -->
                 <div id="config-academicas" class="spa-section">
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -289,7 +405,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-4 text-lg-end">
-                                <button type="button" class="btn btn-light text-indigo fw-bold px-4 py-2 rounded-pill shadow" id="btnTriggerClosePeriod">
+                                <button type="button" class="btn btn-light text-indigo fw-bold px-4 py-2 rounded-pill shadow" id="btnTriggerClosePeriod" data-bs-toggle="modal" data-bs-target="#modalConfirmClosePeriod">
                                     <i class="bi bi-lock-fill me-1"></i> Cerrar Período Académico
                                 </button>
                             </div>
@@ -309,9 +425,9 @@
                                 </p>
                             </div>
                         </div>
-                        <a href="../m2-academico/notas.html" class="btn btn-indigo btn-sm fw-semibold">
-                            <i class="bi bi-journal-check me-1"></i> Ir a Libreta Docente (Período 4)
-                        </a>
+                        <button type="button" class="btn btn-indigo btn-sm fw-semibold" id="btnAdminAlertGoGradebook">
+                            <i class="bi bi-journal-check me-1"></i> Ir a Libreta Institucional (Período 4)
+                        </button>
                     </div>
 
                     <!-- Resumen de Periodos -->
@@ -359,32 +475,6 @@
                     </div>
                 </div>
 
-                <!-- Modal de Confirmación de Cierre de Periodo -->
-                <div class="modal fade" id="modalConfirmClosePeriod" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content rounded-4 border-0 shadow-lg">
-                            <div class="modal-header border-bottom">
-                                <h5 class="modal-title fw-bold text-dark"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Confirmar Cierre de Período</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body p-4">
-                                <p class="text-secondary mb-3">
-                                    ¿Estás seguro de que deseas cerrar el <strong>Tercer Período Académico (19 de Octubre)</strong>?
-                                </p>
-                                <div class="alert alert-warning small mb-0">
-                                    <i class="bi bi-info-circle me-1"></i> Esta acción archivará las notas del Periodo 3 y habilitará automáticamente el <strong>Cuarto Período</strong> con 4 columnas predeterminadas vacías en la libreta docente.
-                                </div>
-                            </div>
-                            <div class="modal-footer border-top">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" class="btn btn-danger" id="btnConfirmClosePeriodAction">
-                                    <i class="bi bi-lock-fill me-1"></i> Confirmar y Cerrar Período
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Sección 3: Configuraciones de Cuenta -->
                 <div id="config-cuenta" class="spa-section">
                     <div class="under-construction-card shadow-sm mx-auto construction-card">
@@ -399,6 +489,32 @@
 
             </div>
         </main>
+    </div>
+
+    <!-- Modal de Confirmación de Cierre de Periodo (Hijo directo de body para evitar problemas de apilamiento/backdrop) -->
+    <div class="modal fade" id="modalConfirmClosePeriod" tabindex="-1" aria-labelledby="modalConfirmClosePeriodLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold text-dark" id="modalConfirmClosePeriodLabel"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Confirmar Cierre de Período</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-secondary mb-3">
+                        ¿Estás seguro de que deseas cerrar el <strong>Tercer Período Académico (19 de Octubre)</strong>?
+                    </p>
+                    <div class="alert alert-warning small mb-0">
+                        <i class="bi bi-info-circle me-1"></i> Esta acción archivará las notas del Periodo 3 y habilitará automáticamente el <strong>Cuarto Período</strong> con 4 columnas predeterminadas vacías en la libreta docente.
+                    </div>
+                </div>
+                <div class="modal-footer border-top">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmClosePeriodAction">
+                        <i class="bi bi-lock-fill me-1"></i> Confirmar y Cerrar Período
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Bootstrap 5 JS Bundle -->
@@ -432,7 +548,6 @@
             let currentPeriodNumber = 3;
             let currentAdminData = null;
             const modalConfirmEl = document.getElementById('modalConfirmClosePeriod');
-            const modalConfirm = modalConfirmEl ? new bootstrap.Modal(modalConfirmEl) : null;
 
             // Función para activar el parpadeo / shimmer de carga en las cards
             function setCardLoadingState(isLoading) {
@@ -501,7 +616,7 @@
                     if (tableBody) {
                         if (data.estudiantes && data.estudiantes.length > 0) {
                             tableBody.innerHTML = data.estudiantes.map(st => `
-                                <tr>
+                                <tr role="button" onclick="window.filterStudentInGradebook('${st.nombre}')" title="Clic para auditar notas de ${st.nombre} en la Libreta">
                                     <td>
                                         <div class="d-flex align-items-center gap-2">
                                             <div class="student-avatar admin-student-avatar">${st.iniciales}</div>
@@ -605,6 +720,11 @@
                     badgePeriodoTabla.textContent = `Periodo ${pNum}`;
                 }
 
+                const gbPeriodSel = document.getElementById('adminGbFilterPeriod');
+                if (gbPeriodSel && !gbPeriodSel.dataset.userChanged) {
+                    gbPeriodSel.value = String(pNum);
+                }
+
                 if (pNum === 3) {
                     if (badge) {
                         badge.textContent = "Periodo 3 Activo";
@@ -655,9 +775,10 @@
 
             // 3. Manejo de Cierre de Período
             const btnTrigger = document.getElementById('btnTriggerClosePeriod');
-            if (btnTrigger) {
+            if (btnTrigger && modalConfirmEl) {
                 btnTrigger.addEventListener('click', () => {
-                    if (modalConfirm) modalConfirm.show();
+                    const inst = bootstrap.Modal.getOrCreateInstance(modalConfirmEl);
+                    if (inst) inst.show();
                 });
             }
 
@@ -676,7 +797,10 @@
                         const data = await res.json();
 
                         if (data.success) {
-                            if (modalConfirm) modalConfirm.hide();
+                            if (modalConfirmEl) {
+                                const inst = bootstrap.Modal.getInstance(modalConfirmEl) || bootstrap.Modal.getOrCreateInstance(modalConfirmEl);
+                                if (inst) inst.hide();
+                            }
                             const successAlert = document.getElementById('adminCloseSuccessAlert');
                             if (successAlert) {
                                 successAlert.classList.remove('d-none');
@@ -709,6 +833,10 @@
                                 const successAlert = document.getElementById('adminCloseSuccessAlert');
                                 if (successAlert) successAlert.classList.add('d-none');
                                 await loadAdminDataFromMySQL();
+                                if (adminGbFilterPeriod) {
+                                    adminGbFilterPeriod.value = "3";
+                                    loadAdminGradebook();
+                                }
                                 alert('Período restablecido al Periodo 3.');
                             } else {
                                 alert(data.error);
@@ -721,6 +849,222 @@
                     }
                 });
             }
+
+            // ==============================================================
+            // 5. LIBRETA INSTITUCIONAL DE CALIFICACIONES (ADMIN / RECTORÍA)
+            // ==============================================================
+            const filterCourse = document.getElementById('adminGbFilterCourse');
+            const filterSubject = document.getElementById('adminGbFilterSubject');
+            const filterPeriod = document.getElementById('adminGbFilterPeriod');
+            const searchStudent = document.getElementById('adminGbSearchStudent');
+            const btnResetFilters = document.getElementById('adminGbBtnReset');
+            const gbTableBody = document.getElementById('adminGbTableBody');
+            const gbRecordsBadge = document.getElementById('adminGbRecordsBadge');
+            const gbPeriodIndicator = document.getElementById('adminGbPeriodIndicator');
+
+            // Navegación fluida hacia la Libreta Institucional
+            function switchToSection(targetId) {
+                const navLinks = document.querySelectorAll('#sidebar .nav-link');
+                const sections = document.querySelectorAll('.spa-section');
+
+                navLinks.forEach(l => {
+                    if (l.getAttribute('data-target') === targetId) {
+                        l.classList.add('active');
+                    } else {
+                        l.classList.remove('active');
+                    }
+                });
+
+                sections.forEach(sec => {
+                    if (sec.id === targetId) {
+                        sec.classList.add('active');
+                    } else {
+                        sec.classList.remove('active');
+                    }
+                });
+
+                if (targetId === 'libreta-calificaciones') {
+                    loadAdminGradebook();
+                }
+            }
+
+            // Exponer función para filtrar un estudiante desde el Cuadro de Honor
+            window.filterStudentInGradebook = function(studentName) {
+                if (searchStudent) searchStudent.value = studentName;
+                if (filterCourse) filterCourse.value = 'ALL';
+                if (filterSubject) filterSubject.value = 'ALL';
+                switchToSection('libreta-calificaciones');
+            };
+
+            // Botón 'Ir a Libreta Completa' en Cuadro de Honor
+            const btnGoGradebook = document.getElementById('btnAdminGoGradebook');
+            if (btnGoGradebook) {
+                btnGoGradebook.addEventListener('click', () => {
+                    if (searchStudent) searchStudent.value = '';
+                    switchToSection('libreta-calificaciones');
+                });
+            }
+
+            // Botón en la alerta de período cerrado
+            const btnAlertGoGb = document.getElementById('btnAdminAlertGoGradebook');
+            if (btnAlertGoGb) {
+                btnAlertGoGb.addEventListener('click', () => {
+                    if (filterPeriod) filterPeriod.value = String(currentPeriodNumber);
+                    switchToSection('libreta-calificaciones');
+                });
+            }
+
+            // Enlace de la barra lateral hacia la libreta institucional
+            const navLinkGb = document.getElementById('navLinkAdminGradebook');
+            if (navLinkGb) {
+                navLinkGb.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    switchToSection('libreta-calificaciones');
+                });
+            }
+
+            // Función debounce para búsqueda de estudiante en tiempo real
+            let searchDebounceTimeout = null;
+
+            async function loadAdminGradebook() {
+                if (!gbTableBody) return;
+
+                const courseVal = filterCourse ? filterCourse.value : 'ALL';
+                const subjectVal = filterSubject ? filterSubject.value : 'ALL';
+                const periodVal = filterPeriod ? filterPeriod.value : (currentPeriodNumber || 3);
+                const studentVal = searchStudent ? searchStudent.value.trim() : '';
+
+                if (gbPeriodIndicator) {
+                    gbPeriodIndicator.textContent = `Período ${periodVal} ${periodVal == currentPeriodNumber ? '(En Curso)' : '(Cerrado)'}`;
+                }
+
+                gbTableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <span class="spinner-border spinner-border-sm me-2 text-indigo"></span>
+                            Consultando libreta institucional en tiempo real...
+                        </td>
+                    </tr>
+                `;
+
+                try {
+                    const params = new URLSearchParams({
+                        action: 'gradebook',
+                        course: courseVal,
+                        subject: subjectVal,
+                        period: periodVal,
+                        student: studentVal
+                    });
+
+                    const res = await fetch(`../../api/admin.php?${params.toString()}`);
+                    const result = await res.json();
+
+                    if (!result.success || !result.data) {
+                        throw new Error(result.error || 'Error al obtener calificaciones');
+                    }
+
+                    const records = result.data.records || [];
+                    if (gbRecordsBadge) {
+                        gbRecordsBadge.textContent = `${records.length} ${records.length === 1 ? 'registro' : 'registros'}`;
+                    }
+
+                    if (records.length === 0) {
+                        gbTableBody.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="bi bi-search fs-2 d-block text-secondary mb-2"></i>
+                                    <strong>No se encontraron registros</strong> con los filtros aplicados.<br>
+                                    <span class="small">Intenta seleccionando "Todos los Cursos" o limpiando el filtro de búsqueda.</span>
+                                </td>
+                            </tr>
+                        `;
+                        return;
+                    }
+
+                    gbTableBody.innerHTML = records.map(r => {
+                        const activitiesHtml = r.calificaciones && r.calificaciones.length > 0
+                            ? r.calificaciones.map(c => `
+                                <span class="badge bg-light text-dark border px-2 py-1 small me-1 mb-1" title="${c.actividad}">
+                                    <span class="text-secondary small">${c.actividad.split(':')[0]}:</span> <strong>${c.nota.toFixed(1)}</strong>
+                                </span>
+                            `).join('')
+                            : `<span class="text-muted small fst-italic">Sin notas registradas en P${periodVal}</span>`;
+
+                        const avgColor = r.promedio >= 4.0 ? 'text-success' : (r.promedio >= 3.0 ? 'text-dark' : 'text-danger');
+                        const avgDisplay = r.cantidad_notas > 0 ? r.promedio.toFixed(2) : '-';
+
+                        return `
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="avatar-circle-sm bg-indigo text-white fw-bold d-flex align-items-center justify-content-center rounded-circle flex-shrink-0" style="width: 36px; height: 36px; font-size: 0.85rem;">
+                                            ${r.iniciales}
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark">${r.estudiante_nombre}</div>
+                                            <div class="text-muted small" style="font-size: 0.75rem;">${r.estudiante_email}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-light text-dark border fw-medium px-2 py-1">${r.curso_nombre}</span>
+                                </td>
+                                <td>
+                                    <div class="fw-bold text-indigo">${r.materia_nombre}</div>
+                                    <div class="text-muted small" style="font-size: 0.75rem;">Prof. ${r.docente_nombre}</div>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-wrap align-items-center" style="max-width: 320px;">
+                                        ${activitiesHtml}
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="fw-bold fs-6 ${avgColor}">${avgDisplay}</span>
+                                    <div class="text-muted small" style="font-size: 0.7rem;">${r.cantidad_notas} act.</div>
+                                </td>
+                                <td class="text-center pe-4">
+                                    <span class="badge ${r.badge_class} rounded-pill px-3 py-1 shadow-sm" style="font-size: 0.75rem;">
+                                        ${r.nivel_desempeno}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+
+                } catch (e) {
+                    console.error("Error al cargar libreta institucional:", e);
+                    gbTableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-danger">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i> Error al cargar datos: ${e.message}
+                            </td>
+                        </tr>
+                    `;
+                }
+            }
+
+            // Listeners de los filtros de la libreta
+            if (filterCourse) filterCourse.addEventListener('change', loadAdminGradebook);
+            if (filterSubject) filterSubject.addEventListener('change', loadAdminGradebook);
+            if (filterPeriod) filterPeriod.addEventListener('change', loadAdminGradebook);
+
+            if (searchStudent) {
+                searchStudent.addEventListener('input', () => {
+                    clearTimeout(searchDebounceTimeout);
+                    searchDebounceTimeout = setTimeout(loadAdminGradebook, 300);
+                });
+            }
+
+            if (btnResetFilters) {
+                btnResetFilters.addEventListener('click', () => {
+                    if (filterCourse) filterCourse.value = 'ALL';
+                    if (filterSubject) filterSubject.value = 'ALL';
+                    if (filterPeriod) filterPeriod.value = String(currentPeriodNumber || 3);
+                    if (searchStudent) searchStudent.value = '';
+                    loadAdminGradebook();
+                });
+            }
+        });
         });
     </script>
 </body>

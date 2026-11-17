@@ -277,6 +277,164 @@ try {
             ]);
             break;
 
+        // ==============================================================
+        // 4. LIBRETA INSTITUCIONAL DE CALIFICACIONES (ADMIN / RECTORÍA)
+        // Permite al Administrador auditar TODOS los cursos, TODAS las materias
+        // y filtrar por estudiante específico con calificaciones de la base de datos.
+        // ==============================================================
+        case 'gradebook':
+            // 4.1 Determinar período activo
+            $stmtAct = $pdo->query("SELECT numero_periodo FROM periodos_academicos WHERE id_institucion = 'a0000001-0000-0000-0000-000000000001' AND activo = 1 LIMIT 1");
+            $activeP = $stmtAct->fetchColumn() ?: 3;
+            $period = (int)($_GET['period'] ?? $activeP);
+            $selectedCourse = trim($_GET['course'] ?? 'ALL');
+            $selectedSubject = trim($_GET['subject'] ?? 'ALL');
+            $searchStudent = trim($_GET['student'] ?? '');
+
+            // 4.2 Listas para los filtros
+            $stmtCursos = $pdo->query("SELECT id_curso, nombre FROM cursos WHERE id_institucion = 'a0000001-0000-0000-0000-000000000001' ORDER BY nombre ASC");
+            $cursosList = $stmtCursos->fetchAll();
+
+            $stmtMaterias = $pdo->query("SELECT id_materia, nombre, area FROM materias WHERE id_institucion = 'a0000001-0000-0000-0000-000000000001' ORDER BY nombre ASC");
+            $materiasList = $stmtMaterias->fetchAll();
+
+            $stmtPeriodos = $pdo->query("SELECT numero_periodo, activo FROM periodos_academicos WHERE id_institucion = 'a0000001-0000-0000-0000-000000000001' ORDER BY numero_periodo ASC");
+            $periodosList = $stmtPeriodos->fetchAll();
+
+            // 4.3 Construcción de la consulta con filtros dinámicos
+            $sql = "
+                SELECT 
+                    em.id_matricula,
+                    u.id_usuario as id_estudiante,
+                    u.nombre_completo as estudiante_nombre,
+                    u.email as estudiante_email,
+                    c.id_curso,
+                    c.nombre as curso_nombre,
+                    m.id_materia,
+                    m.nombre as materia_nombre,
+                    m.area as materia_area,
+                    d.nombre_completo as docente_nombre,
+                    aa.id_asignacion
+                FROM estudiantes_matriculados em
+                JOIN usuarios u ON em.id_estudiante = u.id_usuario
+                JOIN cursos c ON em.id_curso = c.id_curso
+                JOIN asignaciones_academicas aa ON aa.id_curso = c.id_curso
+                JOIN materias m ON aa.id_materia = m.id_materia
+                JOIN usuarios d ON aa.id_docente = d.id_usuario
+                WHERE em.ano_lectivo = 2026 AND aa.ano_lectivo = 2026
+            ";
+
+            $params = [];
+
+            if ($selectedCourse !== 'ALL' && !empty($selectedCourse)) {
+                $sql .= " AND (c.id_curso = :curso OR c.nombre LIKE :cursoName) ";
+                $params[':curso'] = $selectedCourse;
+                $params[':cursoName'] = "%$selectedCourse%";
+            }
+
+            if ($selectedSubject !== 'ALL' && !empty($selectedSubject)) {
+                $sql .= " AND (m.id_materia = :materia OR m.nombre LIKE :materiaName) ";
+                $params[':materia'] = $selectedSubject;
+                $params[':materiaName'] = "%$selectedSubject%";
+            }
+
+            if (!empty($searchStudent)) {
+                $sql .= " AND (u.nombre_completo LIKE :search OR u.email LIKE :search) ";
+                $params[':search'] = "%$searchStudent%";
+            }
+
+            $sql .= " ORDER BY c.nombre ASC, u.nombre_completo ASC, m.nombre ASC";
+
+            $stmtR = $pdo->prepare($sql);
+            $stmtR->execute($params);
+            $rows = $stmtR->fetchAll();
+
+            // 4.4 Adjuntar las calificaciones reales registradas para cada estudiante/materia
+            $gradebookRecords = [];
+            foreach ($rows as $r) {
+                $stmtC = $pdo->prepare("
+                    SELECT c.id_calificacion, c.nota, c.actividad, c.comentario_docente
+                    FROM calificaciones c
+                    WHERE c.id_matricula = ? AND c.id_asignacion = ? AND c.periodo = ?
+                    ORDER BY c.fecha_registro ASC
+                ");
+                $stmtC->execute([$r['id_matricula'], $r['id_asignacion'], $period]);
+                $califs = $stmtC->fetchAll();
+
+                $notasList = [];
+                $suma = 0;
+                $count = 0;
+                foreach ($califs as $cl) {
+                    if ($cl['nota'] !== null) {
+                        $n = (float)$cl['nota'];
+                        $notasList[] = [
+                            'actividad' => $cl['actividad'] ?: ('Nota ' . ($count + 1)),
+                            'nota' => $n
+                        ];
+                        $suma += $n;
+                        $count++;
+                    }
+                }
+
+                $promedio = $count > 0 ? round($suma / $count, 2) : 0.0;
+
+                // Nivel de desempeño institucional
+                $nivel = 'Sin Calificaciones';
+                $badgeClass = 'bg-secondary';
+                if ($count > 0) {
+                    if ($promedio >= 4.6) {
+                        $nivel = 'Superior';
+                        $badgeClass = 'bg-success';
+                    } elseif ($promedio >= 4.0) {
+                        $nivel = 'Alto';
+                        $badgeClass = 'bg-primary';
+                    } elseif ($promedio >= 3.0) {
+                        $nivel = 'Básico';
+                        $badgeClass = 'bg-warning text-dark';
+                    } else {
+                        $nivel = 'Bajo';
+                        $badgeClass = 'bg-danger';
+                    }
+                }
+
+                // Generar iniciales del estudiante
+                $parts = explode(' ', trim($r['estudiante_nombre']));
+                $initials = strtoupper(substr($parts[0] ?? 'E', 0, 1) . substr($parts[1] ?? '', 0, 1));
+
+                $gradebookRecords[] = [
+                    'id_matricula' => $r['id_matricula'],
+                    'id_estudiante' => $r['id_estudiante'],
+                    'estudiante_nombre' => $r['estudiante_nombre'],
+                    'estudiante_email' => $r['estudiante_email'],
+                    'iniciales' => $initials,
+                    'curso_id' => $r['id_curso'],
+                    'curso_nombre' => $r['curso_nombre'],
+                    'materia_id' => $r['id_materia'],
+                    'materia_nombre' => $r['materia_nombre'],
+                    'materia_area' => $r['materia_area'],
+                    'docente_nombre' => $r['docente_nombre'],
+                    'calificaciones' => $notasList,
+                    'cantidad_notas' => $count,
+                    'promedio' => $promedio,
+                    'nivel_desempeno' => $nivel,
+                    'badge_class' => $badgeClass
+                ];
+            }
+
+            echo json_encode([
+                'success' => true,
+                'data' => [
+                    'periodo_seleccionado' => $period,
+                    'periodo_activo' => (int)$activeP,
+                    'cursos' => $cursosList,
+                    'materias' => $materiasList,
+                    'periodos' => $periodosList,
+                    'records' => $gradebookRecords,
+                    'total_records' => count($gradebookRecords)
+                ]
+            ]);
+            break;
+
         default:
             echo json_encode(['success' => false, 'error' => 'Acción no válida']);
             break;

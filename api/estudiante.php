@@ -200,7 +200,7 @@ try {
                     p.fecha_fin
                 FROM boletines_historicos b
                 JOIN periodos_academicos p ON b.id_periodo = p.id_periodo
-                WHERE b.id_matricula = ?
+                WHERE b.id_matricula = ? AND p.activo = 0
                 ORDER BY p.numero_periodo ASC
             ");
             $stmt->execute([$student['id_matricula']]);

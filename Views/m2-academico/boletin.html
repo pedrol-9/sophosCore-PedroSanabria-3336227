@@ -37,7 +37,7 @@
                 <span class="badge badge-role badge-role-docente ms-2">Boletines Académicos</span>
             </div>
             <div class="top-icons">
-                <a href="../m1-autenticacion/login.html" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                <a href="../../index.html" class="btn btn-sm btn-outline-light rounded-pill px-3" onclick="sessionStorage.removeItem('sophos_session');">
                     <i class="bi bi-box-arrow-right"></i> Salir
                 </a>
             </div>
@@ -131,10 +131,9 @@
                         <div class="col-md-4">
                             <label class="form-label small text-secondary fw-medium mb-1">Período</label>
                             <select class="form-select bg-light border-0" id="selBoletinPeriod">
+                                <option value="" disabled>Seleccionar Período...</option>
                                 <option value="1">Periodo 1</option>
-                                <option value="2">Periodo 2</option>
-                                <option value="3" selected>Periodo 3 (Activo - Cierre 19 Oct)</option>
-                                <option value="4">Periodo 4</option>
+                                <option value="2" selected>Periodo 2</option>
                             </select>
                         </div>
                     </div>
@@ -154,7 +153,7 @@
                             </div>
                         </div>
                         <div class="text-end">
-                            <span class="badge bg-indigo px-3 py-2 fs-6" id="bReportPeriodBadge">Periodo 3 - 2026</span>
+                            <span class="badge bg-indigo px-3 py-2 fs-6" id="bReportPeriodBadge">Periodo 2 - 2026</span>
                             <div class="text-muted small mt-1">Fecha de expedición: <span id="bDate"></span></div>
                         </div>
                     </div>
