@@ -642,18 +642,17 @@
           <div class="card card-custom p-3 mb-4 border-0 shadow-sm no-print">
             <div class="row align-items-center g-3">
               <div class="col-md-6">
-                <label class="form-label small text-secondary fw-bold mb-1">Seleccionar Período a Consultar:</label>
+                <label class="form-label small text-secondary fw-bold mb-1">Seleccionar Período:</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="bulletinPeriodSelector"
                   onchange="renderStudentBulletin()">
-                  <option value="1">Primer Período (Cerrado)</option>
-                  <option value="2" selected>Segundo Período (Cerrado)</option>
-                  <option value="3" disabled>Tercer Período (En curso - Pendiente de cierre)</option>
-                  <option value="4" disabled>Cuarto Período (Inactivo)</option>
+                  <option value="" selected>Seleccionar período...</option>
+                  <option value="1">Primer Período</option>
+                  <option value="2">Segundo Período</option>
                 </select>
               </div>
               <div class="col-md-6 text-md-end">
-                <span class="badge-contrast-success px-3 py-2" id="bulletinStatusBadge">
-                  <i class="bi bi-check-circle-fill me-1"></i> Boletín Consolidado 2026
+                <span class="badge-contrast-dark px-3 py-2" id="bulletinStatusBadge">
+                  <i class="bi bi-info-circle me-1"></i> Selecciona un período
                 </span>
               </div>
             </div>
@@ -1099,7 +1098,8 @@
         // 5. Historial de asistencia
         renderAttendanceSection(data.attendance_summary);
 
-        // 6. Boletín oficial
+        // 6. Boletín
+        populateBulletinPeriodSelector(data.bulletins);
         renderStudentBulletin();
 
       } catch (err) {
@@ -1610,17 +1610,52 @@
       table.innerHTML = html;
     }
 
-    // Renderizar Boletín Oficial desde MySQL (Exclusivamente períodos cerrados)
+    // Llenar selector exclusivamente con períodos cerrados
+    function populateBulletinPeriodSelector(bulletins) {
+      const select = document.getElementById('bulletinPeriodSelector');
+      if (!select) return;
+      const periodNames = { 1: 'Primer Período', 2: 'Segundo Período', 3: 'Tercer Período', 4: 'Cuarto Período' };
+      const currentVal = select.value;
+
+      let html = '<option value="">Seleccionar período...</option>';
+      (bulletins || []).forEach(b => {
+        const num = parseInt(b.numero_periodo);
+        const name = periodNames[num] || `Período ${num}`;
+        html += `<option value="${num}" ${currentVal == num ? 'selected' : ''}>${name}</option>`;
+      });
+      select.innerHTML = html;
+      if (!currentVal) {
+        select.value = "";
+      }
+    }
+
+    // Renderizar Boletín (Exclusivamente períodos cerrados)
     function renderStudentBulletin() {
       if (!studentPortalData) return;
 
-      const selectedPeriod = parseInt(document.getElementById('bulletinPeriodSelector')?.value || 2);
+      const sel = document.getElementById('bulletinPeriodSelector');
+      const selectedVal = sel ? sel.value : '';
       const bulletinCard = document.getElementById('bulletinCardContent');
       const pendingCard = document.getElementById('bulletinPendingCard');
       const printBtn = document.getElementById('btnPrintBulletin');
       const statusBadge = document.getElementById('bulletinStatusBadge');
 
-      // Buscar si es un boletín histórico cerrado (Periodo 1 o 2)
+      if (!selectedVal) {
+        if (bulletinCard) bulletinCard.classList.add('d-none');
+        if (pendingCard) pendingCard.classList.add('d-none');
+        if (printBtn) {
+          printBtn.disabled = true;
+          printBtn.classList.add('opacity-50');
+        }
+        if (statusBadge) {
+          statusBadge.className = 'badge-contrast-dark px-3 py-2';
+          statusBadge.innerHTML = '<i class="bi bi-info-circle me-1"></i> Selecciona un período';
+        }
+        return;
+      }
+
+      const selectedPeriod = parseInt(selectedVal);
+      // Buscar si es un boletín histórico cerrado
       const historicalBulletin = (studentPortalData.bulletins || []).find(b => parseInt(b.numero_periodo) === selectedPeriod);
 
       // Si el período está en curso o no se ha cerrado, NO se debe generar boletín
@@ -1637,12 +1672,12 @@
         }
         if (statusBadge) {
           statusBadge.className = 'badge-contrast-warning px-3 py-2';
-          statusBadge.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Período en Curso - Pendiente de Cierre';
+          statusBadge.innerHTML = '<i class="bi bi-hourglass-split me-1"></i> Período en curso';
         }
         return;
       }
 
-      // Período cerrado con boletín oficial generado
+      // Período cerrado con boletín generado
       if (pendingCard) pendingCard.classList.add('d-none');
       if (bulletinCard) bulletinCard.classList.remove('d-none');
       if (printBtn) {
@@ -1651,7 +1686,7 @@
       }
       if (statusBadge) {
         statusBadge.className = 'badge-contrast-success px-3 py-2';
-        statusBadge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Documento Oficial Válido 2026';
+        statusBadge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Boletín Consolidado 2026';
       }
 
       const periodBadge = document.getElementById('bulletinReportPeriodBadge');
