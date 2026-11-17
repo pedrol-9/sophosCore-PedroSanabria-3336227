@@ -146,6 +146,14 @@ try {
                 ];
             }
 
+            // Ordenar por promedio descendente (Cuadro de Honor: mejores puntajes arriba)
+            usort($studentsWithGrades, function ($a, $b) {
+                return (float)$b['promedio'] <=> (float)$a['promedio'];
+            });
+
+            // Limitar a los 10 mejores puntajes para el Cuadro de Honor
+            $cuadroDeHonor = array_slice($studentsWithGrades, 0, 10);
+
             // 1.6 Registros Reales del Observador Digital y Asistente IA
             $stmtObs = $pdo->query("
                 SELECT 
@@ -217,7 +225,7 @@ try {
                     'institucion' => $institucion,
                     'periodo_activo' => $periodoActivoNum,
                     'periodos' => $periodos,
-                    'estudiantes' => $studentsWithGrades,
+                    'estudiantes' => $cuadroDeHonor,
                     'monitoreo_ia' => $aiMonitoring
                 ]
             ]);
