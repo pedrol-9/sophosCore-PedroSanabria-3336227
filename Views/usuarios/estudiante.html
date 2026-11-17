@@ -452,12 +452,9 @@
             <div>
               <h2 class="fw-bold mb-1 text-dark">Libreta de Mis Calificaciones</h2>
             </div>
-            <div class="d-flex gap-2">
-              <button type="button" class="btn btn-outline-primary" onclick="toggleSophosChat(true)">
-                <i class="bi bi-stars me-1"></i> Consultar a SophosBot
-              </button>
-              <button type="button" class="btn btn-indigo shadow-sm" onclick="navigateToSection('boletines')">
-                <i class="bi bi-file-earmark-pdf me-1"></i> Ver Boletín Oficial
+            <div>
+              <button type="button" class="btn btn-indigo shadow-sm" id="btnGradesViewBulletin" onclick="openBulletinForActivePeriod()">
+                <i class="bi bi-file-earmark-pdf me-1"></i> Ver Boletín
               </button>
             </div>
           </div>
@@ -624,12 +621,12 @@
         </div>
 
         <!-- ============================================================== -->
-        <!-- SECCIÓN 4: BOLETINES OFICIALES                                  -->
+        <!-- SECCIÓN 4: BOLETINES ACADÉMICOS                                  -->
         <!-- ============================================================== -->
         <div id="boletines" class="spa-section">
           <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2 no-print">
             <div>
-              <h2 class="fw-bold mb-1 text-dark">Boletines Académicos Oficiales</h2>
+              <h2 class="fw-bold mb-1 text-dark">Boletines Académicos</h2>
             </div>
             <div class="d-flex gap-2">
               <button type="button" class="btn btn-outline-secondary" onclick="navigateToSection('panel-general')">
@@ -648,14 +645,15 @@
                 <label class="form-label small text-secondary fw-bold mb-1">Seleccionar Período a Consultar:</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="bulletinPeriodSelector"
                   onchange="renderStudentBulletin()">
-                  <option value="1">Primer Período (Oficial Cerrado)</option>
-                  <option value="2" selected>Segundo Período (Oficial Cerrado)</option>
-                  <option value="3">Tercer Período (En curso - Cierre 19 de Octubre)</option>
+                  <option value="1">Primer Período (Cerrado)</option>
+                  <option value="2" selected>Segundo Período (Cerrado)</option>
+                  <option value="3" disabled>Tercer Período (En curso - Pendiente de cierre)</option>
+                  <option value="4" disabled>Cuarto Período (Inactivo)</option>
                 </select>
               </div>
               <div class="col-md-6 text-md-end">
                 <span class="badge-contrast-success px-3 py-2" id="bulletinStatusBadge">
-                  <i class="bi bi-check-circle-fill me-1"></i> Documento Oficial Válido 2026
+                  <i class="bi bi-check-circle-fill me-1"></i> Boletín Consolidado 2026
                 </span>
               </div>
             </div>
@@ -757,9 +755,9 @@
                 <i class="bi bi-hourglass-split fs-1"></i>
               </span>
             </div>
-            <h4 class="fw-bold text-dark mb-2">Boletín Oficial Aún No Generado</h4>
+            <h4 class="fw-bold text-dark mb-2">Boletín No Disponible</h4>
             <p class="text-secondary mx-auto mb-4 student-chat-window">
-              El boletín oficial del <strong id="pendingPeriodName">Tercer Período</strong> no se encuentra generado todavía, ya que este período académico está actualmente en curso.
+              El boletín del <strong id="pendingPeriodName">Tercer Período</strong> no se encuentra disponible todavía, ya que este período académico está actualmente en curso.
             </p>
             <div class="alert alert-light border text-start mx-auto mb-4 p-3 rounded-3 view-empty-state-notice">
               <div class="d-flex align-items-start gap-2 mb-2">
@@ -773,7 +771,7 @@
                 <i class="bi bi-cpu text-indigo mt-1"></i>
                 <div>
                   <span class="fw-bold text-dark small">Generación Automática:</span>
-                  <div class="text-secondary small">Al momento de realizarse el cierre oficial de período por parte de la coordinación académica, el sistema generará y consolidará de manera automática los boletines oficiales para todos los estudiantes.</div>
+                  <div class="text-secondary small">Al momento de realizarse el cierre del período por parte de la coordinación académica, el sistema generará y consolidará de manera automática los boletines de calificaciones para todos los estudiantes.</div>
                 </div>
               </div>
             </div>
@@ -1093,6 +1091,7 @@
         // 3. Selectores de materias y períodos
         renderSubjectSelector(data.subjects);
         renderGradesPeriodButtons(data.periods);
+        updateGradesBulletinButton();
 
         // 4. Libreta detallada de calificaciones
         renderGradesTable();
@@ -1270,11 +1269,45 @@
       container.innerHTML = html;
     }
 
+    function isPeriodClosed(periodNum) {
+      if (!studentPortalData) return false;
+      return (studentPortalData.bulletins || []).some(b => parseInt(b.numero_periodo) === periodNum);
+    }
+
+    function updateGradesBulletinButton() {
+      const btn = document.getElementById('btnGradesViewBulletin');
+      if (!btn) return;
+      const closed = isPeriodClosed(activePeriodNumber);
+      if (closed) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        btn.title = `Ver Boletín del Período ${activePeriodNumber}`;
+      } else {
+        btn.disabled = true;
+        btn.classList.add('opacity-50');
+        btn.title = `El boletín no se puede generar porque el Período ${activePeriodNumber} aún está en curso.`;
+      }
+    }
+
+    function openBulletinForActivePeriod() {
+      if (!isPeriodClosed(activePeriodNumber)) {
+        alert(`El boletín del Período ${activePeriodNumber} no se puede generar porque el período académico se encuentra actualmente en curso.`);
+        return;
+      }
+      const sel = document.getElementById('bulletinPeriodSelector');
+      if (sel) {
+        sel.value = activePeriodNumber;
+      }
+      navigateToSection('boletines');
+      renderStudentBulletin();
+    }
+
     function changeGradesPeriod(periodNum) {
       activePeriodNumber = periodNum;
       if (studentPortalData?.periods) {
         renderGradesPeriodButtons(studentPortalData.periods);
       }
+      updateGradesBulletinButton();
       renderGradesTable();
       renderStudentBulletin();
     }
@@ -1663,7 +1696,7 @@
       }
 
       generalObs = historicalBulletin.observacion_director
-        || `Boletín oficial consolidado y cerrado para el Período ${selectedPeriod}. Promedio general registrado: ${historicalBulletin.promedio_general}.`;
+        || `Boletín consolidado y cerrado para el Período ${selectedPeriod}. Promedio general registrado: ${historicalBulletin.promedio_general}.`;
 
       if (tableBody) tableBody.innerHTML = rowsHtml;
       if (obsEl) obsEl.textContent = `"${generalObs}"`;
