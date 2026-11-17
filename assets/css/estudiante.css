@@ -136,6 +136,26 @@
       box-shadow: 0 10px 20px -5px rgba(2, 132, 199, 0.15);
     }
 
+    .student-subjects-scroll-container {
+      max-height: 420px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 4px;
+    }
+
+    .student-subjects-scroll-container::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .student-subjects-scroll-container::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    .student-subjects-scroll-container::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
     .learning-step-card {
       border-radius: 14px;
       border: 1px solid #e2e8f0;
