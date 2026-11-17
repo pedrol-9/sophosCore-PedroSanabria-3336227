@@ -122,7 +122,7 @@ try {
                     $badgeClass = 'badge-soft-warning';
                     $barClass = 'bg-warning';
                 } else {
-                    $estado = 'Bajo (Riesgo)';
+                    $estado = 'Bajo';
                     $badgeClass = 'badge-soft-danger';
                     $barClass = 'bg-danger';
                     $alumnosEnRiesgo++;

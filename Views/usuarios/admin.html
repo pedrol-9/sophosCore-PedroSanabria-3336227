@@ -218,7 +218,7 @@
                                                     <th>Estudiante</th>
                                                     <th>Grado</th>
                                                     <th>Promedio</th>
-                                                    <th>Estado</th>
+                                                    <th class="text-end pe-3">Estado</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="adminStudentsTableBody">
@@ -503,15 +503,15 @@
                             tableBody.innerHTML = data.estudiantes.map(st => `
                                 <tr>
                                     <td>
-                                        <div class="d-flex align-items-center gap-3">
+                                        <div class="d-flex align-items-center gap-2">
                                             <div class="student-avatar admin-student-avatar">${st.iniciales}</div>
-                                            <div>
-                                                <div class="fw-semibold text-dark">${st.nombre}</div>
-                                                <div class="text-muted small view-text-caption">${st.email}</div>
+                                            <div class="text-truncate">
+                                                <div class="fw-semibold text-dark text-truncate">${st.nombre}</div>
+                                                <div class="text-muted small view-text-caption text-truncate">${st.email}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="badge bg-light text-dark border fw-medium px-2 py-1">${st.curso}</span></td>
+                                    <td><span class="badge bg-light text-dark border fw-medium px-2 py-1 text-nowrap">${st.curso}</span></td>
                                     <td>
                                         <div class="grade-progress-wrap">
                                             <div class="d-flex justify-content-between small mb-1">
@@ -523,9 +523,9 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td class="text-end pe-3">
                                         <span class="badge-soft ${st.badge_class}">
-                                            <span class="status-dot"></span> ${st.estado}
+                                            ${st.estado.replace(/\s*\(.*?\)/, '')}
                                         </span>
                                     </td>
                                 </tr>
