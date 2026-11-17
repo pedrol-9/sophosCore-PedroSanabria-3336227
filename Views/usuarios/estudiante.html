@@ -97,7 +97,7 @@
           </div>
           <div class="user-details overflow-hidden">
             <div class="fw-bold text-white small text-truncate">Alex Johnson</div>
-            <div class="text-white-50 text-truncate view-text-caption">11° Grado A • Estudiante</div>
+            <div class="text-white-50 text-truncate view-text-caption">11-A</div>
           </div>
         </div>
         <a href="../../index.html" class="btn btn-link btn-logout text-decoration-none p-2 w-100"
@@ -1120,9 +1120,13 @@
 
         const details = userBox.querySelector('.user-details');
         if (details) {
+          const shortCourse = (student.curso_nombre || '11-A')
+            .replace(/°\s*Grado\s*/i, '-')
+            .replace(/\s+/g, '')
+            .trim();
           details.innerHTML = `
                         <div class="fw-bold text-white small text-truncate">${escapeHtml(student.nombre_completo)}</div>
-                        <div class="text-white-50 text-truncate view-text-caption">${escapeHtml(student.curso_nombre)} • ${escapeHtml(student.rol)}</div>
+                        <div class="text-white-50 text-truncate view-text-caption">${escapeHtml(shortCourse)}</div>
                     `;
         }
       }
