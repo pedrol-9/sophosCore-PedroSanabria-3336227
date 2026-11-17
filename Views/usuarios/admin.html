@@ -110,10 +110,6 @@
                                 <i class="bi bi-calendar3 text-indigo"></i>
                                 <span id="headerAcademicPeriodPill">Año Lectivo 2026 • Periodo 3 Activo</span>
                             </div>
-                            <button class="btn-action-light" id="btnExportReport" type="button" title="Descargar reporte institucional de calificaciones en CSV">
-                                <i class="bi bi-download"></i>
-                                <span>Exportar</span>
-                            </button>
                         </div>
                     </div>
                     
@@ -654,38 +650,6 @@
             if (btnRefresh) {
                 btnRefresh.addEventListener('click', () => {
                     loadAdminDataFromMySQL();
-                });
-            }
-
-            // Botón de exportación real de calificaciones en CSV
-            const btnExport = document.getElementById('btnExportReport');
-            if (btnExport) {
-                btnExport.addEventListener('click', () => {
-                    if (!currentAdminData || !currentAdminData.estudiantes || currentAdminData.estudiantes.length === 0) {
-                        alert('No hay calificaciones cargadas para exportar en este momento.');
-                        return;
-                    }
-
-                    const headers = ["Estudiante", "Correo Institucional", "Grado / Curso", `Promedio Periodo ${currentPeriodNumber}`, "Desempeño", "Alerta de Riesgo"];
-                    const rows = currentAdminData.estudiantes.map(st => [
-                        `"${st.nombre}"`,
-                        `"${st.email}"`,
-                        `"${st.curso}"`,
-                        st.promedio,
-                        `"${st.estado}"`,
-                        st.promedio < 3.0 ? '"EN RIESGO"' : '"AL DÍA"'
-                    ]);
-
-                    const csvContent = "\uFEFF" + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');
-                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = `reporte_calificaciones_periodo_${currentPeriodNumber}_2026.csv`;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
                 });
             }
 
