@@ -20,9 +20,7 @@ const SophosDB = (() => {
         subjects: [
             { id: "MAT", name: "Matemáticas", teacher: "Mariana Ruiz" },
             { id: "FIS", name: "Física", teacher: "Mariana Ruiz" },
-            { id: "QUI", name: "Química", teacher: "Mariana Ruiz" },
-            { id: "CAS", name: "Lengua Castellana", teacher: "Carlos Mendoza" },
-            { id: "LEC", name: "Lectura Crítica", teacher: "Carlos Mendoza" }
+            { id: "QUI", name: "Química", teacher: "Mariana Ruiz" }
         ],
         students: [],
         gradebooks: {},

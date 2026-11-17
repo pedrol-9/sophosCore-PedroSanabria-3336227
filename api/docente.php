@@ -57,16 +57,16 @@ try {
                 ['id' => '10A', 'name' => '10° Grado A', 'grade' => 10, 'db_id' => 'c0000001-0000-0000-0000-000000000002']
             ];
 
-            // Materias asignadas
+            // Materias asignadas a este docente
             $stmtM = $pdo->prepare("
                 SELECT DISTINCT m.id_materia, m.nombre, m.area, u.nombre_completo as docente
                 FROM asignaciones_academicas aa
                 JOIN materias m ON aa.id_materia = m.id_materia
                 JOIN usuarios u ON aa.id_docente = u.id_usuario
-                WHERE aa.ano_lectivo = 2026
+                WHERE aa.id_docente = ? AND aa.ano_lectivo = 2026
                 ORDER BY m.nombre ASC
             ");
-            $stmtM->execute();
+            $stmtM->execute([$docenteId]);
             $materiasRaw = $stmtM->fetchAll();
 
             $subjects = [];
@@ -265,14 +265,23 @@ try {
             $courseKey = $_GET['course'] ?? '11A';
             $subjectKey = $_GET['subject'] ?? 'MAT';
             $period = (int)($_GET['period'] ?? 3);
+            $docenteId = $_GET['docente_id'] ?? 'b0000001-0000-0000-0000-000000000002';
 
             $dbCourseId = $courseCodeMap[$courseKey]['id'] ?? 'c0000001-0000-0000-0000-000000000001';
             $dbSubjectId = $subjectCodeMap[$subjectKey]['id'] ?? 'd0000001-0000-0000-0000-000000000001';
 
-            // Buscar asignación académica
-            $stmtA = $pdo->prepare("SELECT id_asignacion FROM asignaciones_academicas WHERE id_curso = ? AND id_materia = ? AND ano_lectivo = 2026 LIMIT 1");
-            $stmtA->execute([$dbCourseId, $dbSubjectId]);
+            // Buscar asignación académica asegurando que pertenezca al docente logueado
+            $stmtA = $pdo->prepare("SELECT id_asignacion FROM asignaciones_academicas WHERE id_curso = ? AND id_materia = ? AND id_docente = ? AND ano_lectivo = 2026 LIMIT 1");
+            $stmtA->execute([$dbCourseId, $dbSubjectId, $docenteId]);
             $asigId = $stmtA->fetchColumn();
+
+            if (!$asigId) {
+                echo json_encode([
+                    'success' => false,
+                    'error' => 'No tienes permisos para acceder a esta asignatura.'
+                ]);
+                break;
+            }
 
             // Obtener estudiantes del curso
             $stmtS = $pdo->prepare("
@@ -374,9 +383,16 @@ try {
             $dbCourseId = $courseCodeMap[$courseKey]['id'] ?? 'c0000001-0000-0000-0000-000000000001';
             $dbSubjectId = $subjectCodeMap[$subjectKey]['id'] ?? 'd0000001-0000-0000-0000-000000000001';
 
-            $stmtA = $pdo->prepare("SELECT id_asignacion, id_institucion FROM asignaciones_academicas WHERE id_curso = ? AND id_materia = ? AND ano_lectivo = 2026 LIMIT 1");
-            $stmtA->execute([$dbCourseId, $dbSubjectId]);
+            $docenteId = $input['docente_id'] ?? 'b0000001-0000-0000-0000-000000000002';
+            $stmtA = $pdo->prepare("SELECT id_asignacion, id_institucion FROM asignaciones_academicas WHERE id_curso = ? AND id_materia = ? AND id_docente = ? AND ano_lectivo = 2026 LIMIT 1");
+            $stmtA->execute([$dbCourseId, $dbSubjectId, $docenteId]);
             $asigRow = $stmtA->fetch();
+
+            if (!$asigRow) {
+                echo json_encode(['success' => false, 'error' => 'No tienes permisos para modificar calificaciones en esta asignatura.']);
+                break;
+            }
+
             $asigId = $asigRow['id_asignacion'];
             $instId = $asigRow['id_institucion'];
 
@@ -470,7 +486,7 @@ try {
                 $dbCourseId = $courseCodeMap[$cKey]['id'];
                 foreach (array_keys($subjectCodeMap) as $sKey) {
                     $dbSubjId = $subjectCodeMap[$sKey]['id'];
-                    $stmtAs = $pdo->prepare("SELECT id_asignacion FROM asignaciones_academicas WHERE id_curso = ? AND id_materia = ? LIMIT 1");
+                    $stmtAs = $pdo->prepare("SELECT id_asignacion FROM asignaciones_academicas WHERE id_curso = ? AND id_materia = ? AND id_docente = 'b0000001-0000-0000-0000-000000000002' LIMIT 1");
                     $stmtAs->execute([$dbCourseId, $dbSubjId]);
                     $asigId = $stmtAs->fetchColumn();
 
@@ -569,6 +585,7 @@ try {
         // 6. GESTIÓN DE INASISTENCIAS (MÓDULO ACADÉMICO DOCENTE)
         // ==============================================================
         case 'inasistencias':
+            $docenteId = $_GET['docente_id'] ?? 'b0000001-0000-0000-0000-000000000002';
             $courseKey = $_GET['course'] ?? 'all';
             $subjectKey = $_GET['subject'] ?? 'all';
             $statusKey = $_GET['status'] ?? 'all';
@@ -596,8 +613,9 @@ try {
                 JOIN materias m ON aa.id_materia = m.id_materia
                 JOIN usuarios ud ON aa.id_docente = ud.id_usuario
                 WHERE a.estado IN ('FALTA_JUSTIFICADA', 'FALTA_INJUSTIFICADA')
+                  AND aa.id_docente = ?
             ";
-            $params = [];
+            $params = [$docenteId];
 
             if ($courseKey !== 'all' && isset($courseCodeMap[$courseKey])) {
                 $sql .= " AND c.id_curso = ? ";
@@ -717,12 +735,21 @@ try {
             }
 
             // Resolver asignacion si no viene directa
+            $docenteId = $input['docente_id'] ?? 'b0000001-0000-0000-0000-000000000002';
             if (!$asignacionId) {
                 $dbCourseId = $courseCodeMap[$courseKey]['id'] ?? 'c0000001-0000-0000-0000-000000000001';
                 $dbSubjId = $subjectCodeMap[$subjectKey]['id'] ?? 'd0000001-0000-0000-0000-000000000001';
-                $stmtAsig = $pdo->prepare("SELECT id_asignacion FROM asignaciones_academicas WHERE id_curso = ? AND id_materia = ? LIMIT 1");
-                $stmtAsig->execute([$dbCourseId, $dbSubjId]);
+                $stmtAsig = $pdo->prepare("SELECT id_asignacion FROM asignaciones_academicas WHERE id_curso = ? AND id_materia = ? AND id_docente = ? LIMIT 1");
+                $stmtAsig->execute([$dbCourseId, $dbSubjId, $docenteId]);
                 $asignacionId = $stmtAsig->fetchColumn();
+            } else {
+                // Verificar que pertenezca al docente
+                $stmtVer = $pdo->prepare("SELECT id_asignacion FROM asignaciones_academicas WHERE id_asignacion = ? AND id_docente = ? LIMIT 1");
+                $stmtVer->execute([$asignacionId, $docenteId]);
+                if (!$stmtVer->fetchColumn()) {
+                    echo json_encode(['success' => false, 'error' => 'No tienes permisos para registrar inasistencias en esta asignatura.']);
+                    exit;
+                }
             }
 
             if (!$matriculaId || !$asignacionId) {

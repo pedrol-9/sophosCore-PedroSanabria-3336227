@@ -227,8 +227,6 @@
                     <option value="MAT">Matemáticas</option>
                     <option value="FIS">Física</option>
                     <option value="QUI">Química</option>
-                    <option value="CAS">Lengua Castellana</option>
-                    <option value="LEC">Lectura Crítica</option>
                   </select>
                 </div>
                 <div class="col-md-6">
@@ -431,20 +429,20 @@
               <div class="col-md-3">
                 <label class="form-label small text-secondary fw-bold mb-1">Curso / Grupo</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="filterInasistenciaCourse" onchange="loadDocenteInasistencias()">
+                  <option value="" selected disabled>Seleccionar Curso / Grupo...</option>
                   <option value="all">Todos los Cursos</option>
-                  <option value="11A" selected>11° Grado A</option>
+                  <option value="11A">11° Grado A</option>
                   <option value="10A">10° Grado A</option>
                 </select>
               </div>
               <div class="col-md-3">
                 <label class="form-label small text-secondary fw-bold mb-1">Asignatura</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="filterInasistenciaSubject" onchange="loadDocenteInasistencias()">
-                  <option value="all" selected>Todas las Asignaturas</option>
+                  <option value="" selected disabled>Seleccionar Materia...</option>
+                  <option value="all">Todas las Asignaturas</option>
                   <option value="MAT">Matemáticas</option>
                   <option value="FIS">Física</option>
                   <option value="QUI">Química</option>
-                  <option value="CAS">Lengua Castellana</option>
-                  <option value="LEC">Lectura Crítica</option>
                 </select>
               </div>
               <div class="col-md-3">
@@ -527,8 +525,6 @@
                         <option value="MAT" selected>Matemáticas</option>
                         <option value="FIS">Física</option>
                         <option value="QUI">Química</option>
-                        <option value="CAS">Lengua Castellana</option>
-                        <option value="LEC">Lectura Crítica</option>
                       </select>
                     </div>
                     <div class="col-md-6">
@@ -564,35 +560,52 @@
               <div class="col-md-3">
                 <label class="form-label small text-secondary fw-medium mb-1">Curso / Grupo</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="docenteBoletinCourse">
-                  <option value="11A" selected>11° Grado A</option>
+                  <option value="" selected disabled>Seleccionar Curso / Grupo...</option>
+                  <option value="11A">11° Grado A</option>
                   <option value="10A">10° Grado A</option>
                 </select>
               </div>
               <div class="col-md-4">
                 <label class="form-label small text-secondary fw-medium mb-1">Estudiante</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="docenteBoletinStudent">
-                  <!-- Llenado dinámico -->
+                  <option value="" selected disabled>Seleccionar Estudiante...</option>
                 </select>
               </div>
               <div class="col-md-3">
                 <label class="form-label small text-secondary fw-medium mb-1">Período Académico</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="docenteBoletinPeriod">
-                  <option value="1">Período 1 (Oficial Cerrado)</option>
-                  <option value="2" selected>Período 2 (Oficial Cerrado)</option>
+                  <option value="" selected disabled>Seleccionar Período...</option>
+                  <option value="1">Período 1</option>
+                  <option value="2">Período 2</option>
                   <option value="3">Período 3 (En curso)</option>
+                  <option value="4">Período 4</option>
                 </select>
               </div>
               <div class="col-md-2 d-flex align-items-end">
                 <button type="button" class="btn btn-indigo w-100 shadow-sm" id="docenteBtnPrintBoletin"
-                  onclick="printDocenteBoletin()">
+                  onclick="printDocenteBoletin()" disabled>
                   <i class="bi bi-printer me-1"></i> Imprimir
                 </button>
               </div>
             </div>
           </div>
 
+          <!-- Estado Inicial sin Filtros de Boletín -->
+          <div class="card card-custom p-5 border-0 shadow-sm mx-auto text-center gradebook-empty-card"
+            id="docenteBoletinEmptyState">
+            <div class="mb-3">
+              <span class="rounded-circle d-inline-flex align-items-center justify-content-center bg-light text-secondary view-empty-state-icon">
+                <i class="bi bi-file-earmark-person fs-1 opacity-50"></i>
+              </span>
+            </div>
+            <h5 class="fw-bold text-dark mb-1">Consulta de Boletines Académicos</h5>
+            <p class="text-secondary small mx-auto mb-0 view-empty-state-guidance">
+              Selecciona Curso, Estudiante y Período en los filtros superiores para consultar el boletín oficial.
+            </p>
+          </div>
+
           <!-- Formato Oficial del Boletín -->
-          <div class="card card-custom p-4 p-md-5 border-0 shadow mx-auto card-report report-content-card"
+          <div class="card card-custom p-4 p-md-5 border-0 shadow mx-auto card-report report-content-card d-none"
             id="docenteBoletinContent">
             <!-- Cabecera Institucional -->
             <div class="d-flex justify-content-between align-items-start border-bottom pb-3 mb-4">
@@ -715,7 +728,7 @@
             <div>
               <button type="button" class="btn btn-outline-primary rounded-pill px-4"
                 onclick="document.getElementById('docenteBoletinPeriod').value='2'; renderDocenteBoletin();">
-                <i class="bi bi-arrow-left me-1"></i> Consultar Boletín Período 2 (Cerrado)
+                <i class="bi bi-arrow-left me-1"></i> Consultar Boletín Período 2
               </button>
             </div>
           </div>
@@ -1410,8 +1423,10 @@
       if (!courseSel || !studentSel || typeof SophosDB === 'undefined') return;
 
       const courseId = courseSel.value;
+      studentSel.innerHTML = '<option value="" selected disabled>Seleccionar Estudiante...</option>';
+      if (!courseId) return;
+
       const students = SophosDB.getStudentsByCourse(courseId);
-      studentSel.innerHTML = '';
       students.forEach(st => {
         const opt = document.createElement('option');
         opt.value = st.id;
@@ -1425,18 +1440,33 @@
       const studentSel = document.getElementById('docenteBoletinStudent');
       const periodSel = document.getElementById('docenteBoletinPeriod');
 
+      const contentEl = document.getElementById('docenteBoletinContent');
+      const pendingEl = document.getElementById('docenteBoletinPendingCard');
+      const emptyEl = document.getElementById('docenteBoletinEmptyState');
+      const printBtn = document.getElementById('docenteBtnPrintBoletin');
+
       if (!courseSel || !studentSel || !periodSel) return;
 
       const courseId = courseSel.value;
       const studentId = studentSel.value;
       const periodId = parseInt(periodSel.value);
 
+      // Si falta alguno de los tres filtros requeridos
+      if (!courseId || !studentId || isNaN(periodId)) {
+        if (contentEl) contentEl.classList.add('d-none');
+        if (pendingEl) pendingEl.classList.add('d-none');
+        if (emptyEl) emptyEl.classList.remove('d-none');
+        if (printBtn) {
+          printBtn.disabled = true;
+          printBtn.classList.add('opacity-50');
+        }
+        return;
+      }
+
+      if (emptyEl) emptyEl.classList.add('d-none');
+
       const student = typeof SophosDB !== 'undefined' ? SophosDB.getStudentById(studentId) : null;
       if (!student) return;
-
-      const contentEl = document.getElementById('docenteBoletinContent');
-      const pendingEl = document.getElementById('docenteBoletinPendingCard');
-      const printBtn = document.getElementById('docenteBtnPrintBoletin');
 
       // Si es el Período 3 (en curso) o no está cerrado, NO debe generarse boletín
       if (periodId === 3) {
@@ -1484,15 +1514,17 @@
 
           let rowsHtml = '';
           data.materias.forEach(m => {
+            // Filtrar materias: la docente solo puede ver y gestionar las materias que le corresponden
+            const isTeacherSubject = (m.materia === 'Matemáticas' || m.materia === 'Física' || m.materia === 'Química');
+            if (!isTeacherSubject) return;
+
             const gradeVal = parseFloat(m.definitiva || 0);
             let level = '<span class="badge-contrast-success small">SUPERIOR</span>';
             if (gradeVal < 3.0) level = '<span class="badge-contrast-danger small">BAJO</span>';
             else if (gradeVal < 4.0) level = '<span class="badge-contrast-warning small">BÁSICO</span>';
             else if (gradeVal < 4.5) level = '<span class="badge-contrast-info small">ALTO</span>';
 
-            const teacher = (m.materia === 'Lengua Castellana' || m.materia === 'Lectura Crítica')
-              ? 'Carlos Mendoza'
-              : (m.docente || 'Mariana Ruiz');
+            const teacher = m.docente || 'Mariana Ruiz';
 
             rowsHtml += `
               <tr>
@@ -1506,6 +1538,10 @@
               </tr>
             `;
           });
+
+          if (!rowsHtml) {
+            rowsHtml = '<tr><td colspan="4" class="text-center py-4 text-muted">No tienes asignaturas registradas para este estudiante en este período.</td></tr>';
+          }
 
           if (tbody) tbody.innerHTML = rowsHtml;
           if (obsEl) obsEl.textContent = `"${data.observacion}"`;
@@ -1566,13 +1602,28 @@
     }
 
     async function loadDocenteInasistencias() {
-      const course = document.getElementById('filterInasistenciaCourse')?.value || 'all';
-      const subject = document.getElementById('filterInasistenciaSubject')?.value || 'all';
+      const course = document.getElementById('filterInasistenciaCourse')?.value || '';
+      const subject = document.getElementById('filterInasistenciaSubject')?.value || '';
       const status = document.getElementById('filterInasistenciaStatus')?.value || 'all';
       const tbody = document.getElementById('docenteInasistenciasTableBody');
       const counterBadge = document.getElementById('inasistenciasCounterBadge');
 
       if (!tbody) return;
+
+      if (!course || !subject) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="text-center py-5 text-muted">
+              <i class="bi bi-filter fs-1 text-secondary d-block mb-2 opacity-50"></i>
+              <div class="fw-bold">Selecciona un Curso y una Asignatura</div>
+              <div class="small">Aplica los filtros superiores para consultar el listado oficial de inasistencias.</div>
+            </td>
+          </tr>
+        `;
+        if (counterBadge) counterBadge.textContent = 'Esperando filtros...';
+        return;
+      }
+
       tbody.innerHTML = `
         <tr>
           <td colspan="7" class="text-center py-4 text-muted">
@@ -1583,7 +1634,7 @@
       `;
 
       try {
-        const res = await fetch(`../../api/docente.php?action=inasistencias&course=${course}&subject=${subject}&status=${status}`);
+        const res = await fetch(`../../api/docente.php?action=inasistencias&course=${course}&subject=${subject}&status=${status}&docente_id=b0000001-0000-0000-0000-000000000002`);
         const data = await res.json();
 
         if (data.success) {
