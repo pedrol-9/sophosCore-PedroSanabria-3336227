@@ -10,6 +10,7 @@
       letter-spacing: 0.02em;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
       box-shadow: 0 1px 3px rgba(21, 128, 61, 0.3);
     }
@@ -23,6 +24,7 @@
       letter-spacing: 0.02em;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
       box-shadow: 0 1px 3px rgba(3, 105, 161, 0.3);
     }
@@ -36,6 +38,7 @@
       letter-spacing: 0.02em;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
       box-shadow: 0 1px 3px rgba(180, 83, 9, 0.3);
     }
@@ -49,6 +52,7 @@
       letter-spacing: 0.02em;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
       box-shadow: 0 1px 3px rgba(185, 28, 28, 0.3);
     }
@@ -62,6 +66,7 @@
       letter-spacing: 0.02em;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
       box-shadow: 0 1px 3px rgba(109, 40, 217, 0.3);
     }
@@ -75,6 +80,7 @@
       letter-spacing: 0.02em;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
     }
 
