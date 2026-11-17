@@ -53,8 +53,8 @@ try {
 
             // Cursos
             $courses = [
-                ['id' => '11A', 'name' => '11° Grado A (5 Estudiantes)', 'grade' => 11, 'db_id' => 'c0000001-0000-0000-0000-000000000001'],
-                ['id' => '10A', 'name' => '10° Grado A (5 Estudiantes)', 'grade' => 10, 'db_id' => 'c0000001-0000-0000-0000-000000000002']
+                ['id' => '11A', 'name' => '11° Grado A', 'grade' => 11, 'db_id' => 'c0000001-0000-0000-0000-000000000001'],
+                ['id' => '10A', 'name' => '10° Grado A', 'grade' => 10, 'db_id' => 'c0000001-0000-0000-0000-000000000002']
             ];
 
             // Materias asignadas
