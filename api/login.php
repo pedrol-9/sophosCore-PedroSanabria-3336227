@@ -3,6 +3,7 @@
  * SophosCore - Autenticación de Usuarios
  */
 
+// Configuración de cabeceras para permitir solicitudes desde cualquier origen y manejar CORS
 header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -21,12 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 require_once __DIR__ . '/../config/db.php';
 
+// Obtener la conexión a la base de datos
 try {
     $pdo = getDBConnection();
     
     $rawInput = file_get_contents('php://input');
     $input = json_decode($rawInput, true);
     
+    // Validar que los datos de entrada sean correctos
     $email = trim($input['email'] ?? $_POST['email'] ?? '');
     $password = trim($input['password'] ?? $_POST['password'] ?? '');
 
@@ -49,6 +52,7 @@ try {
         WHERE LOWER(u.email) = LOWER(?)
         LIMIT 1
     ");
+
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
@@ -76,6 +80,7 @@ try {
         $redirectUrl = 'Views/usuarios/admin.html';
     }
 
+    // Iniciar sesión y almacenar información del usuario
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }

@@ -200,11 +200,10 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../assets/js/sophos-client-db.js"></script>
     <script src="../../assets/js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const currentPeriod = SophosDB.getCurrentPeriod();
+            const currentPeriod = (typeof SophosDB !== 'undefined' ? SophosDB.getCurrentPeriod() : null) || { name: 'Tercer Período', status: 'active' };
             if (currentPeriod) {
                 document.getElementById('periodHeaderName').textContent = `${currentPeriod.name} (${currentPeriod.status === 'active' ? 'Activo' : 'Cerrado'})`;
                 document.getElementById('bannerPeriodTitle').textContent = `${currentPeriod.name} 2026`;

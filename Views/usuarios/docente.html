@@ -295,9 +295,9 @@
                   Usa el botón <span class="badge bg-indigo"><i class="bi bi-stars"></i> IA</span> al lado de cada
                   observación para sugerir una redacción pedagógica y profesional.
                 </span>
-                <a href="../m2-academico/boletin.html" class="btn btn-sm btn-outline-dark" id="docenteBtnPreviewReport">
+                <button type="button" class="btn btn-sm btn-outline-dark" id="docenteBtnPreviewReport" onclick="switchAcademicTab('boletines')">
                   <i class="bi bi-file-earmark-pdf me-1"></i> Previsualizar Boletines
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -1064,8 +1064,6 @@
 
   <!-- Bootstrap 5 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Base de Datos Conectada a MySQL -->
-  <script src="../../assets/js/sophos-client-db.js"></script>
   <!-- Vanilla JS -->
   <script src="../../assets/js/main.js"></script>
   <!-- Componentes reutilizables -->
@@ -1081,22 +1079,101 @@
     let dashboardTeacherId = "";
     let dashboardAssignments = [];
 
+    let docentePeriods = [
+      { id: 1, name: "Primer Período", shortName: "P1", status: "closed" },
+      { id: 2, name: "Segundo Período", shortName: "P2", status: "closed" },
+      { id: 3, name: "Tercer Período", shortName: "P3", status: "active" },
+      { id: 4, name: "Cuarto Período", shortName: "P4", status: "pending" }
+    ];
+    let docenteCourses = [
+      { id: "11A", name: "11° Grado A", db_id: "c0000001-0000-0000-0000-000000000001" },
+      { id: "10A", name: "10° Grado A", db_id: "c0000001-0000-0000-0000-000000000002" }
+    ];
+    let docenteSubjects = [
+      { id: "MAT", name: "Matemáticas" },
+      { id: "FIS", name: "Física" },
+      { id: "QUI", name: "Química" }
+    ];
+    let docenteStudentsCache = {};
+    let docenteObservationsCache = [];
+    let docenteReportsCache = [];
+
+    function calculateDocenteAverage(grades) {
+      if (!grades || !Array.isArray(grades) || grades.length === 0) return null;
+      const valid = grades.filter(g => g !== null && g !== undefined && g !== '' && !isNaN(Number(g)));
+      if (valid.length === 0) return null;
+      const sum = valid.reduce((acc, curr) => acc + Number(curr), 0);
+      return Number((sum / valid.length).toFixed(1));
+    }
+
+    async function getDocenteStudentsByCourse(courseId) {
+      if (docenteStudentsCache[courseId] && docenteStudentsCache[courseId].length > 0) {
+        return docenteStudentsCache[courseId];
+      }
+      try {
+        const res = await fetch(`../../api/docente.php?action=students&course=${courseId}`);
+        const data = await res.json();
+        if (data.success && data.students && data.students.length > 0) {
+          docenteStudentsCache[courseId] = data.students;
+          return data.students;
+        }
+      } catch (e) {
+        console.error("Error al obtener estudiantes:", e);
+      }
+      const is11 = (courseId === '11A');
+      const fallback = is11 ? [
+        { id: 'EST-1101', name: 'Alex Johnson', email: 'alex.johnson@sophoscore.edu.co', avatar: 'AJ', avatarColor: '#4f46e5', courseId: '11A' },
+        { id: 'EST-1102', name: 'Carlos Andrés Mendoza H.', email: 'carlos.mendozah@sophoscore.edu.co', avatar: 'CA', avatarColor: '#059669', courseId: '11A' },
+        { id: 'EST-1103', name: 'Daniel Felipe Mora', email: 'daniel.mora@sophoscore.edu.co', avatar: 'DF', avatarColor: '#4f46e5', courseId: '11A' },
+        { id: 'EST-1104', name: 'Isabella Ríos', email: 'isabella.rios@sophoscore.edu.co', avatar: 'IR', avatarColor: '#059669', courseId: '11A' },
+        { id: 'EST-1105', name: 'Valentina Herrera', email: 'valentina.herrera@sophoscore.edu.co', avatar: 'VH', avatarColor: '#4f46e5', courseId: '11A' }
+      ] : [
+        { id: 'EST-1001', name: 'David Santiago Morales', email: 'david.morales@sophoscore.edu.co', avatar: 'DM', avatarColor: '#4f46e5', courseId: '10A' },
+        { id: 'EST-1002', name: 'Gabriela Silva Castro', email: 'gabriela.silva@sophoscore.edu.co', avatar: 'GS', avatarColor: '#059669', courseId: '10A' },
+        { id: 'EST-1003', name: 'Lucas Alejandro Ramírez', email: 'lucas.ramirez@sophoscore.edu.co', avatar: 'LR', avatarColor: '#4f46e5', courseId: '10A' },
+        { id: 'EST-1004', name: 'Mariana Duarte Gómez', email: 'mariana.duarte@sophoscore.edu.co', avatar: 'MD', avatarColor: '#059669', courseId: '10A' },
+        { id: 'EST-1005', name: 'Sebastián Vargas Torres', email: 'sebastian.vargas@sophoscore.edu.co', avatar: 'SV', avatarColor: '#4f46e5', courseId: '10A' }
+      ];
+      docenteStudentsCache[courseId] = fallback;
+      return fallback;
+    }
+
+    function getDocenteStudentById(studentId) {
+      for (const cKey in docenteStudentsCache) {
+        const found = docenteStudentsCache[cKey].find(s => s.id === studentId || s.db_id === studentId);
+        if (found) return found;
+      }
+      return null;
+    }
+
+    async function initDocenteSessionAndPeriods() {
+      try {
+        const res = await fetch('../../api/docente.php?action=init');
+        const data = await res.json();
+        if (data.success) {
+          if (data.periods && data.periods.length > 0) {
+            docentePeriods = data.periods;
+          }
+          if (data.current_period) {
+            docenteCurrentPeriod = data.current_period;
+          }
+          if (data.courses && data.courses.length > 0) {
+            docenteCourses = data.courses;
+          }
+          if (data.subjects && data.subjects.length > 0) {
+            docenteSubjects = data.subjects;
+          }
+        }
+      } catch (e) {
+        console.error("Error al inicializar sesión docente con MySQL:", e);
+      }
+      renderDocentePeriodButtons();
+      loadDocenteGradebook();
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       initDashboardStudentFilters();
-
-      // Sincronizar período actual activo de la base de datos
-      if (typeof SophosDB !== 'undefined') {
-        const activePeriod = SophosDB.getCurrentPeriod();
-        if (activePeriod) {
-          docenteCurrentPeriod = activePeriod.id;
-        }
-      }
-
-      // Renderizar selector de períodos por botones
-      renderDocentePeriodButtons();
-
-      // Cargar estado inicial (cuadro vacío a la espera de filtros)
-      loadDocenteGradebook();
+      initDocenteSessionAndPeriods();
 
       // Eventos de filtros (Curso y Materia)
       const courseSel = document.getElementById('docenteSelectCourse');
@@ -1138,7 +1215,7 @@
         const modalAddCol = new bootstrap.Modal(modalAddColElem);
         btnAddCol.addEventListener('click', () => {
           if (!docenteCurrentCourse || !docenteCurrentSubject) return;
-          const periodObj = SophosDB.getPeriods().find(p => p.id === docenteCurrentPeriod);
+          const periodObj = docentePeriods.find(p => p.id === docenteCurrentPeriod);
           if (periodObj && periodObj.status !== 'active') return;
 
           const nextNum = (docenteActiveGradebook && docenteActiveGradebook.columnTitles) ? docenteActiveGradebook.columnTitles.length + 1 : 1;
@@ -1424,16 +1501,16 @@
       renderDocenteBoletin();
     }
 
-    function populateDocenteBoletinStudents() {
+    async function populateDocenteBoletinStudents() {
       const courseSel = document.getElementById('docenteBoletinCourse');
       const studentSel = document.getElementById('docenteBoletinStudent');
-      if (!courseSel || !studentSel || typeof SophosDB === 'undefined') return;
+      if (!courseSel || !studentSel) return;
 
       const courseId = courseSel.value;
       studentSel.innerHTML = '<option value="" selected disabled>Seleccionar Estudiante...</option>';
       if (!courseId) return;
 
-      const students = SophosDB.getStudentsByCourse(courseId);
+      const students = await getDocenteStudentsByCourse(courseId);
       students.forEach(st => {
         const opt = document.createElement('option');
         opt.value = st.id;
@@ -1472,8 +1549,14 @@
 
       if (emptyEl) emptyEl.classList.add('d-none');
 
-      const student = typeof SophosDB !== 'undefined' ? SophosDB.getStudentById(studentId) : null;
-      if (!student) return;
+      let student = getDocenteStudentById(studentId);
+      if (!student) {
+        const cached = docenteStudentsCache[courseId];
+        if (cached) student = cached.find(s => s.id === studentId);
+      }
+      if (!student) {
+        student = { id: studentId, name: studentSel.selectedOptions[0]?.textContent || 'Estudiante' };
+      }
 
       // Si es el Período 3 (en curso) o no está cerrado, NO debe generarse boletín
       if (periodId === 3) {
@@ -1730,19 +1813,7 @@
       if (!courseSel || !studentSel) return;
 
       const courseId = courseSel.value;
-      let students = (typeof SophosDB !== 'undefined') ? SophosDB.getStudentsByCourse(courseId) : [];
-
-      if (!students || students.length === 0) {
-        try {
-          const res = await fetch(`../../api/docente.php?action=students&course=${courseId}`);
-          const data = await res.json();
-          if (data.success && data.students) {
-            students = data.students;
-          }
-        } catch (e) {
-          console.error("Error al obtener estudiantes:", e);
-        }
-      }
+      const students = await getDocenteStudentsByCourse(courseId);
 
       studentSel.innerHTML = '';
       (students || []).forEach(st => {
@@ -1874,10 +1945,10 @@
     function renderDocentePeriodButtons() {
       const container = document.getElementById('docentePeriodButtonsGroup');
       const statusIndicator = document.getElementById('docentePeriodStatusIndicator');
-      if (!container || typeof SophosDB === 'undefined') return;
+      if (!container) return;
 
-      const periods = SophosDB.getPeriods();
-      const activePeriodObj = SophosDB.getCurrentPeriod();
+      const periods = docentePeriods;
+      const activePeriodObj = docentePeriods.find(p => p.status === 'active');
       const currentActiveId = activePeriodObj ? activePeriodObj.id : 3;
 
       container.innerHTML = '';
@@ -1947,9 +2018,7 @@
     // ==========================================
     // CARGA Y CONTROL DE LA LIBRETA DE NOTAS
     // ==========================================
-    function loadDocenteGradebook() {
-      if (typeof SophosDB === 'undefined') return;
-
+    async function loadDocenteGradebook() {
       const emptyState = document.getElementById('docenteEmptyState');
       const tableWrapper = document.getElementById('docenteTableWrapper');
       const btnAddCol = document.getElementById('docenteBtnAddColumn');
@@ -1959,9 +2028,9 @@
       const footerHelp = document.getElementById('docenteFooterHelpText');
       const previewBtn = document.getElementById('docenteBtnPreviewReport');
 
-      const periods = SophosDB.getPeriods();
-      const periodObj = periods.find(p => p.id === docenteCurrentPeriod);
-      const activePeriodObj = SophosDB.getCurrentPeriod();
+      const periods = docentePeriods;
+      const periodObj = periods.find(p => p.id === docenteCurrentPeriod) || { id: docenteCurrentPeriod, name: `Período ${docenteCurrentPeriod}`, status: docenteCurrentPeriod === 3 ? 'active' : 'closed' };
+      const activePeriodObj = periods.find(p => p.status === 'active');
       const isCurrentActive = periodObj && activePeriodObj && (periodObj.id === activePeriodObj.id);
       const isReadOnly = !isCurrentActive;
 
@@ -1993,13 +2062,11 @@
       if (emptyState) emptyState.classList.add('d-none');
       if (tableWrapper) tableWrapper.classList.remove('d-none');
 
-      docenteActiveGradebook = SophosDB.getGradebook(docenteCurrentCourse, docenteCurrentSubject, docenteCurrentPeriod);
-      const students = SophosDB.getStudentsByCourse(docenteCurrentCourse);
-      const courseObj = SophosDB.getCourses().find(c => c.id === docenteCurrentCourse);
-      const subjectObj = SophosDB.getSubjects().find(s => s.id === docenteCurrentSubject);
+      const courseObj = docenteCourses.find(c => c.id === docenteCurrentCourse);
+      const subjectObj = docenteSubjects.find(s => s.id === docenteCurrentSubject);
       const courseName = courseObj ? courseObj.name : docenteCurrentCourse;
       const subjectName = subjectObj ? subjectObj.name : docenteCurrentSubject;
-      const periodName = periodObj ? periodObj.name : `Periodo ${docenteCurrentPeriod}`;
+      const periodName = periodObj ? periodObj.name : `Período ${docenteCurrentPeriod}`;
 
       if (headerTitle) {
         headerTitle.textContent = `${courseName} - ${subjectName} (${periodName})`;
@@ -2045,7 +2112,24 @@
         previewBtn.removeAttribute('aria-disabled');
       }
 
-      renderDocenteGradeTable(students, docenteActiveGradebook, isReadOnly);
+      // Consultar libreta oficial desde API MySQL
+      try {
+        const res = await fetch(`../../api/docente.php?action=gradebook&course=${docenteCurrentCourse}&subject=${docenteCurrentSubject}&period=${docenteCurrentPeriod}`);
+        const data = await res.json();
+        if (data.success) {
+          docenteActiveGradebook = {
+            columnTitles: data.columnTitles || ["Actividad 1", "Actividad 2", "Actividad 3", "Evaluación"],
+            records: data.records || {}
+          };
+          const students = (data.students && data.students.length > 0) ? data.students : await getDocenteStudentsByCourse(docenteCurrentCourse);
+          docenteStudentsCache[docenteCurrentCourse] = students;
+          renderDocenteGradeTable(students, docenteActiveGradebook, isReadOnly);
+        } else {
+          console.error("Error al cargar gradebook:", data.error);
+        }
+      } catch (err) {
+        console.error("Error de conexión al cargar libreta:", err);
+      }
     }
 
     // ==========================================
@@ -2077,7 +2161,7 @@
       // 2. Filas de cada estudiante
       students.forEach(student => {
         const record = gradebook.records[student.id] || { grades: gradebook.columnTitles.map(() => null), observation: "" };
-        const avg = SophosDB.calculateAverage(record.grades);
+        const avg = calculateDocenteAverage(record.grades);
         const avgBadgeClass = avg === null ? 'bg-light text-secondary' : (avg >= 4.0 ? 'avg-high' : (avg >= 3.0 ? 'avg-mid' : 'avg-low'));
 
         let rowHTML = `
@@ -2174,7 +2258,7 @@
       docenteActiveGradebook.records[studentId].grades[colIdx] = num;
 
       // Recalcular promedio en vivo
-      const avg = SophosDB.calculateAverage(docenteActiveGradebook.records[studentId].grades);
+      const avg = calculateDocenteAverage(docenteActiveGradebook.records[studentId].grades);
       const badge = document.getElementById(`docente-avg-${studentId}`);
       if (badge) {
         badge.textContent = avg !== null ? avg : '--';
@@ -2182,29 +2266,29 @@
       }
     }
 
-    function addDocenteGradeColumn(newTitle) {
+    async function addDocenteGradeColumn(newTitle) {
       if (!docenteCurrentCourse || !docenteCurrentSubject || !docenteActiveGradebook) return;
-      const periodObj = SophosDB.getPeriods().find(p => p.id === docenteCurrentPeriod);
+      const periodObj = docentePeriods.find(p => p.id === docenteCurrentPeriod);
       if (periodObj && periodObj.status !== 'active') return;
 
       docenteActiveGradebook.columnTitles.push(newTitle);
-      const students = SophosDB.getStudentsByCourse(docenteCurrentCourse);
+      const students = docenteStudentsCache[docenteCurrentCourse] || await getDocenteStudentsByCourse(docenteCurrentCourse);
       students.forEach(s => {
         if (!docenteActiveGradebook.records[s.id]) {
           docenteActiveGradebook.records[s.id] = { grades: [], observation: "" };
         }
         docenteActiveGradebook.records[s.id].grades.push(null);
       });
-      SophosDB.saveGradebook(docenteCurrentCourse, docenteCurrentSubject, docenteCurrentPeriod, docenteActiveGradebook);
       renderDocenteGradeTable(students, docenteActiveGradebook, false);
+      saveDocenteGradebook();
     }
 
-    function saveDocenteGradebook() {
+    async function saveDocenteGradebook() {
       if (!docenteCurrentCourse || !docenteCurrentSubject || !docenteActiveGradebook) return;
-      const periodObj = SophosDB.getPeriods().find(p => p.id === docenteCurrentPeriod);
+      const periodObj = docentePeriods.find(p => p.id === docenteCurrentPeriod);
       if (periodObj && periodObj.status !== 'active') return;
 
-      const students = SophosDB.getStudentsByCourse(docenteCurrentCourse);
+      const students = docenteStudentsCache[docenteCurrentCourse] || await getDocenteStudentsByCourse(docenteCurrentCourse);
       students.forEach(s => {
         const obsInput = document.getElementById(`docente-obs-${s.id}`);
         if (obsInput && docenteActiveGradebook.records[s.id]) {
@@ -2212,16 +2296,46 @@
         }
       });
 
-      SophosDB.saveGradebook(docenteCurrentCourse, docenteCurrentSubject, docenteCurrentPeriod, docenteActiveGradebook);
+      const btnSave = document.getElementById('docenteBtnSave');
+      if (btnSave) {
+        btnSave.disabled = true;
+        btnSave.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Guardando...';
+      }
 
-      const toast = document.getElementById('docenteSaveToast');
-      if (toast) {
-        toast.classList.remove('d-none');
-        toast.classList.add('d-flex');
-        setTimeout(() => {
-          toast.classList.add('d-none');
-          toast.classList.remove('d-flex');
-        }, 3500);
+      try {
+        const res = await fetch('../../api/docente.php?action=save_gradebook', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            course: docenteCurrentCourse,
+            subject: docenteCurrentSubject,
+            period: docenteCurrentPeriod,
+            columnTitles: docenteActiveGradebook.columnTitles,
+            records: docenteActiveGradebook.records
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          const toast = document.getElementById('docenteSaveToast');
+          if (toast) {
+            toast.classList.remove('d-none');
+            toast.classList.add('d-flex');
+            setTimeout(() => {
+              toast.classList.add('d-none');
+              toast.classList.remove('d-flex');
+            }, 3500);
+          }
+        } else {
+          alert(data.error || 'No se pudieron guardar las calificaciones.');
+        }
+      } catch (err) {
+        console.error("Error al guardar calificaciones:", err);
+        alert('Error al comunicarse con la base de datos.');
+      } finally {
+        if (btnSave) {
+          btnSave.disabled = false;
+          btnSave.innerHTML = '<i class="bi bi-floppy2-fill me-1"></i> Guardar Calificaciones';
+        }
       }
     }
 
@@ -2232,7 +2346,7 @@
       docenteActiveAIStudent = studentId;
       const input = document.getElementById(`docente-obs-${studentId}`);
       const originalText = (input ? input.value : "").trim();
-      const student = SophosDB.getStudentById(studentId);
+      const student = getDocenteStudentById(studentId);
       const studentName = student ? student.name.split(' ')[0] : 'El estudiante';
 
       const suggestion = generatePedagogicalSuggestion(originalText, studentName, studentId);
@@ -2322,7 +2436,7 @@
     }
 
     function generatePedagogicalSuggestion(original, studentName, studentId) {
-      const avg = docenteActiveGradebook.records[studentId] ? SophosDB.calculateAverage(docenteActiveGradebook.records[studentId].grades) : null;
+      const avg = docenteActiveGradebook.records[studentId] ? calculateDocenteAverage(docenteActiveGradebook.records[studentId].grades) : null;
       const numAvg = avg ? parseFloat(avg) : 3.5;
 
       if (!original || original.length < 5) {
@@ -2402,14 +2516,13 @@
       const obsStudentSel = document.getElementById('obsSelectStudent');
       if (obsCourseSel && obsStudentSel) {
         populateStudentsSelect(obsCourseSel.value, obsStudentSel);
-        obsCourseSel.addEventListener('change', () => {
-          populateStudentsSelect(obsCourseSel.value, obsStudentSel);
+        obsCourseSel.addEventListener('change', async () => {
+          await populateStudentsSelect(obsCourseSel.value, obsStudentSel);
           renderObservadorHistorial(obsStudentSel.value);
         });
         obsStudentSel.addEventListener('change', () => {
           renderObservadorHistorial(obsStudentSel.value);
         });
-        renderObservadorHistorial(obsStudentSel.value);
       }
 
       // 2. Manejo de Selectores en Generar Reporte
@@ -2417,8 +2530,8 @@
       const repStudentSel = document.getElementById('repSelectStudent');
       if (repCourseSel && repStudentSel) {
         populateStudentsSelect(repCourseSel.value, repStudentSel);
-        repCourseSel.addEventListener('change', () => {
-          populateStudentsSelect(repCourseSel.value, repStudentSel);
+        repCourseSel.addEventListener('change', async () => {
+          await populateStudentsSelect(repCourseSel.value, repStudentSel);
           updateReportContext();
           renderReportesHistorial(repStudentSel.value);
         });
@@ -2429,8 +2542,6 @@
         document.querySelectorAll('input[name="repTypeRadio"]').forEach(radio => {
           radio.addEventListener('change', updateReportContext);
         });
-        updateReportContext();
-        renderReportesHistorial(repStudentSel.value);
       }
 
       // 3. Botón Mejorar Redacción con Gemini AI (Registro de Observación)
@@ -2462,13 +2573,20 @@
       if (btnPreviewRep) {
         btnPreviewRep.addEventListener('click', handleAbrirPrevisualizacionReporte);
       }
+
+      // Cargar observaciones desde MySQL
+      loadDocenteObservationsFromMySQL().then(() => {
+        if (obsStudentSel) renderObservadorHistorial(obsStudentSel.value);
+        updateReportContext();
+        if (repStudentSel) renderReportesHistorial(repStudentSel.value);
+      });
     }
 
     // Llenar selectores de estudiantes según el curso
-    function populateStudentsSelect(courseId, selectElem) {
-      if (!selectElem || typeof SophosDB === 'undefined') return;
+    async function populateStudentsSelect(courseId, selectElem) {
+      if (!selectElem) return;
       selectElem.innerHTML = '';
-      const students = SophosDB.getStudentsByCourse(courseId);
+      const students = await getDocenteStudentsByCourse(courseId);
       students.forEach(s => {
         const opt = document.createElement('option');
         opt.value = s.id;
@@ -2522,7 +2640,7 @@
         return;
       }
 
-      const student = SophosDB.getStudentById(studentSel.value);
+      const student = getDocenteStudentById(studentSel.value);
       const studentName = student ? student.name : 'el estudiante';
       const category = categorySel ? categorySel.value : 'Falta disciplinaria';
 
@@ -2550,7 +2668,7 @@
       }
     }
 
-    function handleGuardarObservacion(e) {
+    async function handleGuardarObservacion(e) {
       e.preventDefault();
       const courseSel = document.getElementById('obsSelectCourse');
       const studentSel = document.getElementById('obsSelectStudent');
@@ -2559,28 +2677,53 @@
       const textDraft = document.getElementById('obsTextareaDraft');
       const inputAgr = document.getElementById('obsInputAgreements');
 
-      const student = SophosDB.getStudentById(studentSel.value);
+      const student = getDocenteStudentById(studentSel.value);
       const desc = (textDraft ? textDraft.value : '').trim();
       if (!desc) {
         showObservadorToast("La descripción de los hechos no puede estar vacía.", "warning");
         return;
       }
 
-      const newObs = SophosDB.addObservation({
-        studentId: studentSel.value,
-        studentName: student ? student.name : 'Estudiante',
-        courseId: courseSel.value,
-        date: dateInput.value || new Date().toISOString().split('T')[0],
-        type: 'disciplinario',
-        category: categorySel.value,
-        description: desc,
-        agreements: inputAgr ? inputAgr.value.trim() : ''
-      });
+      try {
+        const res = await fetch('../../api/docente.php?action=save_observation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            studentCode: studentSel.value,
+            course: courseSel.value,
+            type: 'DISCIPLINARIA',
+            category: categorySel.value,
+            description: desc,
+            agreements: inputAgr ? inputAgr.value.trim() : '',
+            date: dateInput.value || new Date().toISOString().split('T')[0]
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showObservadorToast(`¡Observación registrada en la base de datos MySQL para ${student ? student.name : 'el estudiante'}!`, "success");
+          resetObservationForm();
+          await loadDocenteObservationsFromMySQL();
+          renderObservadorHistorial(studentSel.value);
+          updateReportContext();
+        } else {
+          showObservadorToast(`Error al guardar: ${data.error}`, "danger");
+        }
+      } catch (err) {
+        console.error("Error al guardar observación:", err);
+        showObservadorToast("Error de conexión al guardar la observación en MySQL.", "danger");
+      }
+    }
 
-      showObservadorToast(`¡Observación ${newObs.id} registrada en el observador de ${newObs.studentName}!`, "success");
-      resetObservationForm();
-      renderObservadorHistorial(studentSel.value);
-      updateReportContext();
+    async function loadDocenteObservationsFromMySQL() {
+      try {
+        const res = await fetch('../../api/docente.php?action=observations');
+        const data = await res.json();
+        if (data.success && data.observations) {
+          docenteObservationsCache = data.observations;
+        }
+      } catch (e) {
+        console.error("Error al cargar observaciones de MySQL:", e);
+      }
     }
 
     function resetObservationForm() {
@@ -2593,14 +2736,20 @@
     function renderObservadorHistorial(studentId) {
       const container = document.getElementById('obsHistorialListContainer');
       const badge = document.getElementById('obsHistorialStudentBadge');
-      if (!container || typeof SophosDB === 'undefined') return;
+      if (!container) return;
 
-      const student = SophosDB.getStudentById(studentId);
+      const student = getDocenteStudentById(studentId);
       if (badge) {
         badge.textContent = student ? `${student.name} (${student.courseId === '11A' ? '11°A' : '10°A'})` : '-';
       }
 
-      const list = SophosDB.getObservations(studentId);
+      // Filtrar observaciones del estudiante
+      const list = docenteObservationsCache.filter(o => {
+        if (student && student.db_id && o.studentId === student.db_id) return true;
+        if (student && o.studentName && o.studentName.toLowerCase().includes(student.name.toLowerCase().split(' ')[0])) return true;
+        return false;
+      });
+
       container.innerHTML = '';
 
       if (list.length === 0) {
@@ -2618,17 +2767,17 @@
         card.className = 'border rounded-3 p-3 mb-2 bg-light shadow-sm';
         card.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center mb-1">
-                        <span class="badge bg-indigo-subtle text-indigo border border-indigo-subtle small">${obs.category}</span>
-                        <span class="small text-muted view-text-caption"><i class="bi bi-calendar3 me-1"></i>${obs.date}</span>
+                        <span class="badge bg-indigo-subtle text-indigo border border-indigo-subtle small">${escapeHtml(obs.category)}</span>
+                        <span class="small text-muted view-text-caption"><i class="bi bi-calendar3 me-1"></i>${escapeHtml(obs.date)}</span>
                     </div>
-                    <p class="small text-dark mb-1 fw-normal readable-copy">${obs.description}</p>
+                    <p class="small text-dark mb-1 fw-normal readable-copy">${escapeHtml(obs.description)}</p>
                     ${obs.agreements ? `
                         <div class="small text-muted pt-1 border-top mt-2 view-text-emphasis">
-                            <strong class="text-secondary"><i class="bi bi-hand-thumbs-up me-1"></i>Compromiso:</strong> ${obs.agreements}
+                            <strong class="text-secondary"><i class="bi bi-hand-thumbs-up me-1"></i>Compromiso:</strong> ${escapeHtml(obs.agreements)}
                         </div>
                     ` : ''}
                     <div class="text-end text-muted mt-1 view-text-footnote">
-                        Docente: ${obs.teacher || 'Profe Mariana'}
+                        Docente: ${escapeHtml(obs.teacher || 'Profe Mariana')}
                     </div>
                 `;
         container.appendChild(card);
@@ -2659,10 +2808,10 @@
       const detailsEl = document.getElementById('repContextDetails');
       const titleEl = document.getElementById('repContextTitle');
       const metaInfo = document.getElementById('repStudentMetaInfo');
-      if (!studentSel || !detailsEl || typeof SophosDB === 'undefined') return;
+      if (!studentSel || !detailsEl) return;
 
       const studentId = studentSel.value;
-      const student = SophosDB.getStudentById(studentId);
+      const student = getDocenteStudentById(studentId);
       const reportType = getSelectedReportType();
 
       if (!student) {
@@ -2674,19 +2823,23 @@
 
       if (reportType === 'disciplinario') {
         if (titleEl) titleEl.innerHTML = `<i class="bi bi-shield-exclamation me-1 text-danger"></i> Antecedentes Convivenciales (Observador):`;
-        const observations = SophosDB.getObservations(studentId);
+        const observations = docenteObservationsCache.filter(o => {
+          if (student.db_id && o.studentId === student.db_id) return true;
+          if (o.studentName && o.studentName.toLowerCase().includes(student.name.toLowerCase().split(' ')[0])) return true;
+          return false;
+        });
         if (observations.length === 0) {
           detailsEl.innerHTML = `<span class="text-success"><i class="bi bi-check-circle-fill me-1"></i> El estudiante tiene un historial de convivencia limpio sin faltas registradas.</span>`;
         } else {
-          const listSummary = observations.map(o => `• [${o.date}] ${o.category}: "${o.description.slice(0, 75)}..."`).join('<br>');
+          const listSummary = observations.map(o => `• [${escapeHtml(o.date)}] ${escapeHtml(o.category)}: "${escapeHtml(o.description.slice(0, 75))}..."`).join('<br>');
           detailsEl.innerHTML = `<strong>${observations.length} anotación(es) previa(s):</strong><br>${listSummary}`;
         }
       } else {
         if (titleEl) titleEl.innerHTML = `<i class="bi bi-mortarboard me-1 text-primary"></i> Rendimiento Académico Registrado:`;
-        const summary = SophosDB.getStudentSummaryForAI(studentId);
-        if (summary && summary.subjects.length > 0) {
-          const subjText = summary.subjects.map(s => `<strong>${s.subjectName}:</strong> ${s.average !== null ? s.average : 'Sin notas'}`).join(' | ');
-          detailsEl.innerHTML = `Desempeño en el Período Activo: ${subjText}`;
+        const record = docenteActiveGradebook && docenteActiveGradebook.records ? docenteActiveGradebook.records[studentId] : null;
+        if (record && record.grades) {
+          const avg = calculateDocenteAverage(record.grades);
+          detailsEl.innerHTML = `Desempeño en el Período Activo: <strong>Promedio Actual:</strong> ${avg !== null ? avg : 'Sin notas'}`;
         } else {
           detailsEl.textContent = 'Sin calificaciones registradas para el período actual.';
         }
@@ -2707,7 +2860,7 @@
         return;
       }
 
-      const student = SophosDB.getStudentById(studentSel.value);
+      const student = getDocenteStudentById(studentSel.value);
       const studentName = student ? student.name : 'el estudiante';
       const reportType = getSelectedReportType();
       const detailsEl = document.getElementById('repContextDetails');
@@ -2748,17 +2901,23 @@
         return;
       }
 
-      const student = SophosDB.getStudentById(studentSel.value);
+      const student = getDocenteStudentById(studentSel.value);
       const repTitle = reportType === 'disciplinario' ? 'Reporte Disciplinario y de Convivencia' : 'Informe de Seguimiento Académico';
 
-      const newRep = SophosDB.addReport({
+      const newRep = {
+        id: `REP-${Date.now().toString().slice(-4)}`,
         studentId: studentSel.value,
         studentName: student ? student.name : 'Estudiante',
         courseId: courseSel.value,
         type: reportType,
         title: repTitle,
-        content: text
-      });
+        content: text,
+        date: new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' }),
+        status: 'Radicado',
+        teacher: 'Profe Mariana'
+      };
+
+      docenteReportsCache.push(newRep);
 
       showObservadorToast(`¡${repTitle} (${newRep.id}) radicado exitosamente!`, "success");
       renderReportesHistorial(studentSel.value);
@@ -2766,9 +2925,9 @@
 
     function renderReportesHistorial(studentId) {
       const container = document.getElementById('repHistorialListContainer');
-      if (!container || typeof SophosDB === 'undefined') return;
+      if (!container) return;
 
-      const list = SophosDB.getReports(studentId);
+      const list = docenteReportsCache.filter(r => r.studentId === studentId);
       container.innerHTML = '';
 
       if (list.length === 0) {
@@ -2789,15 +2948,15 @@
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex align-items-center gap-2">
                             <span class="badge ${isDisc ? 'bg-danger-subtle text-danger border border-danger-subtle' : 'bg-primary-subtle text-primary border border-primary-subtle'}">
-                                ${rep.title}
+                                ${escapeHtml(rep.title)}
                             </span>
-                            <span class="badge bg-success-subtle text-success">${rep.status || 'Radicado'}</span>
+                            <span class="badge bg-success-subtle text-success">${escapeHtml(rep.status || 'Radicado')}</span>
                         </div>
-                        <span class="small text-muted"><i class="bi bi-calendar3 me-1"></i>${rep.date}</span>
+                        <span class="small text-muted"><i class="bi bi-calendar3 me-1"></i>${escapeHtml(rep.date)}</span>
                     </div>
-                    <p class="small text-dark mb-2 fw-normal view-preformatted-copy">${rep.content}</p>
+                    <p class="small text-dark mb-2 fw-normal view-preformatted-copy">${escapeHtml(rep.content)}</p>
                     <div class="d-flex justify-content-between align-items-center pt-2 border-top">
-                        <small class="text-muted">Docente: ${rep.teacher || 'Profe Mariana'}</small>
+                        <small class="text-muted">Docente: ${escapeHtml(rep.teacher || 'Profe Mariana')}</small>
                         <button type="button" class="btn btn-sm btn-outline-dark" onclick="openReportInModal('${encodeURIComponent(JSON.stringify(rep))}')">
                             <i class="bi bi-printer me-1"></i> Ver Formato Imprimible
                         </button>
@@ -2819,7 +2978,7 @@
         return;
       }
 
-      const student = SophosDB.getStudentById(studentSel.value);
+      const student = getDocenteStudentById(studentSel.value);
       const reportObj = {
         title: reportType === 'disciplinario' ? 'Reporte Disciplinario y de Convivencia' : 'Informe de Seguimiento Académico',
         studentName: student ? student.name : 'Estudiante',

@@ -314,9 +314,22 @@ try {
 
             // Mapear registros por estudiante
             $records = [];
+            $studentsFormatted = [];
             $counter = 1;
             foreach ($studentsList as $st) {
                 $stdCode = ($courseKey === '11A' ? 'EST-110' : 'EST-100') . $counter++;
+
+                $parts = explode(' ', trim($st['nombre_completo']));
+                $initials = strtoupper(substr($parts[0] ?? 'E', 0, 1) . substr($parts[1] ?? '', 0, 1));
+                $studentsFormatted[] = [
+                    'id' => $stdCode,
+                    'db_id' => $st['id_usuario'],
+                    'matricula_id' => $st['id_matricula'],
+                    'name' => $st['nombre_completo'],
+                    'avatar' => $initials,
+                    'avatarColor' => ($counter % 2 === 0 ? '#059669' : '#4f46e5'),
+                    'courseId' => $courseKey
+                ];
 
                 // Consultar calificaciones del estudiante
                 $stmtC = $pdo->prepare("
@@ -357,6 +370,7 @@ try {
                 'subject' => $subjectKey,
                 'period' => $period,
                 'columnTitles' => $columnTitles,
+                'students' => $studentsFormatted,
                 'records' => $records
             ]);
             break;
@@ -863,6 +877,44 @@ try {
                 'message' => 'Observación registrada en la base de datos MySQL (observador_digital).',
                 'studentName' => $targetUser['nombre_completo']
             ]);
+            break;
+
+        case 'observations':
+            $stmtObs = $pdo->query("
+                SELECT 
+                    o.id_observador as id,
+                    o.id_estudiante as db_student_id,
+                    u.nombre_completo as studentName,
+                    o.tipo_nota as type,
+                    o.observacion_informal,
+                    o.observacion_formal_ia,
+                    o.fecha_registro as date,
+                    ud.nombre_completo as teacher,
+                    c.nombre as courseName
+                FROM observador_digital o
+                JOIN usuarios u ON o.id_estudiante = u.id_usuario
+                JOIN estudiantes_matriculados em ON em.id_estudiante = u.id_usuario AND em.ano_lectivo = 2026
+                JOIN cursos c ON em.id_curso = c.id_curso
+                LEFT JOIN usuarios ud ON o.id_docente = ud.id_usuario
+                ORDER BY o.fecha_registro DESC
+            ");
+            $obsRows = $stmtObs->fetchAll();
+            $observations = [];
+            foreach ($obsRows as $ob) {
+                $observations[] = [
+                    'id' => $ob['id'],
+                    'studentId' => $ob['db_student_id'],
+                    'studentName' => $ob['studentName'],
+                    'courseName' => $ob['courseName'],
+                    'date' => substr($ob['date'], 0, 10),
+                    'type' => strtolower($ob['type']),
+                    'category' => $ob['type'] === 'DISCIPLINARIA' ? 'Falta / Seguimiento Convivencial' : 'Seguimiento Pedagógico',
+                    'description' => $ob['observacion_formal_ia'] ?: $ob['observacion_informal'],
+                    'agreements' => 'Compromiso firmado y radicado en el observador.',
+                    'teacher' => $ob['teacher'] ?: 'Profe Mariana'
+                ];
+            }
+            echo json_encode(['success' => true, 'observations' => $observations]);
             break;
 
         // ==============================================================
