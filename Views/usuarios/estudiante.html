@@ -465,7 +465,7 @@
               <div class="col-md-5">
                 <label class="form-label small text-secondary fw-bold mb-1">Materia</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="gradesSubjectSelector">
-                  <option value="" selected>Seleccionar materia...</option>
+                  <option value="" selected disabled>Seleccionar Materia...</option>
                 </select>
               </div>
               <div class="col-md-7">
@@ -644,7 +644,7 @@
                 <label class="form-label small text-secondary fw-bold mb-1">Seleccionar Período:</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="bulletinPeriodSelector"
                   onchange="renderStudentBulletin()">
-                  <option value="" selected>Seleccionar período...</option>
+                  <option value="" selected disabled>Seleccionar Período...</option>
                   <option value="1">Primer Período</option>
                   <option value="2">Segundo Período</option>
                 </select>
@@ -893,19 +893,20 @@
             </div>
             <div class="mb-3">
               <label class="form-label small fw-bold text-secondary">Materia Afectada</label>
-              <select class="form-select" id="modalMateriaFalta">
+              <select class="form-select" id="modalMateriaFalta" required>
+                <option value="" selected disabled>Seleccionar Materia...</option>
                 <option value="Matemáticas">Matemáticas</option>
                 <option value="Física">Física</option>
-                <option value="Todas las materias del día">Todas las materias del día</option>
+                <option value="Química">Química</option>
               </select>
             </div>
             <div class="mb-3">
               <label class="form-label small fw-bold text-secondary">Tipo de Inasistencia</label>
-              <select class="form-select mb-2" id="modalMotivoTipo">
+              <select class="form-select mb-2" id="modalMotivoTipo" required>
+                <option value="" selected disabled>Seleccionar Motivo...</option>
                 <option value="Incapacidad Médica">Incapacidad Médica / Consulta Salud</option>
                 <option value="Calamidad Doméstica">Calamidad Doméstica</option>
-                <option value="Representación Institucional / Deportiva">Representación Institucional / Deportiva
-                </option>
+                <option value="Representación Institucional / Deportiva">Representación Institucional / Deportiva</option>
                 <option value="Otro Motivo">Otro Motivo</option>
               </select>
               <label class="form-label small fw-bold text-secondary">Observación</label>

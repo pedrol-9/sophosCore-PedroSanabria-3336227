@@ -289,7 +289,7 @@
                                     <i class="bi bi-mortarboard text-indigo me-1"></i> Curso / Grado
                                 </label>
                                 <select class="form-select bg-light border-0 fw-semibold" id="adminGbFilterCourse">
-                                    <option value="ALL" selected>Todos los Cursos</option>
+                                    <option value="" selected disabled>Seleccionar Curso / Grado...</option>
                                     <option value="c0000001-0000-0000-0000-000000000001">11° Grado A</option>
                                     <option value="c0000001-0000-0000-0000-000000000002">10° Grado A</option>
                                 </select>
@@ -301,7 +301,7 @@
                                     <i class="bi bi-book text-indigo me-1"></i> Materia
                                 </label>
                                 <select class="form-select bg-light border-0 fw-semibold" id="adminGbFilterSubject">
-                                    <option value="ALL" selected>Todas las Materias</option>
+                                    <option value="" selected disabled>Seleccionar Materia...</option>
                                     <option value="d0000001-0000-0000-0000-000000000001">Matemáticas</option>
                                     <option value="d0000001-0000-0000-0000-000000000002">Física</option>
                                     <option value="d0000001-0000-0000-0000-000000000003">Química</option>
@@ -316,9 +316,10 @@
                                     <i class="bi bi-calendar3 text-indigo me-1"></i> Período
                                 </label>
                                 <select class="form-select bg-light border-0 fw-semibold" id="adminGbFilterPeriod">
+                                    <option value="" selected disabled>Seleccionar Período...</option>
                                     <option value="1">Período 1</option>
                                     <option value="2">Período 2</option>
-                                    <option value="3" selected>Período 3</option>
+                                    <option value="3">Período 3 (En Curso)</option>
                                     <option value="4">Período 4</option>
                                 </select>
                             </div>
@@ -401,7 +402,7 @@
                                 </div>
                                 <h3 class="fw-bold mb-2" id="adminPeriodTitle">Control de Cierre de Período Académico</h3>
                                 <p class="text-white-50 small mb-0" id="adminPeriodDesc">
-                                    Al cerrar el <strong>Tercer Período</strong>, se archivarán las calificaciones de todos los cursos (10° y 11°) y se habilitará el <strong>Cuarto Período</strong> con 4 columnas predeterminadas vacías para que los docentes comiencen su nuevo registro de notas.
+                                    Al cerrar el <strong>Tercer Período</strong>, se archivarán las calificaciones de todos los cursos y se habilitará el <strong>Cuarto Período</strong> con 4 columnas predeterminadas vacías para que los docentes comiencen su nuevo registro de notas.
                                 </p>
                             </div>
                             <div class="col-lg-4 text-lg-end">
@@ -721,9 +722,7 @@
                 }
 
                 const gbPeriodSel = document.getElementById('adminGbFilterPeriod');
-                if (gbPeriodSel && !gbPeriodSel.dataset.userChanged) {
-                    gbPeriodSel.value = String(pNum);
-                }
+                // Mantener el placeholder Seleccionar Período por defecto
 
                 if (pNum === 3) {
                     if (badge) {
@@ -900,8 +899,6 @@
             // Exponer función para filtrar un estudiante desde el Cuadro de Honor
             window.filterStudentInGradebook = function(studentName) {
                 if (searchStudent) searchStudent.value = studentName;
-                if (filterCourse) filterCourse.value = 'ALL';
-                if (filterSubject) filterSubject.value = 'ALL';
                 switchToSection('libreta-calificaciones');
             };
 
@@ -918,7 +915,6 @@
             const btnAlertGoGb = document.getElementById('btnAdminAlertGoGradebook');
             if (btnAlertGoGb) {
                 btnAlertGoGb.addEventListener('click', () => {
-                    if (filterPeriod) filterPeriod.value = String(currentPeriodNumber);
                     switchToSection('libreta-calificaciones');
                 });
             }
@@ -938,13 +934,28 @@
             async function loadAdminGradebook() {
                 if (!gbTableBody) return;
 
-                const courseVal = filterCourse ? filterCourse.value : 'ALL';
-                const subjectVal = filterSubject ? filterSubject.value : 'ALL';
+                const courseVal = filterCourse ? filterCourse.value : '';
+                const subjectVal = filterSubject ? filterSubject.value : '';
                 const periodVal = filterPeriod ? filterPeriod.value : (currentPeriodNumber || 3);
                 const studentVal = searchStudent ? searchStudent.value.trim() : '';
 
                 if (gbPeriodIndicator) {
-                    gbPeriodIndicator.textContent = `Período ${periodVal} ${periodVal == currentPeriodNumber ? '(En Curso)' : '(Cerrado)'}`;
+                    gbPeriodIndicator.textContent = periodVal ? `Período ${periodVal} ${periodVal == currentPeriodNumber ? '(En Curso)' : '(Cerrado)'}` : 'Período 3 (En Curso)';
+                }
+
+                // Si no se está buscando por estudiante específico y falta curso o materia:
+                if (!studentVal && (!courseVal || !subjectVal)) {
+                    gbTableBody.innerHTML = `
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-funnel fs-1 text-secondary d-block mb-2 opacity-50"></i>
+                                <div class="fw-bold fs-6 text-dark">Selecciona un Curso y una Materia</div>
+                                <div class="small">Elige los filtros en la barra superior para consultar las calificaciones o escribe en el buscador de estudiante.</div>
+                            </td>
+                        </tr>
+                    `;
+                    if (gbRecordsBadge) gbRecordsBadge.textContent = 'Esperando filtros...';
+                    return;
                 }
 
                 gbTableBody.innerHTML = `
@@ -959,9 +970,9 @@
                 try {
                     const params = new URLSearchParams({
                         action: 'gradebook',
-                        course: courseVal,
-                        subject: subjectVal,
-                        period: periodVal,
+                        course: courseVal || 'ALL',
+                        subject: subjectVal || 'ALL',
+                        period: periodVal || 3,
                         student: studentVal
                     });
 
@@ -975,7 +986,7 @@
                     // Actualizar dinámicamente los selectores de curso y materia si hay datos
                     if (result.data.cursos && result.data.cursos.length > 0 && filterCourse && filterCourse.options.length <= 3) {
                         const currentVal = filterCourse.value;
-                        filterCourse.innerHTML = '<option value="ALL">Todos los Cursos</option>';
+                        filterCourse.innerHTML = '<option value="" selected disabled>Seleccionar Curso / Grado...</option>';
                         result.data.cursos.forEach(c => {
                             const opt = document.createElement('option');
                             opt.value = c.id_curso;
@@ -987,7 +998,7 @@
 
                     if (result.data.materias && result.data.materias.length > 0 && filterSubject && filterSubject.options.length <= 6) {
                         const currentVal = filterSubject.value;
-                        filterSubject.innerHTML = '<option value="ALL">Todas las Materias</option>';
+                        filterSubject.innerHTML = '<option value="" selected disabled>Seleccionar Materia...</option>';
                         result.data.materias.forEach(m => {
                             const opt = document.createElement('option');
                             opt.value = m.id_materia;
@@ -1091,9 +1102,9 @@
 
             if (btnResetFilters) {
                 btnResetFilters.addEventListener('click', () => {
-                    if (filterCourse) filterCourse.value = 'ALL';
-                    if (filterSubject) filterSubject.value = 'ALL';
-                    if (filterPeriod) filterPeriod.value = String(currentPeriodNumber || 3);
+                    if (filterCourse) filterCourse.value = '';
+                    if (filterSubject) filterSubject.value = '';
+                    if (filterPeriod) filterPeriod.value = '';
                     if (searchStudent) searchStudent.value = '';
                     loadAdminGradebook();
                 });

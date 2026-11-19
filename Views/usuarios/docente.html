@@ -130,13 +130,13 @@
               <div class="col-md-4">
                 <label class="form-label text-secondary small fw-medium">Materia</label>
                 <select class="form-select bg-light border-0" id="dashboardSubjectFilter" disabled>
-                  <option value="">Cargando materias...</option>
+                  <option value="" selected disabled>Seleccionar Materia...</option>
                 </select>
               </div>
               <div class="col-md-4">
                 <label class="form-label text-secondary small fw-medium">Grado</label>
                 <select class="form-select bg-light border-0" id="dashboardCourseFilter" disabled>
-                  <option value="">Cargando cursos...</option>
+                  <option value="" selected disabled>Seleccionar Grado...</option>
                 </select>
               </div>
               <div class="col-md-4 d-flex align-items-end">
@@ -405,7 +405,6 @@
                 <label class="form-label small text-secondary fw-bold mb-1">Curso / Grupo</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="filterInasistenciaCourse" onchange="loadDocenteInasistencias()">
                   <option value="" selected disabled>Seleccionar Curso / Grupo...</option>
-                  <option value="all">Todos los Cursos</option>
                   <option value="11A">11° Grado A</option>
                   <option value="10A">10° Grado A</option>
                 </select>
@@ -414,7 +413,6 @@
                 <label class="form-label small text-secondary fw-bold mb-1">Asignatura</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="filterInasistenciaSubject" onchange="loadDocenteInasistencias()">
                   <option value="" selected disabled>Seleccionar Materia...</option>
-                  <option value="all">Todas las Asignaturas</option>
                   <option value="MAT">Matemáticas</option>
                   <option value="FIS">Física</option>
                   <option value="QUI">Química</option>
@@ -423,9 +421,9 @@
               <div class="col-md-3">
                 <label class="form-label small text-secondary fw-bold mb-1">Tipo de Inasistencia</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="filterInasistenciaStatus" onchange="loadDocenteInasistencias()">
-                  <option value="all" selected>Todos los Estados</option>
-                  <option value="INJUSTIFICADA">Falta Injustificada</option>
-                  <option value="JUSTIFICADA">Falta Justificada</option>
+                  <option value="" selected disabled>Seleccionar Estado...</option>
+                  <option value="INJUSTIFICADA">Solo Injustificadas</option>
+                  <option value="JUSTIFICADA">Solo Justificadas</option>
                 </select>
               </div>
               <div class="col-md-3 d-flex align-items-end">
@@ -712,14 +710,15 @@
                     <div class="col-md-6">
                       <label class="form-label text-secondary small fw-medium mb-1">Curso / Grupo</label>
                       <select class="form-select bg-light border-0 fw-semibold" id="obsSelectCourse">
-                        <option value="11A" selected>11° Grado A</option>
+                        <option value="" selected disabled>Seleccionar Curso / Grupo...</option>
+                        <option value="11A">11° Grado A</option>
                         <option value="10A">10° Grado A</option>
                       </select>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label text-secondary small fw-medium mb-1">Estudiante</label>
                       <select class="form-select bg-light border-0 fw-semibold" id="obsSelectStudent">
-                        <!-- Poblado dinámicamente -->
+                        <option value="" selected disabled>Seleccionar Estudiante...</option>
                       </select>
                     </div>
                   </div>
@@ -729,6 +728,7 @@
                     <div class="col-md-7">
                       <label class="form-label text-secondary small fw-medium mb-1">Tipo de Acontecimiento</label>
                       <select class="form-select bg-light border-0 fw-semibold" id="obsSelectCategory">
+                        <option value="" selected disabled>Seleccionar Tipo de Falta / Categoría...</option>
                         <option value="Falta Leve / Dispersión">Falta Leve / Dispersión o distracción</option>
                         <option value="Compromiso Convivencial">Compromiso Convivencial / Desacato</option>
                         <option value="Citación a Acudiente">Citación formal a Acudiente</option>
@@ -822,14 +822,15 @@
               <div class="col-md-3">
                 <label class="form-label text-secondary small fw-medium mb-1">Curso / Grupo</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="repSelectCourse">
-                  <option value="11A" selected>11° Grado A</option>
+                  <option value="" selected disabled>Seleccionar Curso / Grupo...</option>
+                  <option value="11A">11° Grado A</option>
                   <option value="10A">10° Grado A</option>
                 </select>
               </div>
               <div class="col-md-3">
                 <label class="form-label text-secondary small fw-medium mb-1">Estudiante</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="repSelectStudent">
-                  <!-- Poblado dinámicamente -->
+                  <option value="" selected disabled>Seleccionar Estudiante...</option>
                 </select>
               </div>
             </div>
@@ -1015,7 +1016,8 @@
               <div class="col-md-6">
                 <label class="form-label small fw-bold text-secondary">Curso / Grupo</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="newInasistenciaCourse" onchange="updateInasistenciaStudentsDropdown()">
-                  <option value="11A" selected>11° Grado A</option>
+                  <option value="" selected disabled>Seleccionar Curso / Grupo...</option>
+                  <option value="11A">11° Grado A</option>
                   <option value="10A">10° Grado A</option>
                 </select>
               </div>
@@ -1026,13 +1028,14 @@
               <div class="col-12">
                 <label class="form-label small fw-bold text-secondary">Estudiante</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="newInasistenciaStudent" required>
-                  <!-- Llenado dinámicamente -->
+                  <option value="" selected disabled>Seleccionar Estudiante...</option>
                 </select>
               </div>
               <div class="col-md-6">
                 <label class="form-label small fw-bold text-secondary">Asignatura</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="newInasistenciaSubject" required>
-                  <option value="MAT" selected>Matemáticas</option>
+                  <option value="" selected disabled>Seleccionar Materia...</option>
+                  <option value="MAT">Matemáticas</option>
                   <option value="FIS">Física</option>
                   <option value="QUI">Química</option>
                 </select>
@@ -1040,7 +1043,8 @@
               <div class="col-md-6">
                 <label class="form-label small fw-bold text-secondary">Tipo de Inasistencia</label>
                 <select class="form-select bg-light border-0 fw-semibold" id="newInasistenciaType" required>
-                  <option value="FALTA_INJUSTIFICADA" selected>Injustificada</option>
+                  <option value="" selected disabled>Seleccionar Tipo de Falta...</option>
+                  <option value="FALTA_INJUSTIFICADA">Injustificada</option>
                   <option value="FALTA_JUSTIFICADA">Justificada</option>
                 </select>
               </div>
@@ -1197,6 +1201,14 @@
         dashboardCourseFilter.addEventListener('change', updateDashboardSubjectOptions);
       }
 
+      const dashboardSubjectFilter = document.getElementById('dashboardSubjectFilter');
+      if (dashboardSubjectFilter) {
+        dashboardSubjectFilter.addEventListener('change', () => {
+          const applyBtn = document.getElementById('applyDashboardFilters');
+          if (applyBtn) applyBtn.disabled = !dashboardSubjectFilter.value;
+        });
+      }
+
       const applyDashboardFilters = document.getElementById('applyDashboardFilters');
       if (applyDashboardFilters) {
         applyDashboardFilters.addEventListener('click', loadDashboardStudents);
@@ -1276,7 +1288,7 @@
 
         dashboardTeacherId = data.docente_id;
         dashboardAssignments = data.assignments || [];
-        courseSelect.innerHTML = '';
+        courseSelect.innerHTML = '<option value="" selected disabled>Seleccionar Grado / Curso...</option>';
         (data.courses || []).forEach(course => {
           const option = document.createElement('option');
           option.value = course.id;
@@ -1284,19 +1296,11 @@
           courseSelect.appendChild(option);
         });
 
-        if (courseSelect.options.length === 0) {
-          throw new Error('No hay cursos asignados a este docente para el año lectivo actual.');
-        }
-
         courseSelect.disabled = false;
-        updateDashboardSubjectOptions();
-        subjectSelect.disabled = subjectSelect.options.length === 0;
-        applyButton.disabled = subjectSelect.disabled;
-        if (applyButton.disabled) {
-          table.innerHTML = '<tr><td colspan="3" class="text-center py-4 text-muted">No hay materias asignadas para este curso.</td></tr>';
-          return;
-        }
-        await loadDashboardStudents();
+        subjectSelect.innerHTML = '<option value="" selected disabled>Seleccionar Materia...</option>';
+        subjectSelect.disabled = true;
+        applyButton.disabled = true;
+        table.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted"><i class="bi bi-funnel fs-2 text-secondary d-block mb-2 opacity-50"></i><div class="fw-bold">Selecciona un Curso y una Materia</div><div class="small">Elige los filtros y haz clic en "Aplicar Filtros" para consultar el listado de estudiantes.</div></td></tr>';
       } catch (error) {
         console.error('Error al cargar filtros del panel docente:', error);
         table.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-danger">${escapeHtml(error.message)}</td></tr>`;
@@ -1309,10 +1313,16 @@
       const applyButton = document.getElementById('applyDashboardFilters');
       if (!courseSelect || !subjectSelect) return;
 
-      const previousSubject = subjectSelect.value;
       const courseId = courseSelect.value;
+      if (!courseId) {
+        subjectSelect.innerHTML = '<option value="" selected disabled>Seleccionar Materia...</option>';
+        subjectSelect.disabled = true;
+        if (applyButton) applyButton.disabled = true;
+        return;
+      }
+
       const subjects = dashboardAssignments.filter(assignment => assignment.course_id === courseId);
-      subjectSelect.innerHTML = '';
+      subjectSelect.innerHTML = '<option value="" selected disabled>Seleccionar Materia...</option>';
       subjects.forEach(assignment => {
         if (Array.from(subjectSelect.options).some(option => option.value === assignment.subject_id)) return;
         const option = document.createElement('option');
@@ -1321,11 +1331,8 @@
         subjectSelect.appendChild(option);
       });
 
-      if (Array.from(subjectSelect.options).some(option => option.value === previousSubject)) {
-        subjectSelect.value = previousSubject;
-      }
-      subjectSelect.disabled = subjectSelect.options.length === 0;
-      if (applyButton) applyButton.disabled = subjectSelect.disabled;
+      subjectSelect.disabled = subjects.length === 0;
+      if (applyButton) applyButton.disabled = !subjectSelect.value;
     }
 
     async function loadDashboardStudents() {
@@ -1334,6 +1341,11 @@
       const table = document.getElementById('dashboardStudentsTable');
       const heading = document.getElementById('dashboardStudentsHeading');
       if (!courseSelect || !subjectSelect || !table) return;
+
+      if (!courseSelect.value || !subjectSelect.value) {
+        table.innerHTML = '<tr><td colspan="3" class="text-center py-5 text-muted"><i class="bi bi-funnel fs-2 text-secondary d-block mb-2 opacity-50"></i><div class="fw-bold">Selecciona un Curso y una Materia</div><div class="small">Elige los filtros y haz clic en "Aplicar Filtros" para consultar el listado de estudiantes.</div></td></tr>';
+        return;
+      }
 
       const selectedCourse = courseSelect.selectedOptions[0];
       const selectedSubject = subjectSelect.selectedOptions[0];

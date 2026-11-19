@@ -157,26 +157,24 @@ html, body.landing-page {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Backdrop Blur Premium cuando se abre el modal */
+/* Backdrop Overlay Limpio y Confiable para el modal */
 .modal-backdrop {
-    z-index: 1060 !important;
+    z-index: 1050 !important;
 }
 
 .modal-backdrop.show {
-    backdrop-filter: blur(8px) saturate(130%) !important;
-    -webkit-backdrop-filter: blur(8px) saturate(130%) !important;
-    background-color: rgba(7, 11, 22, 0.75) !important;
+    background-color: rgba(10, 15, 29, 0.82) !important;
     opacity: 1 !important;
-    z-index: 1060 !important;
+    z-index: 1050 !important;
 }
 
 #loginModal {
-    z-index: 1080 !important;
+    z-index: 1060 !important;
 }
 
 #loginModal .modal-dialog {
     position: relative;
-    z-index: 1085 !important;
+    z-index: 1065 !important;
 }
 
 #loginModal .modal-content {
