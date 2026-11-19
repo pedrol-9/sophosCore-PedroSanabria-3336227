@@ -158,23 +158,31 @@ html, body.landing-page {
 }
 
 /* Backdrop Blur Premium cuando se abre el modal */
-.modal-backdrop.show {
-    backdrop-filter: blur(14px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
-    background-color: rgba(7, 11, 22, 0.75) !important;
-    opacity: 1 !important;
-}
-
-#loginModal {
+.modal-backdrop {
     z-index: 1060 !important;
 }
 
+.modal-backdrop.show {
+    backdrop-filter: blur(8px) saturate(130%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(130%) !important;
+    background-color: rgba(7, 11, 22, 0.75) !important;
+    opacity: 1 !important;
+    z-index: 1060 !important;
+}
+
+#loginModal {
+    z-index: 1080 !important;
+}
+
+#loginModal .modal-dialog {
+    position: relative;
+    z-index: 1085 !important;
+}
+
 #loginModal .modal-content {
-    background: rgba(18, 24, 40, 0.88) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 35px rgba(79, 70, 229, 0.2) !important;
+    background: #0f172a !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 35px rgba(79, 70, 229, 0.25) !important;
     border-radius: 20px !important;
     color: #f8fafc;
 }

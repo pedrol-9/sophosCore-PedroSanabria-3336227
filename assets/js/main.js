@@ -118,12 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Modal trigger safeguard (garantiza apertura de loginModal)
-    document.querySelectorAll('[data-bs-target="#loginModal"]').forEach(btn => {
+    // Modal trigger safeguard (garantiza apertura de loginModal sólo si no tiene data-bs-toggle nativo)
+    document.querySelectorAll('[data-bs-target="#loginModal"]:not([data-bs-toggle="modal"])').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const modalEl = document.getElementById('loginModal');
             if (modalEl && typeof bootstrap !== 'undefined') {
-                const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
                 modal.show();
             }
         });
