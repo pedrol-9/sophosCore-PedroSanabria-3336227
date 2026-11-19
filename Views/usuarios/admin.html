@@ -864,7 +864,7 @@
 
             // Navegación fluida hacia la Libreta Institucional
             function switchToSection(targetId) {
-                const navLinks = document.querySelectorAll('#sidebar .nav-link');
+                const navLinks = document.querySelectorAll('#sidebar .nav-link, .sidebar .nav-link');
                 const sections = document.querySelectorAll('.spa-section');
 
                 navLinks.forEach(l => {
@@ -887,6 +887,15 @@
                     loadAdminGradebook();
                 }
             }
+
+            // Asegurar que al hacer clic en el menú lateral se cargue la libreta institucional
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (link.getAttribute('data-target') === 'libreta-calificaciones') {
+                        loadAdminGradebook();
+                    }
+                });
+            });
 
             // Exponer función para filtrar un estudiante desde el Cuadro de Honor
             window.filterStudentInGradebook = function(studentName) {
@@ -961,6 +970,31 @@
 
                     if (!result.success || !result.data) {
                         throw new Error(result.error || 'Error al obtener calificaciones');
+                    }
+
+                    // Actualizar dinámicamente los selectores de curso y materia si hay datos
+                    if (result.data.cursos && result.data.cursos.length > 0 && filterCourse && filterCourse.options.length <= 3) {
+                        const currentVal = filterCourse.value;
+                        filterCourse.innerHTML = '<option value="ALL">Todos los Cursos</option>';
+                        result.data.cursos.forEach(c => {
+                            const opt = document.createElement('option');
+                            opt.value = c.id_curso;
+                            opt.textContent = c.nombre;
+                            if (opt.value === currentVal) opt.selected = true;
+                            filterCourse.appendChild(opt);
+                        });
+                    }
+
+                    if (result.data.materias && result.data.materias.length > 0 && filterSubject && filterSubject.options.length <= 6) {
+                        const currentVal = filterSubject.value;
+                        filterSubject.innerHTML = '<option value="ALL">Todas las Materias</option>';
+                        result.data.materias.forEach(m => {
+                            const opt = document.createElement('option');
+                            opt.value = m.id_materia;
+                            opt.textContent = m.nombre;
+                            if (opt.value === currentVal) opt.selected = true;
+                            filterSubject.appendChild(opt);
+                        });
                     }
 
                     const records = result.data.records || [];
@@ -1064,7 +1098,6 @@
                     loadAdminGradebook();
                 });
             }
-        });
         });
     </script>
 </body>
